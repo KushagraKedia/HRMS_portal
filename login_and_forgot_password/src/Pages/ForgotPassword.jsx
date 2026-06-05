@@ -27,8 +27,10 @@ function ForgotPassword() {
             className=" w-full p-3 rounded-xl border border-black bg-white text-black text-[15px]"/><br />
 
 
-              <button type="Submit" classsName="p-3 rounded-xl
-          bg-orange-500 text-white font-semibold hover:bg-orange-600 mt-3">Submit</button><br />
+              <button type="Submit" className="p-3 rounded-xl
+             bg-orange-500 text-white font-semibold hover:bg-orange-600 mt-3">
+               Sign Up
+              </button><br />
 
               <p className="text-sm mt-2 flex gap-1">Return to{" "}
              <Link to="/" className="text-green-600">Sign In</Link></p>
