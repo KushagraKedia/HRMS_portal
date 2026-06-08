@@ -16,11 +16,6 @@ import videoIcon from "../assets/video.png";
 import calendar3Icon from "../assets/calendar-3.png";
 import GICLogo from "../assets/gic-logo-white.png"
 import benifitDeductionGraph from "../assets/benifit-deduction-graph.png"
-import topEmployeeGraph from "../assets/top-employee-graph.png"
-import topEmployeeDistribution from "../assets/top-employee-distribution.png";
-import payrollGraph from "../assets/payroll-graph.png"
-import employeeStatusGraph from "../assets/employee-status.png"
-import leaveGraph from "../assets/leave-type.png"
 import personM1 from "../assets/person-m-1.webp"
 import personM2 from "../assets/person-m-2.webp"
 import personM3 from "../assets/person-m-3.webp"
