@@ -86,7 +86,7 @@ function Sidebar() {
   const [trainingOpen , setTrainingOpen] = useState(false);
 
   return (
-    <aside className="w-72 h-screen overflow-y-auto bg-[#F8F9FA] border-r border-gray-200 px-4 py-4">
+    <aside className="w-62 h-screen overflow-y-auto bg-[#F8F9FA] border-r border-gray-200 px-4 py-4">
 
       <img src={GIC} alt="calendar" className="h-20 w-60" />
       {/* MAIN MENU */}
@@ -97,7 +97,7 @@ function Sidebar() {
       <div className="space-y-2">
 
         <div onClick={() => setDashboardOpen(!dashboardOpen)}
-        className="flex items-center justify-between bg-gray-200 rounded-lg px-3 py-3 hover:cursor-pointer">
+        className="flex items-center justify-between  rounded-lg px-3 py-3 hover:cursor-pointer hover:bg-[#f3f0f0]">
           <div className="flex items-center gap-3">
             <Home size={18} className="text-slate-500" />
             <span className="font-medium">Dashboard</span>
