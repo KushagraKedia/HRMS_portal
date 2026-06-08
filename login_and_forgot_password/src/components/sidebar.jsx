@@ -69,9 +69,22 @@ import {
   Table
 } from "lucide-react";
 
+import { useState } from "react";
+
+
+
 import GIC from "../assets/GIC1.webp";
 
 function Sidebar() {
+  const [dashboardOpen,setDashboardOpen] = useState(false);
+  const [superAdminOpen, setSuperAdminOpen] = useState(false);
+  const [applicationOpen, setApplicationOpen] = useState(false);
+  const [employeeOpen , setEmployeeOpen] = useState(false);
+  const [ticketOpen, setTicketOpen] = useState(false);
+  const [attendenceOpen, setAttendenceOpen] = useState(false);
+  const [performanceOpen , setPerformanceOpen] = useState(false);
+  const [trainingOpen , setTrainingOpen] = useState(false);
+
   return (
     <aside className="w-72 h-screen overflow-y-auto bg-[#F8F9FA] border-r border-gray-200 px-4 py-4">
 
@@ -83,11 +96,14 @@ function Sidebar() {
 
       <div className="space-y-2">
 
-        <div className="flex items-center justify-between bg-gray-200 rounded-lg px-3 py-3">
+        <div onClick={() => setDashboardOpen(!dashboardOpen)}
+        className="flex items-center justify-between bg-gray-200 rounded-lg px-3 py-3 hover:cursor-pointer">
           <div className="flex items-center gap-3">
             <Home size={18} className="text-slate-500" />
             <span className="font-medium">Dashboard</span>
           </div>
+
+          
 
           <div className="flex items-center gap-2">
             <span className="bg-red-500 text-white text-xs px-2 py-0.5 rounded-md">
@@ -96,22 +112,106 @@ function Sidebar() {
             <ChevronDown size={16} />
           </div>
         </div>
+        {
+            dashboardOpen && (
+              <div className="ml-8 mt-2 space-y-2">
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Admin Dashboard</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Employee Dashboard</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Deals Dashboard</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Leads Dashboard</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">HR Dashboard</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Payroll Dashboard</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Recuritment Dashboard</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Attendence Dashboard</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Finance Dashboard</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">IT Admin Dashboard</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Asset Dashboard</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Help Desk Dashboard</div>
+             </div>
+            )
+          }
 
-        <div className="flex items-center justify-between px-3 py-3 rounded-lg hover:bg-gray-100">
+           <div onClick={() => setApplicationOpen(!applicationOpen)}
+        className="flex items-center justify-between hover:bg-[#f3f0f0] rounded-lg px-3 py-3 hover:cursor-pointer">
+          <div className="flex items-center gap-3">
+            <LayoutGrid size={18} className="text-slate-500" />
+            <span className="font-medium">Application</span>
+          </div>
+
+          
+
+          <div className="flex items-center gap-2">
+            
+            <ChevronDown size={16} />
+          </div>
+        </div>
+        {
+            applicationOpen && (
+              <div className="ml-8 mt-2 space-y-2">
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Chat</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Calls</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Calendar</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Email</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">To Do</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Notes</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Social Feed</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">File Manager</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Kanban</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Invoices</div>
+             </div>
+            )
+          }
+
+        {/* <div onClick={() => setApplicationOpen(!applicationOpen)} className="flex items-left justify-begin px-3 py-3 rounded-lg hover:bg-gray-100 hover:cursor-pointer" >
           <div className="flex items-center gap-3">
             <LayoutGrid size={18} className="text-slate-500" />
             <span>Applications</span>
           </div>
           <ChevronDown size={16} />
-        </div>
+          {
+            applicationOpen && (
+              <div className="ml-8 mt-2 space-y-2">
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Admin Dashboard</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Employee Dashboard</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Deals Dashboard</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Leads Dashboard</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">HR Dashboard</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Payroll Dashboard</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Recuritment Dashboard</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Attendence Dashboard</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Finance Dashboard</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">IT Admin Dashboard</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Asset Dashboard</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Help Desk Dashboard</div>
+             </div>
+            )
+          }
+        </div> */}
 
-        <div className="flex items-center justify-between px-3 py-3 rounded-lg hover:bg-gray-100">
+        <div className="flex items-center justify-between px-3 py-3 rounded-lg hover:bg-gray-100 hover:cursor-pointer" onClick={() => setSuperAdminOpen(!superAdminOpen)}>
           <div className="flex items-center gap-3">
             <ShieldCheck size={18} className="text-slate-500" />
             <span>Super Admin</span>
           </div>
           <ChevronDown size={16} />
         </div>
+
+        {
+            superAdminOpen && (
+              <div className="ml-8 mt-2 space-y-2">
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Dashboard</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Companies</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Subscriptions</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Packages</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Domain</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Purchase Transactions</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Tenent Usage Metrics</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Tenent supprot Tickets</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Tickets</div>
+             </div>
+            )
+          }
+        
       </div>
 
       {/* LAYOUT */}
@@ -164,47 +264,109 @@ function Sidebar() {
 
 <div className="space-y-2">
 
-  <div className="flex items-center justify-between px-3 py-3 rounded-lg hover:bg-gray-100">
+  <div className="flex items-center justify-between px-3 py-3 rounded-lg hover:bg-gray-100 hover:cursor-pointer" onClick={() => setEmployeeOpen(!employeeOpen)}>
     <div className="flex items-center gap-3">
       <Users size={18} className="text-slate-500" />
       <span>Employees</span>
     </div>
     <ChevronDown size={16} />
   </div>
+  {
+      employeeOpen && (
+        <div className="ml-8 mt-2 space-y-2">
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Employees List</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Employees Grid</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Employees Details</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Departments</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Designations</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Policies</div>
+             </div>
+      )
+    }
 
-  <div className="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-gray-100">
+  <div className="flex items-center justify-between px-3 py-3 rounded-lg hover:bg-gray-100 hover:cursor-pointer" onClick={() => setTicketOpen(!ticketOpen)}>
+    <div className="flex items-center gap-3">
     <Ticket size={18} className="text-slate-500" />
     <span>Tickets</span>
+    </div>
+    <ChevronDown size={16} />
   </div>
+  {
+            ticketOpen && (
+              <div className="ml-8 mt-2 space-y-2">
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Tickets</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Tickets Detail</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Ticket Automation</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Ticket Reports</div>
+             </div>
+            )
+    }
 
   <div className="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-gray-100">
     <CalendarDays size={18} className="text-slate-500" />
     <span>Holidays</span>
   </div>
 
-  <div className="flex items-center justify-between px-3 py-3 rounded-lg hover:bg-gray-100">
+  <div className="flex items-center justify-between px-3 py-3 rounded-lg hover:bg-gray-100 hover:cursor-pointer" onClick={() => setAttendenceOpen(!attendenceOpen)}>
     <div className="flex items-center gap-3">
       <ClipboardCheck size={18} className="text-slate-500" />
       <span>Attendance</span>
     </div>
     <ChevronDown size={16} />
   </div>
+  {
+            attendenceOpen && (
+              <div className="ml-8 mt-2 space-y-2">
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Leaves</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Attendence (Admin)</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Attendence (Employee)</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Timesheet</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Shift & Schedule</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Shift Swap Requests</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Overtime</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Holiday Calendar</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">WFH Management</div>
+             </div>
+            )
+    }
 
-  <div className="flex items-center justify-between px-3 py-3 rounded-lg hover:bg-gray-100">
+  <div className="flex items-center justify-between px-3 py-3 rounded-lg hover:bg-gray-100 hover:cursor-pointer" onClick={()=>(setPerformanceOpen(!performanceOpen))}>
     <div className="flex items-center gap-3">
       <GraduationCap size={18} className="text-slate-500" />
       <span>Performance</span>
     </div>
     <ChevronDown size={16} />
   </div>
+  {
+            performanceOpen && (
+              <div className="ml-8 mt-2 space-y-2">
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Performance Indicator</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Performance Review</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Performance Apprasial</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Goal List</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Goal Type</div>
+             </div>
+            )
+    }
 
-  <div className="flex items-center justify-between px-3 py-3 rounded-lg hover:bg-gray-100">
+  <div className="flex items-center justify-between px-3 py-3 rounded-lg hover:bg-gray-100 hover:cursor-pointer" onClick={()=>setTrainingOpen(!trainingOpen)}>
     <div className="flex items-center gap-3">
       <PencilLine size={18} className="text-slate-500" />
       <span>Training</span>
     </div>
     <ChevronDown size={16} />
   </div>
+  {
+            trainingOpen && (
+              <div className="ml-8 mt-2 space-y-2">
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Training List</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Training Type</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Trainer</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Certification Tracking</div>
+                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Learning Analytics</div>
+             </div>
+            )
+    }
 
   <div className="flex items-center justify-between px-3 py-3 rounded-lg hover:bg-gray-100">
     <div className="flex items-center gap-3">
@@ -258,7 +420,7 @@ function Sidebar() {
       <span>Jobs</span>
     </div>
 
-    <ChevronDown size={16} />
+    {/* <ChevronDown size={16} /> */}
   </div>
 
   <div className="flex items-center justify-between px-3 py-3 rounded-lg hover:bg-gray-100">
@@ -267,7 +429,7 @@ function Sidebar() {
       <span>Candidates</span>
     </div>
 
-    <ChevronDown size={16} />
+    {/* <ChevronDown size={16} /> */}
   </div>
 
   <div className="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-gray-100">

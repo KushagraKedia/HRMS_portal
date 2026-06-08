@@ -39,108 +39,26 @@ import increaseIcon from "../assets/arrow.png";
 import decreaseIcon from "../assets/arrow-2.png";
 import salaryIcon from "../assets/salary.png";
 import Sidebar from "../components/sidebar";
+import AttendenceChart from "./charts/AttendenceGraph.jsx";
+import SkillChart from "./charts/SkillChart.jsx";
+import RecruitmentStatistics from "./charts/RecuritmentStatistics.jsx"
+import TopEmployeeGraph from "./charts/TopEmployeeGraph.jsx";
 
 function Dashboard(){
     const text =" > Dashboard > HR Dashboard";
+
+    const fullTime = 42;
+    const contract = 18;
+    const probation = 5;
+
     return (
         <div className="flex h-screen overflow-hidden">
-
             <Sidebar />
-            {/* <div className="w-[15%] flex flex-col items-left h-screen overflow-y-auto my-5 gap-5">
-                
-                    <span>Main Menu</span>
-                    <div className="flex flex-col gap-3">
-                    <button>
-                        Dashboard
-                    </button>
-                    <button>
-                        Applications
-                    </button>
-                    <button>
-                        Super Admin
-                    </button>
-                </div>
-                
-                    <span>Layout</span>
-                    <div className="flex flex-col gap-3 ">
-                    <button>
-                        Horizontal
-                    </button>
-                    <button>
-                        Detached
-                    </button>
-                    <button>
-                        Modern
-                    </button>
-                    <button>
-                        Two Column
-                    </button>
-                    <button>
-                        Hovered
-                    </button>
-                    <button>
-                        Boxed
-                    </button>
-                    <button>
-                        Horizontal Single
-                    </button>
-                    <button>
-                        Horizontal Overlay
-                    </button>
-                    <button>
-                        Horizontal Box
-                    </button>
-                    <button>
-                        RTL
-                    </button>
-                    <button>
-                        Dark
-                    </button>
-                </div>
-            </div> */}
         <div className="w-full bg-[#F8F9FA] text-black flex-1 h-screen overflow-y-auto">
             <div className="w-full border shadow-[0_1px_3px_rgba(0,0,0,0.12)] border-gray-200 flex items-center justify-begin p-3">
             <span className="ml-10 text-5xl font-bold">GIC FOLKS</span>
             
             </div>
-
-            {/* UPPER NAV BAR */}
-            {/* <div className="h-10 w-full bg-white border border-gray-200 shadow-[0_1px_3px_rgba(0,0,0,0.12)] flex items-center justify-around">
-                <Button>
-                    <img src={dashboardIcon} alt="Home" className="h-4 w-4 mt-1"/>
-                    Dashboard
-                </Button>
-                <Button>
-                    <img src={userIcon} alt="Home" className="h-4 w-4 mt-1"/>
-                    Super Admin
-                </Button>
-                <Button>
-                    <img src={applicationIcon} alt="Home" className="h-4 w-4 mt-1"/>
-                    Application
-                </Button>
-                <Button>
-                    <img src={layoutIcon} alt="Home" className="h-4 w-4 mt-1"/>
-                    Layouts
-                </Button>
-                <Button>
-                    <img src={userIcon} alt="Home" className="h-4 w-4 mt-1"/>
-                    Projects
-                </Button>
-                <Button>
-                    <img src={userIcon} alt="Home" className="h-4 w-4 mt-1"/>
-                    Administration
-                </Button>
-                <Button>
-                    <img src={pageIcon} alt="Home" className="h-4 w-4 mt-1"/>
-                    Pages
-                </Button>
-                <Button>
-                    <img src={extraIcon} alt="Home" className="h-4 w-4 mt-1"/>
-                    Extras
-                </Button>
-            </div> */}
-
-            {/* SECOND NAV BAR */}
             <div className="flex border border-gray-200 shadow-[0_1px_3px_rgba(0,0,0,0.12)]  justify-around items-center py-2">
                 <div>
                     <h1 className="font-bold text-black text-3xl">HR Dashboard</h1>
@@ -178,8 +96,62 @@ function Dashboard(){
                         <p className="text-base w-55 font-bold">Employee Status & type</p>
                         <button className="border border-gray-200 shadow-[0_1px_3px_rgba(0,0,0,0.12)] rounded-lg  text-sm py-1 px-2 bg-[#f3f0f0] hover:cursor-pointer hover:bg-white">View All</button>
                         </div>
-                        <img src={employeeStatusGraph} alt="calendar" className="h-39 w-full mt-7" />
+                        <div className="flex gap-[3px] items-end h-16 mt-5 mx-1">
+                           {[...Array(fullTime)].map((_, i) => (
+                             <div
+                               key={`f-${i}`}
+                               className="w-[4px] h-16 bg-orange-500 rounded-full"
+                             />
+                           ))}
+                         
+                           {[...Array(contract)].map((_, i) => (
+                             <div
+                               key={`c-${i}`}
+                               className="w-[4px] h-16 bg-cyan-700 rounded-full"
+                             />
+                           ))}
+                         
+                           {[...Array(probation)].map((_, i) => (
+                             <div
+                               key={`p-${i}`}
+                               className="w-[4px] h-16 bg-gray-200 rounded-full"
+                             />
+                           ))}
+                         </div>
+                     <div className="flex justify-between mt-3 px-5">
+                           <div>
+                              <h2 className="text-3xl font-bold text-slate-900">
+                                1054
+                              </h2>
+                              <div className="flex items-center gap-2 mt-2">
+                                <div className="w-1 h-8 bg-orange-500 rounded-full"></div>
+                                <span className="text-gray-500">Full-Time</span>
+                              </div>
+                            </div>
+                            <div>
+                              <h2 className="text-3xl font-bold text-slate-900">
+                                568
+                              </h2>
+                              <div className="flex items-center gap-2 mt-2">
+                                <div className="w-1 h-8 bg-cyan-700 rounded-full"></div>
+                                <span className="text-gray-500">Contract</span>
+                              </div>
+                            </div>
+                            <div>
+                              <h2 className="text-3xl font-bold text-slate-900">
+                                80
+                              </h2>
+                              <div className="flex items-center gap-2 mt-2">
+                                <div className="w-1 h-8 bg-gray-300 rounded-full"></div>
+                                <span className="text-gray-500">Probation</span>
+                              </div>
+                            </div>
+
+                          </div>
                     </div>
+
+
+
                     {/* LEAVE BOX */}
                     <div className="bg-white border border-gray-200 shadow-[0_1px_3px_rgba(0,0,0,0.12)] rounded-lg h-45 mt-7 p-2 ml-10 ">
                         <div className=" w-full border border-gray-200 shadow-[0_1px_3px_rgba(0,0,0,0.12)] h-11 flex items-center rounded-lg px-3 justify-between border-l-orange-500 border-l-4">
@@ -189,7 +161,107 @@ function Dashboard(){
                             <p>Monthly</p>
                         </button>
                         </div> 
-                        <img src={leaveGraph} alt="calendar" className="h-30 w-full " />        
+                        <div className="bg-white  rounded-xl flex justify-between items-center">
+
+                        {/* Left Side Graph */}
+                        <div className="relative w-[180px] h-[70px]">
+                  
+                          <svg
+                            viewBox="0 0 180 100"
+                            className="absolute inset-0"
+                         >
+                            {/* Background Arcs */}
+                  
+                            <path
+                              d="M20 90 A70 70 0 0 1 160 90"
+                              fill="none"
+                              stroke="#ececec"
+                              strokeWidth="6"
+                            />
+                  
+                            <path
+                              d="M35 90 A55 55 0 0 1 145 90"
+                              fill="none"
+                              stroke="#ececec"
+                              strokeWidth="6"
+                            />
+                  
+                            <path
+                              d="M50 90 A40 40 0 0 1 130 90"
+                              fill="none"
+                              stroke="#ececec"
+                              strokeWidth="6"
+                            />
+
+                            {/* Progress Arcs */}
+
+                            <path
+                              d="M20 90 A70 70 0 0 1 160 90"
+                              fill="none"
+                              stroke="#ef8b57"
+                              strokeWidth="6"
+                              strokeDasharray="180 40"
+                            />
+
+                            <path
+                              d="M35 90 A55 55 0 0 1 145 90"
+                              fill="none"
+                              stroke="#ef8b57"
+                              strokeWidth="6"
+                              strokeDasharray="120 50"
+                            />
+
+                            <path
+                              d="M50 90 A40 40 0 0 1 130 90"
+                              fill="none"
+                              stroke="#efb18f"
+                              strokeWidth="6"
+                              strokeDasharray="60 80"
+                            />
+                          </svg>
+
+                        </div>
+
+                        {/* Right Side */}
+
+                        <div className="pt-5">
+
+                         <div className="flex items-center justify-between p-1 gap-1">
+                            <div className="flex items-center gap-2">
+                              <div className="w-2 h-2 rounded-full bg-orange-500"></div>
+                              <span>Sick Leave</span>
+                            </div>
+                  
+                            <div className="px-3 rounded-full bg-gray-100">
+                              45
+                            </div>
+                          </div>
+
+                          <div className="flex items-center justify-between p-1 gap-1">
+                            <div className="flex items-center gap-2">
+                              <div className="w-2 h-2 rounded-full bg-orange-500"></div>
+                              <span>Casual Leave</span>
+                            </div>
+                  
+                            <div className="px-3  rounded-full bg-gray-100">
+                              68
+                            </div>
+                          </div>
+
+                          <div className="flex items-center justify-between p-1 gap-1">
+                            <div className="flex items-center gap-2">
+                              <div className="w-2 h-2 rounded-full bg-orange-500"></div>
+                              <span>Unpaid</span>
+                            </div>
+                  
+                            <div className="px-3 rounded-full bg-gray-100">
+                              12
+                            </div>
+                          </div>
+
+                        </div>
+
+                      </div>       
                     </div>
                 </div>
 
@@ -284,7 +356,7 @@ function Dashboard(){
 
             <div className="flex mt-5 mx-10 h-140 flex-row">
                 {/* ATTENDENCE BOX */}
-                <div className="bg-white h-120 w-[70%] my-10 border border-gray-200 shadow-[0_1px_3px_rgba(0,0,0,0.12)] rounded-lg mr-5 p-2">
+                <div className="bg-white h-120 w-[65%] my-10 border border-gray-200 shadow-[0_1px_3px_rgba(0,0,0,0.12)] rounded-lg mr-5 p-2">
                         <div className=" w-full border shadow-[0_1px_3px_rgba(0,0,0,0.12)] border-gray-200 h-11 flex items-center rounded-lg px-3 justify-between border-l-orange-500 border-l-4">
                         <p className="text-base w-45 font-bold">Attendence Trend</p>
                         <button className="border-gray-200 shadow-[0_1px_3px_rgba(0,0,0,0.12)] border rounded-lg  text-sm py-1 px-2 flex gap-1 items-center hover:cursor-pointer hover:bg-[#f3f0f0]">
@@ -292,17 +364,18 @@ function Dashboard(){
                             Weekly
                         </button>
                         </div> 
-                        <img src={attendenceTrendGraph} alt="Home" className="h-105 w-full p-3"/>
+                        <AttendenceChart />
                 </div>
                 {/* TOP EMPLOYEE BOX */}
-                <div className="bg-white h-120 w-[30%] my-10 border border-gray-200 shadow-[0_1px_3px_rgba(0,0,0,0.12)] rounded-lg ml-5 p-2">
+                <div className="bg-white h-120 w-[35%] my-10 border border-gray-200 shadow-[0_1px_3px_rgba(0,0,0,0.12)] rounded-lg ml-5 p-2">
                         <div className=" w-full border border-gray-200 shadow-[0_1px_3px_rgba(0,0,0,0.12)] h-11 flex items-center rounded-lg pl-3 px-3 justify-between border-l-orange-500 border-l-4">
                         <p className="text-base w-55 font-bold">Top Employee Distribution</p>
                         <button className="border-gray-200 shadow-[0_1px_3px_rgba(0,0,0,0.12)] border rounded-lg  text-sm px-2 py-1 bg-[#f3f0f0] hover:bg-white hover:cursor-pointer">View All</button>
                         </div> 
                         <div>
-                            <img src={topEmployeeDistribution} alt="Home" className="h-100 w-[90%] ml-5 mt-1"/>
+                            <SkillChart />
                         </div>
+                        
                 </div>
             </div>
 
@@ -421,7 +494,7 @@ function Dashboard(){
                                 Weekly
                                 </button>  
                             </div>
-                            <img src={recruitmentGraph} alt="Home" className="h-[83%] w-screen p-4"/>
+                            <RecruitmentStatistics />
 
                         </div>
 
@@ -528,7 +601,7 @@ function Dashboard(){
                             <p className="font-bold">Top Employees</p>
                             <button className=" border border-gray-200 rounded-lg shadow-[0_1px_3px_rgba(0,0,0,0.12)] p-1 bg-[#f3f0f0]">1D   7D   1M   1Y</button>
                         </div>
-                        <img src={topEmployeeGraph} alt="Home" className="h-45 w-[95%]"/>
+                        <TopEmployeeGraph />
                     </div>
                 </div>
 
@@ -617,10 +690,10 @@ function Dashboard(){
             </div>
 
 
-            <bottom className="flex bg-white h-10 border border-gray-200 shadow-[0_1px_3px_rgba(0,0,0,0.12)] mx-10 mt-0 justify-between p-2 rounded-sm">
+            <div className="flex bg-white h-10 border-t border-t-gray-200 shadow-[0_1px_3px_rgba(0,0,0,0.12 mt-0 justify-between p-2 w-full">
                 <p>Copyright-2026 ©KK.</p>
                 <p>Designed & Developed By Kushagra Kedia</p>
-            </bottom>
+            </div>
 
 
         </div>
