@@ -70,6 +70,7 @@ import {
 } from "lucide-react";
 
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 
 
@@ -115,23 +116,23 @@ function Sidebar() {
         {
             dashboardOpen && (
               <div className="ml-8 mt-2 space-y-2">
-                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Admin Dashboard</div>
-                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Employee Dashboard</div>
-                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Deals Dashboard</div>
-                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Leads Dashboard</div>
-                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">HR Dashboard</div>
-                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Payroll Dashboard</div>
-                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Recuritment Dashboard</div>
-                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Attendence Dashboard</div>
-                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Finance Dashboard</div>
-                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">IT Admin Dashboard</div>
-                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Asset Dashboard</div>
-                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Help Desk Dashboard</div>
+              {/* <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Admin Dashboard</div> */}
+              {/* <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Employee Dashboard</div> */}
+               {/* <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Deals Dashboard</div> */}
+              {/* <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Leads Dashboard</div> */}
+              <Link to="/dashboard" className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer px-3 rounded-lg py-1 ">HR Dashboard</Link>
+              {/* <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Payroll Dashboard</div> */}
+             {/* <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Recuritment Dashboard</div> */}
+             {/* <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Attendence Dashboard</div> */}
+             {/* <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Finance Dashboard</div> */}
+             {/* <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">IT Admin Dashboard</div> */}
+             {/* <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Asset Dashboard</div> */}
+             {/* <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Help Desk Dashboard</div> */}
              </div>
             )
           }
 
-           <div onClick={() => setApplicationOpen(!applicationOpen)}
+           {/* <div onClick={() => setApplicationOpen(!applicationOpen)}
         className="flex items-center justify-between hover:bg-[#f3f0f0] rounded-lg px-3 py-3 hover:cursor-pointer">
           <div className="flex items-center gap-3">
             <LayoutGrid size={18} className="text-slate-500" />
@@ -160,35 +161,10 @@ function Sidebar() {
                 <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Invoices</div>
              </div>
             )
-          }
+          } */}
 
-        {/* <div onClick={() => setApplicationOpen(!applicationOpen)} className="flex items-left justify-begin px-3 py-3 rounded-lg hover:bg-gray-100 hover:cursor-pointer" >
-          <div className="flex items-center gap-3">
-            <LayoutGrid size={18} className="text-slate-500" />
-            <span>Applications</span>
-          </div>
-          <ChevronDown size={16} />
-          {
-            applicationOpen && (
-              <div className="ml-8 mt-2 space-y-2">
-                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Admin Dashboard</div>
-                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Employee Dashboard</div>
-                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Deals Dashboard</div>
-                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Leads Dashboard</div>
-                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">HR Dashboard</div>
-                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Payroll Dashboard</div>
-                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Recuritment Dashboard</div>
-                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Attendence Dashboard</div>
-                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Finance Dashboard</div>
-                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">IT Admin Dashboard</div>
-                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Asset Dashboard</div>
-                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Help Desk Dashboard</div>
-             </div>
-            )
-          }
-        </div> */}
 
-        <div className="flex items-center justify-between px-3 py-3 rounded-lg hover:bg-gray-100 hover:cursor-pointer" onClick={() => setSuperAdminOpen(!superAdminOpen)}>
+        {/* <div className="flex items-center justify-between px-3 py-3 rounded-lg hover:bg-gray-100 hover:cursor-pointer" onClick={() => setSuperAdminOpen(!superAdminOpen)}>
           <div className="flex items-center gap-3">
             <ShieldCheck size={18} className="text-slate-500" />
             <span>Super Admin</span>
@@ -210,12 +186,12 @@ function Sidebar() {
                 <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Tickets</div>
              </div>
             )
-          }
+          } */}
         
-      </div>
+      </div> 
 
       {/* LAYOUT */}
-      <h3 className="text-xs font-bold text-gray-400 uppercase mt-10 mb-4">
+      {/* <h3 className="text-xs font-bold text-gray-400 uppercase mt-10 mb-4">
         Layout
       </h3>
 
@@ -256,7 +232,7 @@ function Sidebar() {
           <span>Horizontal Single</span>
         </div>
 
-      </div>
+      </div> */}
       {/* HRM */}
 <h3 className="text-xs font-bold text-gray-400 uppercase mt-10 mb-4">
   HRM
@@ -264,12 +240,12 @@ function Sidebar() {
 
 <div className="space-y-2">
 
-  <div className="flex items-center justify-between px-3 py-3 rounded-lg hover:bg-gray-100 hover:cursor-pointer" onClick={() => setEmployeeOpen(!employeeOpen)}>
-    <div className="flex items-center gap-3">
+  {/* <div className="flex items-center justify-between px-3 py-3 rounded-lg hover:bg-gray-100 hover:cursor-pointer" onClick={() => setEmployeeOpen(!employeeOpen)}> */}
+    {/* <div className="flex items-center gap-3">
       <Users size={18} className="text-slate-500" />
       <span>Employees</span>
-    </div>
-    <ChevronDown size={16} />
+    </div> */}
+    {/* <ChevronDown size={16} />
   </div>
   {
       employeeOpen && (
@@ -282,7 +258,7 @@ function Sidebar() {
                 <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Policies</div>
              </div>
       )
-    }
+    } */}
 
   <div className="flex items-center justify-between px-3 py-3 rounded-lg hover:bg-gray-100 hover:cursor-pointer" onClick={() => setTicketOpen(!ticketOpen)}>
     <div className="flex items-center gap-3">
@@ -293,21 +269,21 @@ function Sidebar() {
   </div>
   {
             ticketOpen && (
-              <div className="ml-8 mt-2 space-y-2">
-                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Tickets</div>
-                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Tickets Detail</div>
-                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Ticket Automation</div>
-                <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Ticket Reports</div>
+              <div className="ml-8 mt-2 space-y-2 flex flex-col">
+                <Link to="/Tickets/tickets" className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer px-3 rounded-lg py-1">Tickets</Link>
+                <Link to="/Tickets/tickets_details" className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer px-3 rounded-lg py-1">Tickets Detail</Link>
+                {/* <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Ticket Automation</div> */}
+                {/* <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Ticket Reports</div> */}
              </div>
             )
     }
 
-  <div className="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-gray-100">
+  {/* <div className="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-gray-100">
     <CalendarDays size={18} className="text-slate-500" />
     <span>Holidays</span>
-  </div>
+  </div> */}
 
-  <div className="flex items-center justify-between px-3 py-3 rounded-lg hover:bg-gray-100 hover:cursor-pointer" onClick={() => setAttendenceOpen(!attendenceOpen)}>
+  {/* <div className="flex items-center justify-between px-3 py-3 rounded-lg hover:bg-gray-100 hover:cursor-pointer" onClick={() => setAttendenceOpen(!attendenceOpen)}>
     <div className="flex items-center gap-3">
       <ClipboardCheck size={18} className="text-slate-500" />
       <span>Attendance</span>
@@ -328,9 +304,9 @@ function Sidebar() {
                 <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">WFH Management</div>
              </div>
             )
-    }
+    } */}
 
-  <div className="flex items-center justify-between px-3 py-3 rounded-lg hover:bg-gray-100 hover:cursor-pointer" onClick={()=>(setPerformanceOpen(!performanceOpen))}>
+  {/* <div className="flex items-center justify-between px-3 py-3 rounded-lg hover:bg-gray-100 hover:cursor-pointer" onClick={()=>(setPerformanceOpen(!performanceOpen))}>
     <div className="flex items-center gap-3">
       <GraduationCap size={18} className="text-slate-500" />
       <span>Performance</span>
@@ -347,9 +323,9 @@ function Sidebar() {
                 <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Goal Type</div>
              </div>
             )
-    }
+    } */}
 
-  <div className="flex items-center justify-between px-3 py-3 rounded-lg hover:bg-gray-100 hover:cursor-pointer" onClick={()=>setTrainingOpen(!trainingOpen)}>
+  {/* <div className="flex items-center justify-between px-3 py-3 rounded-lg hover:bg-gray-100 hover:cursor-pointer" onClick={()=>setTrainingOpen(!trainingOpen)}>
     <div className="flex items-center gap-3">
       <PencilLine size={18} className="text-slate-500" />
       <span>Training</span>
@@ -366,9 +342,9 @@ function Sidebar() {
                 <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Learning Analytics</div>
              </div>
             )
-    }
+    } */}
 
-  <div className="flex items-center justify-between px-3 py-3 rounded-lg hover:bg-gray-100">
+  {/* <div className="flex items-center justify-between px-3 py-3 rounded-lg hover:bg-gray-100">
     <div className="flex items-center gap-3">
       <Hourglass size={18} className="text-slate-500" />
       <span>Probation Management</span>
@@ -403,12 +379,12 @@ function Sidebar() {
   <div className="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-gray-100">
     <UserX size={18} className="text-slate-500" />
     <span>Termination</span>
-  </div>
+  </div> */}
 
 </div>
 
 {/* RECRUITMENT */}
-<h3 className="text-xs font-bold text-gray-400 uppercase mt-10 mb-4">
+{/* <h3 className="text-xs font-bold text-gray-400 uppercase mt-10 mb-4">
   Recruitment
 </h3>
 
@@ -420,7 +396,7 @@ function Sidebar() {
       <span>Jobs</span>
     </div>
 
-    {/* <ChevronDown size={16} /> */}
+    <ChevronDown size={16} />
   </div>
 
   <div className="flex items-center justify-between px-3 py-3 rounded-lg hover:bg-gray-100">
@@ -429,7 +405,7 @@ function Sidebar() {
       <span>Candidates</span>
     </div>
 
-    {/* <ChevronDown size={16} /> */}
+    <ChevronDown size={16} />
   </div>
 
   <div className="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-gray-100">
@@ -448,10 +424,10 @@ function Sidebar() {
     </span>
   </div>
 
-</div>
+</div> */}
 
 {/* FINANCE & ACCOUNTS */}
-<h3 className="text-xs font-bold text-gray-400 uppercase mt-10 mb-4">
+{/* <h3 className="text-xs font-bold text-gray-400 uppercase mt-10 mb-4">
   Finance & Accounts
 </h3>
 
@@ -484,10 +460,10 @@ function Sidebar() {
     <ChevronDown size={16} />
   </div>
 
-</div>
+</div> */}
 
 {/* ADMINISTRATION */}
-<h3 className="text-xs font-bold text-gray-400 uppercase mt-10 mb-4">
+{/* <h3 className="text-xs font-bold text-gray-400 uppercase mt-10 mb-4">
   Administration
 </h3>
 
@@ -518,10 +494,10 @@ function Sidebar() {
     <span>Settings</span>
   </div>
 
-</div>
+</div> */}
 
 {/* CONTENT */}
-<h3 className="text-xs font-bold text-gray-400 uppercase mt-10 mb-4">
+{/* <h3 className="text-xs font-bold text-gray-400 uppercase mt-10 mb-4">
   Content
 </h3>
 
@@ -560,10 +536,10 @@ function Sidebar() {
     <span>FAQ'S</span>
   </div>
 
-</div>
+</div> */}
 
 {/* PAGES */}
-<h3 className="text-xs font-bold text-gray-400 uppercase mt-10 mb-4">
+{/* <h3 className="text-xs font-bold text-gray-400 uppercase mt-10 mb-4">
   Pages
 </h3>
 
@@ -629,9 +605,9 @@ function Sidebar() {
     <span>Terms & Conditions</span>
   </div>
 
-</div>
+</div> */}
 {/* AUTHENTICATION */}
-<h3 className="text-xs font-bold text-gray-400 uppercase mt-10 mb-4">
+{/* <h3 className="text-xs font-bold text-gray-400 uppercase mt-10 mb-4">
   Authentication
 </h3>
 
@@ -682,9 +658,9 @@ function Sidebar() {
     <span>500 Error</span>
   </div>
 
-</div>
+</div> */}
 {/* UI INTERFACE */}
-<h3 className="text-xs font-bold text-gray-400 uppercase mt-10 mb-4">
+{/* <h3 className="text-xs font-bold text-gray-400 uppercase mt-10 mb-4">
   UI Interface
 </h3>
 
@@ -744,9 +720,9 @@ function Sidebar() {
     <ChevronDown size={16} />
   </div>
 
-</div>
+</div> */}
 {/* EXTRAS */}
-<h3 className="text-xs font-bold text-gray-400 uppercase mt-10 mb-4">
+{/* <h3 className="text-xs font-bold text-gray-400 uppercase mt-10 mb-4">
   Extras
 </h3>
 
@@ -757,7 +733,7 @@ function Sidebar() {
     <span>Documentation</span>
   </div>
 
-</div>
+</div> */}
     </aside>
   );
 }
