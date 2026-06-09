@@ -17,9 +17,23 @@ import person8 from "./assets_t/person-m-6.webp"
 import person9 from "./assets_t/person9.webp"
 import person10 from "./assets_t/person10.webp"
 import messageGray from "./assets_t/message_gray.png"
+import loading from "./assets_t/loader.png"
+import newTicket from "./assets_t/new_ticket.png"
+import openTicket from "./assets_t/open_ticket.png"
+import solvedTicket from "./assets_t/solved_ticket.png"
+import pendingTicket from "./assets_t/pending_ticket.png"
 
 function Tickets(){
     const text ="  > Employee > Tickets";
+
+    const bars = [
+  { height: 65, value: 12 },
+  { height: 40, value: 8 },
+  { height: 50, value: 10 },
+  { height: 25, value: 4 },
+  { height: 32, value: 6 },
+  { height: 50, value: 10 },
+];
     return(
         <div className="flex h-screen overflow-hidden">
             <Sidebar />
@@ -70,11 +84,219 @@ function Tickets(){
                         </button>
                     </div>
                 </div>
-                <div className="flex w-full gap-4 my-8  h-55">
-                    <div className="w-[25%] h-full border border-gray-200 shadow-[0_1px_3px_rgba(0,0,0,0.12)] rounded-lg bg-white"></div>
-                    <div className="w-[25%] h-full border border-gray-200 shadow-[0_1px_3px_rgba(0,0,0,0.12)] rounded-lg bg-white"></div>
-                    <div className="w-[25%] h-full border border-gray-200 shadow-[0_1px_3px_rgba(0,0,0,0.12)] rounded-lg bg-white"></div>
-                    <div className="w-[25%] h-full border border-gray-200 shadow-[0_1px_3px_rgba(0,0,0,0.12)] rounded-lg bg-white"></div>
+                <div className="flex w-full gap-4 my-8  h-45">
+                    <div className="w-[25%] h-full border border-gray-200 shadow-[0_1px_3px_rgba(0,0,0,0.12)] rounded-lg bg-white flex">
+                        <div className="w-[50%] h-full flex flex-col ml-3 mt-3">
+                            <div className="h-15 w-15 rounded-full border-orange-300 border-dashed border-2 mx-3 mt-4">
+                                <img src={newTicket} alt="ticket" className="w-14 h-14 rounded-full" />
+                            </div>
+                            <div className="mx-3 mt-5 text-gray-500 text-lg">New Tickets</div>
+                            <div className="font-bold text-2xl mx-4">120</div>
+                        </div>
+                        <div>
+                            <div className="flex items-end gap-2.5 h-24 mr-3 mt-15">
+      {bars.map((bar, index) => (
+        <div
+          key={index}
+          className="relative group flex justify-center"
+        >
+          <div
+            className="
+              absolute
+              -top-10
+              hidden
+              group-hover:block
+              bg-black
+              text-white
+              text-xs
+              px-2
+              py-1
+              rounded
+              whitespace-nowrap
+              z-10
+            "
+          >
+            Messages: {bar.value}
+          </div>
+
+          {/* Bar */}
+          <div
+            className="
+              w-3
+              border-2
+              border-orange-500
+              bg-orange-200
+              rounded-sm
+              transition-all
+              duration-200
+              group-hover:scale-105
+            "
+            style={{ height: `${bar.height}px` }}
+          />
+        </div>
+      ))}
+    </div>
+                        </div>
+                    </div>
+                    <div className="w-[25%] h-full border border-gray-200 shadow-[0_1px_3px_rgba(0,0,0,0.12)] rounded-lg bg-white flex">
+                        <div className="w-[50%] h-full flex flex-col ml-3 mt-3">
+                            <div className="h-15 w-15 rounded-full border-purple-300 border-dashed border-2 mx-3 mt-4">
+                                <img src={openTicket} alt="ticket" className="w-14 h-14 rounded-full" />
+                            </div>
+                            <div className="mx-3 mt-5 text-gray-500 text-lg">Open Tickets</div>
+                            <div className="font-bold text-2xl mx-4">60</div>
+                        </div>
+                        <div>
+                            <div className="flex items-end gap-2.5 h-24 mr-3 mt-15">
+      {bars.map((bar, index) => (
+        <div
+          key={index}
+          className="relative group flex justify-center"
+        >
+          <div
+            className="
+              absolute
+              -top-10
+              hidden
+              group-hover:block
+              bg-black
+              text-white
+              text-xs
+              px-2
+              py-1
+              rounded
+              whitespace-nowrap
+              z-10
+            "
+          >
+            Messages: {bar.value}
+          </div>
+
+          {/* Bar */}
+          <div
+            className="
+              w-3
+              border-2
+              border-purple-500
+              bg-purple-200
+              rounded-sm
+              transition-all
+              duration-200
+              group-hover:scale-105
+            "
+            style={{ height: `${bar.height}px` }}
+          />
+        </div>
+      ))}
+    </div>
+                        </div>
+                    </div>
+                    <div className="w-[25%] h-full border border-gray-200 shadow-[0_1px_3px_rgba(0,0,0,0.12)] rounded-lg bg-white flex">
+                        <div className="w-[50%] h-full flex flex-col ml-3 mt-3">
+                            <div className="h-15 w-15 rounded-full border-red-300 border-dashed border-2 mx-3 mt-4">
+                                <img src={solvedTicket} alt="ticket" className="w-14 h-14 rounded-full" />
+                            </div>
+                            <div className="mx-3 mt-5 text-gray-500 text-lg">Solved Tickets</div>
+                            <div className="font-bold text-2xl mx-4">50</div>
+                        </div>
+                        <div>
+                            <div className="flex items-end gap-2.5 h-24 mr-3 mt-15">
+      {bars.map((bar, index) => (
+        <div
+          key={index}
+          className="relative group flex justify-center"
+        >
+          <div
+            className="
+              absolute
+              -top-10
+              hidden
+              group-hover:block
+              bg-black
+              text-white
+              text-xs
+              px-2
+              py-1
+              rounded
+              whitespace-nowrap
+              z-10
+            "
+          >
+            Messages: {bar.value}
+          </div>
+
+          {/* Bar */}
+          <div
+            className="
+              w-3
+              border-2
+              border-red-500
+              bg-red-200
+              rounded-sm
+              transition-all
+              duration-200
+              group-hover:scale-105
+            "
+            style={{ height: `${bar.height}px` }}
+          />
+        </div>
+      ))}
+    </div>
+                        </div>
+                    </div>
+                    <div className="w-[25%] h-full border border-gray-200 shadow-[0_1px_3px_rgba(0,0,0,0.12)] rounded-lg bg-white flex">
+                        <div className="w-[50%] h-full flex flex-col ml-3 mt-3">
+                            <div className="h-15 w-15 rounded-full border-blue-300 border-dashed border-2 mx-3 mt-4">
+                                <img src={pendingTicket} alt="ticket" className="w-14 h-14 rounded-full" />
+                            </div>
+                            <div className="ml-3 mt-5 text-gray-500 text-lg">Pending Tickets</div>
+                            <div className="font-bold text-2xl mx-4">10</div>
+                        </div>
+                        <div>
+                            <div className="flex items-end gap-2.5 h-24 mr-3 mt-15">
+      {bars.map((bar, index) => (
+        <div
+          key={index}
+          className="relative group flex justify-center"
+        >
+          <div
+            className="
+              absolute
+              -top-10
+              hidden
+              group-hover:block
+              bg-black
+              text-white
+              text-xs
+              px-2
+              py-1
+              rounded
+              whitespace-nowrap
+              z-10
+            "
+          >
+            Messages: {bar.value}
+          </div>
+
+          {/* Bar */}
+          <div
+            className="
+              w-3
+              border-2
+              border-blue-500
+              bg-blue-200
+              rounded-sm
+              transition-all
+              duration-200
+              group-hover:scale-105
+            "
+            style={{ height: `${bar.height}px` }}
+          />
+        </div>
+      ))}
+    </div>
+                        </div>
+                    </div>
                 </div>
                 <div className="flex w-full h-25 items-center border shadow-[0_1px_3px_rgba(0,0,0,0.12)] border-gray-200 bg-white rounded-lg p-3">
                     <div className="w-[40%] font-semibold text-2xl">Ticket List</div>
@@ -253,6 +475,10 @@ function Tickets(){
                         </div>
                     </div>
                 </div>
+                <button className="px-4 py-2 text-white rounded-lg mb-4 text-lg bg-orange-500 ml-[35%] hover:cursor-pointer hover:bg-orange-600 flex gap-2 items-center">
+                    <img src={loading} alt="load" className="h-5 w-5" />
+                    Load More
+                </button>
                 </div>
                 <div className="flex bg-white h-10 border-t border-t-gray-200 shadow-[0_1px_3px_rgba(0,0,0,0.12 mt-0 justify-between p-2 w-full">
                     <p>Copyright-2026 ©KK.</p>
