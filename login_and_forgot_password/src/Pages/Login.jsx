@@ -9,7 +9,7 @@ function Login() {
   const [password, setPassword] = useState("");
 
   const handleLogin = () => {
-    navigate("./dashboard");
+    navigate("./Dashboard/HR_Dashboard");
   }
 
   function handleSubmit(event) {

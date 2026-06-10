@@ -48,7 +48,7 @@ function Dashboard(){
 
     return (
         <div className="flex h-screen overflow-hidden">
-            <Sidebar />
+        <Sidebar />
         <div className="w-full bg-[#F8F9FA] text-black flex-1 h-screen overflow-y-auto">
             <div className="w-full border shadow-[0_1px_3px_rgba(0,0,0,0.12)] border-gray-200 flex items-center justify-begin p-3">
             <span className="ml-10 text-5xl font-bold">GIC FOLKS</span>
@@ -575,7 +575,7 @@ function Dashboard(){
                             <div className="flex justify-center mt-3 px-3 flex-col w-[60%]">
                             <p className=" text-[#808080]">Total Payroll</p>
                             <p className="font-bold text-3xl mt-1">$2.4M</p>
-                            <div class="flex gap-1">
+                            <div className="flex gap-1">
                                 <p className="text-[#008000]">+55%</p>
                                 <p>Increased</p>
                             </div>

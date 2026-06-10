@@ -186,7 +186,7 @@ function Ticket_details(){
                                 <div>1 Comments </div>
                             </div>
                         </div>
-                        <div className="w-[25%] h-[67%] bg-white rounded-lg py-2 mx-3 shadow-[0_1px_3px_rgba(0,0,0,0.12)] gap-3">
+                        <div className="w-[25%] h-[69%] bg-white rounded-lg py-2 mx-3 shadow-[0_1px_3px_rgba(0,0,0,0.12)] gap-3">
                             <div className="mt-2 text-xl font-semibold pb-4 border-b border-b-gray-300  px-4">Ticket Categories</div>
                             <div className="px-4 mt-2 font-semibold">Change Priority</div>
                             <select className="mx-4 my-3 px-3 py-2 border border-gray-300  rounded-lg w-[90%]">
