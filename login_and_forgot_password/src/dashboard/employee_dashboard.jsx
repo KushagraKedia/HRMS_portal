@@ -28,6 +28,17 @@ import ss3 from "./assests_d/ss3.png";
 import ss4 from "./assests_d/ss4.png";
 import increase from "./assests_d/arrow.png"
 import decrease from "./assests_d/arrow-2.png"
+import Dounet_chart from "./employee_dashboard_charts/Dounet_chart"
+import AttendenceTrend from "./employee_dashboard_charts/AttendenceTrend"
+import AttendenceSummary from "./employee_dashboard_charts/AttendenceSummary"
+import WorkHoursTimeline from "./employee_dashboard_charts/WorkHoursTimeline"
+import fingerprint from "./assests_d/fingerprint.png";
+import noti_img from "./assests_d/noti_img.png";
+import dots from "./assests_d/dots.png";
+import users from "./assests_d/users.png"
+import Deadline from "./assests_d/deadline.png"
+import Tasks from "./assests_d/tasks.png"
+
 
 function Employee_Dashboard(){
     const text =" > Dashboard > Employee Dashboard"
@@ -120,6 +131,8 @@ function Employee_Dashboard(){
                                 <span>2026</span>
                             </button>
                         </div>
+                        {/* BODY */}
+                        <AttendenceSummary />
                     </div>
 
                     {/* LEAVE DETAILS */}
@@ -133,7 +146,7 @@ function Employee_Dashboard(){
                             </button>
                         </div>
                         {/* BODY */}
-                        <div className="w-full h-[55%] flex mx-8 my-5">
+                        <div className="w-full h-[55%] flex mx-8 mt-5 mb-3">
                             <div className="w-[50%] flex flex-col ">
                                 <div className="text-gray-500">Total Leaves</div>
                                 <div className="font-bold text-xl">16</div>
@@ -158,7 +171,22 @@ function Employee_Dashboard(){
 
                 {/* SECOND ROW */}
                 <div className="flex gap-5 mx-5 my-7 items-center h-95">
-                    <div className="h-full w-[33%] bg-white rounded-lg shadow-[0_1px_3px_rgba(0,0,0,0.12)] border border-gray-300"></div>
+
+
+                    {/* ATTENDENCE */}
+                    <div className="h-full w-[33%] bg-[#FFF7ED] rounded-lg shadow-[0_1px_3px_rgba(0,0,0,0.12)] border-2 border-[#FF6B1A] flex flex-col items-center">
+                        <div className="text-gray-500 text-lg font-semibold mt-3">Attendence</div>
+                        <div className="text-xl font-semibold">08:35 AM, 11 June 2026</div>
+                        <Dounet_chart />
+                        <button className="px-4 py-1.5 font-semibold text-white bg-[#1F252D] rounded-lg text-sm hover:cursor-pointer">Production : 3.45 hrs</button>
+                        <div className="flex items-center gap-2 mt-1">
+                            <img src={fingerprint} alt="icon" className="h-6 w-6" />
+                            <div className="font-semibold my-2">Punch In at 10.00 AM</div>
+                        </div>
+                        <button className="px-35 text-white font-semibold py-1 mt-2 hover:cursor-pointer hover:bg-orange-600 bg-orange-500 rounded-lg">Punch Out</button>
+                    </div>
+
+                    {/* RIGHT BOXES */}
                     <div className="h-full w-[66%] flex flex-col gap-4">
                         <div className="flex h-[50%] gap-4">
 
@@ -221,12 +249,15 @@ function Employee_Dashboard(){
                         </div>
 
                         {/* LONG BOX */}
-                        <div className="w-full bg-white rounded-lg shadow-[0_1px_3px_rgba(0,0,0,0.12)] border border-gray-300 h-[50%]"></div>
+                        <div className="w-full bg-white rounded-lg shadow-[0_1px_3px_rgba(0,0,0,0.12)] border border-gray-300 h-[50%]">
+                            <WorkHoursTimeline />
+                        </div>
                     </div>
                 </div>
 
                 {/* THIRD ROW */}
                 <div className="flex gap-5 mx-5 my-7 items-center h-95">
+                    {/* PROJECTS */}
                     <div className="h-full w-[50%] bg-white rounded-lg shadow-[0_1px_3px_rgba(0,0,0,0.12)] border border-gray-300">
                         {/* HEADING */}
                         <div className="w-full h-[20%] rounded-t-lg flex gap-6 border-b border-b-gray-200 items-center justify-between">
@@ -234,7 +265,80 @@ function Employee_Dashboard(){
                             <button className="flex items-center gap-2.5 m-6 py-1 rounded-lg px-3 hover:cursor-pointer hover:bg-[#f3f0f0]">
                                 <span>Ongoing Projects</span>
                             </button>
-                        </div>
+                        </div>    
+                            {/* BODY */}
+                            <div className="flex gap-4 p-4 h-[80%]">
+                                <div className="w-[50%] h-full border border-gray-200 rounded-lg px-3 flex flex-col justify-evenly">
+                                    <div className="flex items-center justify-between">
+                                        <span className="font-semibold">Office Management</span>
+                                        <img src={dots} alt="icon" className="h-4 w-4 hover:cursor-pointer" />
+                                    </div>
+                                    <div className="flex items-cente ">
+                                        <img src={person17} alt="person" className="h-10 w-10 rounded-full" />
+                                        <div className="flex flex-col gap-0 ml-3">
+                                           <span className="whitespace-nowrap font-medium">Daksh Agrawal</span>
+                                           <span className="text-sm text-gray-500">Project Leader</span>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-cente">
+                                        <img src={Deadline} alt="person" className="h-10 w-10 rounded-full" />
+                                        <div className="flex flex-col gap-0 ml-3">
+                                           <span className="whitespace-nowrap font-medium">14th June 2026</span>
+                                           <span className="text-sm text-gray-500">Deadline</span>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-center gap-1.5 w-full bg-gray-100 py-1 rounded border border-dashed border-gray-300">
+                                        <img src={Tasks} alt="img" className="w-5 h-5 ml-2" />
+                                        <span className="text-gray-500">Tasks:</span>
+                                        <span>6</span>
+                                        <span className="text-gray-500">/ 10</span>
+                                        <img src={users} alt="icon" className="w-5 h-5 ml-23" />
+                                    </div>
+                                    <div className="flex items-center gap-1.5 w-full bg-gray-300 h-auto justify-between py-1.5 rounded px-2">
+                                        <span className="text-sm text-gray-600">Time Spent</span>
+                                        <div>
+                                            <span className="font-bold">65/120</span>
+                                            <span className="ml-1 text-gray-500">Hrs</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div className="w-[50%] h-full border border-gray-200 rounded-lg px-3 flex flex-col justify-evenly">
+                                    <div className="flex items-center justify-between">
+                                        <span className="font-semibold">Office Management</span>
+                                        <img src={dots} alt="icon" className="h-4 w-4 hover:cursor-pointer" />
+                                    </div>
+                                    <div className="flex items-cente ">
+                                        <img src={person16} alt="person" className="h-10 w-10 rounded-full" />
+                                        <div className="flex flex-col gap-0 ml-3">
+                                           <span className="whitespace-nowrap font-medium">Amir Khan</span>
+                                           <span className="text-sm text-gray-500">Project Leader</span>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-cente">
+                                        <img src={Deadline} alt="person" className="h-10 w-10 rounded-full" />
+                                        <div className="flex flex-col gap-0 ml-3">
+                                           <span className="whitespace-nowrap font-medium">24th June 2026</span>
+                                           <span className="text-sm text-gray-500">Deadline</span>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-center gap-1.5 w-full bg-gray-100 py-1 rounded border border-dashed border-gray-300">
+                                        <img src={Tasks} alt="img" className="w-5 h-5 ml-2" />
+                                        <span className="text-gray-500">Tasks:</span>
+                                        <span>8</span>
+                                        <span className="text-gray-500">/ 10</span>
+                                        <img src={users} alt="icon" className="w-5 h-5 ml-23" />
+                                    </div>
+                                    <div className="flex items-center gap-1.5 w-full bg-gray-300 h-auto justify-between py-1.5 rounded px-2">
+                                        <span className="text-sm text-gray-600">Time Spent</span>
+                                        <div>
+                                            <span className="font-bold">88/120</span>
+                                            <span className="ml-1 text-gray-500">Hrs</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        
 
                     </div>
                     <div className="h-full w-[50%] bg-white rounded-lg shadow-[0_1px_3px_rgba(0,0,0,0.12)] border border-gray-300">
@@ -261,6 +365,14 @@ function Employee_Dashboard(){
                                 <span>2026</span>
                             </button>
                         </div>
+                        {/* HEADING-2 */}
+                        <div className="flex items-center mx-4 my-4 bg-gray-200 py-1 rounded-lg gap-3">
+                            <div className="font-bold text-lg ml-2">98%</div>
+                            <div className="text-xs text-green-500 px-1.5 bg-green-200 rounded-xl border border-green-500 mt-1">12%</div>
+                            <div className="text-sm text-gray-600">vs Last Years</div>
+                        </div>
+                        {/* BODY */}
+                        <AttendenceTrend />
                     </div>
 
                     {/* MY SKILLS */}
@@ -272,6 +384,29 @@ function Employee_Dashboard(){
                                 <img src={calendarIcon} alt="icon" className="w-4 h-4" />
                                 <span>2026</span>
                             </button>
+                        </div>
+                        {/* BODY */}
+                        <div className="flex flex-col justify-evenly h-[82%] mx-4">
+                            <div className="bg-gray-200 px-3 py-1.5 rounded-lg">
+                                <div className="font-semibold">Figma</div>
+                                <div className="text-sm text-gray-600">Updated : 15 May 2026</div>
+                            </div>
+                            <div className="bg-gray-200 px-3 py-1.5 rounded-lg">
+                                <div className="font-semibold ">HTML</div>
+                                <div className="text-sm text-gray-600">Updated : 12 May 2026</div>
+                            </div>
+                            <div className="bg-gray-200 px-3 py-1.5 rounded-lg">
+                                <div className="font-semibold ">CSS</div>
+                                <div className="text-sm text-gray-600">Updated : 11 June 2026</div>
+                            </div>
+                            <div className="bg-gray-200 px-3 py-1.5 rounded-lg">
+                                <div className="font-semibold ">Wordpress</div>
+                                <div className="text-sm text-gray-600">Updated : 10 June 2026</div>
+                            </div>
+                            <div className="bg-gray-200 px-3 py-1.5 rounded-lg">
+                                <div className="font-semibold ">Javascript</div>
+                                <div className="text-sm text-gray-600">Updated : 25 May 2026</div>
+                            </div>
                         </div>
                     </div>
 
@@ -310,6 +445,7 @@ function Employee_Dashboard(){
                         </div>
                     </div>
                 </div>
+
 
                 {/* FIFTH ROW */}
                 <div className="flex gap-5 mx-5 my-7 items-center h-110">
@@ -444,16 +580,69 @@ function Employee_Dashboard(){
 
                     {/* NOTIFICATIONS */}
                     <div className="h-full w-[33%] bg-white rounded-lg shadow-[0_1px_3px_rgba(0,0,0,0.12)] border border-gray-300">
+                        {/* HEADING */}
                         <div className="w-full h-[17%] rounded-t-lg flex gap-6 border-b border-b-gray-200 items-center justify-between">
                             <span className="p-5 text-xl font-semibold">Notifications</span>
                             <button className="flex items-center gap-2.5 m-6 border border-gray-300 px-2.5 py-1 rounded-lg hover:cursor-pointer hover:bg-[#f3f0f0] bg-[#ded5d5]">
                                 <span className="font-semibold text-sm">View All</span>
                             </button>
                         </div>
+                        {/* BODY */}
+                        <div className="px-5 py-5">
+                            {/* NOTI-1 */}
+                        <div className="flex gap-2.5">
+                            <img src={person11} alt="person" className="w-9 h-9 rounded-full" />
+                            <div className="flex flex-col">
+                                <div className="font-semibold text-sm">Dev Patel sent dashboard report</div>
+                                <span className="font-semibold text-xs text-gray-500">Today at 9:42 AM</span>
+                            </div>
+                        </div>
+                        <div className="flex gap-2 items-center">
+                            <img src={noti_img} alt="image" className="h-6 w-6 rounded-lg border-2 border-gray-300 mt-2 ml-12" />
+                            <span className="hover:pointer-cursor hover:text-orange-500 mt-1">EY_review.pdf</span>
+                        </div>
+                        {/* NOTI-2 */}
+                        <div className="flex gap-2.5 mt-5">
+                            <img src={person12} alt="person" className="w-9 h-9 rounded-full" />
+                            <div className="flex flex-col">
+                                <div className="font-semibold text-sm">Alexander Jermai requested access to UNIX</div>
+                                <span className="font-semibold text-xs text-gray-500">Today at 10:00 AM</span>
+                            </div>
+                        </div>
+                        {/* NOTI-3 */}
+                        <div className="flex gap-2.5 mt-5">
+                            <img src={person13} alt="person" className="w-9 h-9 rounded-full" />
+                            <div className="flex flex-col">
+                                <div className="font-semibold text-sm">Lex Murphy requested access to UNIX</div>
+                                <span className="font-semibold text-xs text-gray-500">Today at 10:50 AM</span>
+                            </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <button className="text-white px-2.5 text-sm py-1 h-auto bg-orange-500 rounded-lg mt-2 ml-15 hover:cursor-pointer hover:bg-orange-600">Approve</button>
+                            <button className="border px-2.5 text-sm py-1 h-auto border-orange-500 rounded-lg mt-2 text-orange-500 hover:cursor-pointer hover:bg-orange-500 hover:text-white hover:shadow-[0_1px_3px_rgba(0,0,0,0.12)]">Decline</button>
+                        </div>
+                        {/* NOTI-4 */}
+                        <div className="flex gap-2.5 mt-5">
+                            <img src={person14} alt="person" className="w-9 h-9 rounded-full" />
+                            <div className="flex flex-col">
+                                <div className="font-semibold text-sm">Shreya Goshwal requested access to UNIX</div>
+                                <span className="font-semibold text-xs text-gray-500">Today at 12:00 PM</span>
+                            </div>
+                        </div>
+                        {/* NOTI-5 */}
+                        <div className="flex gap-2.5 mt-5">
+                            <img src={person15} alt="person" className="w-9 h-9 rounded-full" />
+                            <div className="flex flex-col">
+                                <div className="font-semibold text-sm">Varun Dhawan requested access for ppt</div>
+                                <span className="font-semibold text-xs text-gray-500">Today at 05:00 PM</span>
+                            </div>
+                        </div>
+                        </div>
                     </div>
 
                     {/* MEETING SCHEDULE */}
                     <div className="h-full w-[33%] bg-white rounded-lg shadow-[0_1px_3px_rgba(0,0,0,0.12)] border border-gray-300">
+                        {/* HEADING */}
                         <div className="w-full h-[17%] rounded-t-lg flex gap-6 border-b border-b-gray-200 items-center justify-between">
                             <span className="p-5 text-xl font-semibold">Meeting Schedule</span>
                             <button className="flex items-center gap-2.5 m-6 border border-gray-300 px-2 py-1 rounded-lg shadow-[0_1px_3px_rgba(0,0,0,0.12)] hover:cursor-pointer hover:bg-[#f3f0f0]">
@@ -461,10 +650,32 @@ function Employee_Dashboard(){
                                 <span>Today</span>
                             </button>
                         </div>
+                        {/* BODY */}
+                        <div className="h-full flex mt-5 mx-4">
+                            <div className="h-full w-[30%]"></div>
+                            <div className="h-[82%] w-[70%] flex flex-col gap-6">
+                                <div className="px-3 py-2 bg-gray-200 rounded-lg">
+                                    <div className="font-semibold text-sm">Marketing Strategy Presentation</div>
+                                    <div className="text-sm text-gray-500">Marketing</div>
+                                </div>
+                                <div className="px-3 py-2 bg-gray-200 rounded-lg">
+                                    <div className="font-semibold text-sm">Design Review Hospital, doctors Management Project</div>
+                                    <div className="text-sm text-gray-500">Review</div>
+                                </div>
+                                <div className="px-3 py-2 bg-gray-200 rounded-lg">
+                                    <div className="font-semibold text-sm">Birthday Celebration of Employee</div>
+                                    <div className="text-sm text-gray-500">Celebration</div>
+                                </div>
+                                <div className="px-3 py-2 bg-gray-200 rounded-lg">
+                                    <div className="font-semibold text-sm">Update of Project Flow</div>
+                                    <div className="text-sm text-gray-500">Development</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div className="flex bg-white h-10 border-t border-t-gray-200 shadow-[0_1px_3px_rgba(0,0,0,0.12 mt-0 justify-between p-2 w-full">
+                <div className="flex bg-white border-t border-t-gray-200 shadow-[0_1px_3px_rgba(0,0,0,0.12 mt-0 justify-between p-2 w-auto">
                     <p>Copyright-2026 ©KK.</p>
                     <p>Designed & Developed By Kushagra Kedia</p>
                 </div>
