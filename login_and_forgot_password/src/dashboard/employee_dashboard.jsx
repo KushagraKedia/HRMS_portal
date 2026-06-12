@@ -38,10 +38,15 @@ import dots from "./assests_d/dots.png";
 import users from "./assests_d/users.png"
 import Deadline from "./assests_d/deadline.png"
 import Tasks from "./assests_d/tasks.png"
+import grid from "./assests_d/grid.png";
+import star from "./assests_d/star.png";
+
+import { useState } from "react";
 
 
 function Employee_Dashboard(){
-    const text =" > Dashboard > Employee Dashboard"
+    const text =" > Dashboard > Employee Dashboard";
+    const [checked, setChecked] = useState(false);
     return(
         <div className="flex h-screen overflow-hidden">
             <Sidebar />
@@ -338,9 +343,9 @@ function Employee_Dashboard(){
                                     </div>
                                 </div>
                             </div>
-                        
-
                     </div>
+
+                    {/* TASKS */}
                     <div className="h-full w-[50%] bg-white rounded-lg shadow-[0_1px_3px_rgba(0,0,0,0.12)] border border-gray-300">
                         {/* HEADING */}
                         <div className="w-full h-[20%] rounded-t-lg flex gap-6 border-b border-b-gray-200 items-center justify-between">
@@ -348,6 +353,59 @@ function Employee_Dashboard(){
                             <button className="flex items-center gap-2.5 m-6 py-1 rounded-lg px-3 hover:cursor-pointer hover:bg-[#f3f0f0]">
                                 <span>All Projects</span>
                             </button>
+                        </div>
+                        {/* BODY */}
+                        <div className="flex flex-col h-[80%] justify-evenly gap-3 px-5 py-3">
+                            {/* ROW-1 */}
+                            <div className="w-full border rounded-lg border-gray-300 h-auto flex items-center py-2 px-4">
+                                <img src={grid} alt="grid" className="w-4 h-4" />
+                                <button onClick={() => setChecked(!checked)} className={`w-4 h-4 border mx-3 rounded-md flex items-center justify-center transition-all ${checked ? "bg-orange-500 text-white" : "border-gray-300 bg-white" }`}>
+                                    {checked && "✓"}</button>
+                                <img src={star} alt="star" className="w-4 h-4 hover:cursor-pointer" />
+                                <span className="font-semibold mx-4 text-sm">Patient appointment booking</span>
+                                <span className="bg-[#FFDBEC] text-[#FD3995] px-3 py-1 ml-25 rounded-lg text-xs font-semibold">● Onhold</span>
+                                <img src={users} alt="icon" className="w-5 h-5 ml-7 hover:cursor-pointer" />
+                            </div>
+                            {/* ROW-2 */}
+                            <div className="w-full border rounded-lg border-gray-300 h-auto flex items-center py-2 px-4">
+                                <img src={grid} alt="grid" className="w-4 h-4" />
+                                <button onClick={() => setChecked(!checked)} className={`w-4 h-4 border mx-3 rounded-md flex items-center justify-center transition-all ${checked ? "bg-orange-500 text-white" : "border-gray-300 bg-white" }`}>
+                                    {checked && "✓"}</button>
+                                <img src={star} alt="star" className="w-4 h-4 hover:cursor-pointer" />
+                                <span className="font-semibold mx-4 text-sm">Appointment booking with payment</span>
+                                <span className="bg-[#F7EEF9] text-[#AB47BC] px-3 py-1 ml-14 rounded-lg text-xs font-semibold">● Inprogress</span>
+                                <img src={users} alt="icon" className="w-5 h-5 ml-3 hover:cursor-pointer" />
+                            </div>
+                            {/* ROW-3 */}
+                            <div className="w-full border rounded-lg border-gray-300 h-auto flex items-center py-2 px-4">
+                                <img src={grid} alt="grid" className="w-4 h-4" />
+                                <button onClick={() => setChecked(!checked)} className={`w-4 h-4 border mx-3 rounded-md flex items-center justify-center transition-all ${checked ? "bg-orange-500 text-white" : "border-gray-300 bg-white" }`}>
+                                    {checked && "✓"}</button>
+                                <img src={star} alt="star" className="w-4 h-4 hover:cursor-pointer" />
+                                <span className="font-semibold mx-4 text-sm">Patient and Doctor video conferencing</span>
+                                <span className="bg-[#E5F9EE] text-[#03C95A] px-3 py-1 ml-11 rounded-lg text-xs font-semibold">● Completed</span>
+                                <img src={users} alt="icon" className="w-5 h-5 ml-2 hover:cursor-pointer" />
+                            </div>
+                            {/* ROW-4 */}
+                            <div className="w-full border rounded-lg border-gray-300 h-auto flex items-center py-2 px-4">
+                                <img src={grid} alt="grid" className="w-4 h-4" />
+                                <button onClick={() => setChecked(!checked)} className={`w-4 h-4 border mx-3 rounded-md flex items-center justify-center transition-all ${checked ? "bg-orange-500 text-white" : "border-gray-300 bg-white" }`}>
+                                    {checked && "✓"}</button>
+                                <img src={star} alt="star" className="w-4 h-4 hover:cursor-pointer" />
+                                <span className="font-semibold mx-4 text-sm">Private chat module</span>
+                                <span className="bg-[#EDF2F4] text-[#0C4B5E] px-3 py-1 ml-41 rounded-lg text-xs font-semibold">● Pending</span>
+                                <img src={users} alt="icon" className="w-5 h-5 ml-5 hover:cursor-pointer" />
+                            </div>
+                            {/* ROW-5 */}
+                            <div className="w-full border rounded-lg border-gray-300 h-auto flex items-center py-2 px-4">
+                                <img src={grid} alt="grid" className="w-4 h-4" />
+                                <button onClick={() => setChecked(!checked)} className={`w-4 h-4 border mx-3 rounded-md flex items-center justify-center transition-all ${checked ? "bg-orange-500 text-white" : "border-gray-300 bg-white" }`}>
+                                    {checked && "✓"}</button>
+                                <img src={star} alt="star" className="w-4 h-4 hover:cursor-pointer" />
+                                <span className="font-semibold mx-4 text-sm">Go-Live and Post-Implementation Support</span>
+                                <span className="bg-[#F7EEF9] text-[#AB47BC] px-3 py-1 ml-6 rounded-lg text-xs font-semibold">● Inprogress</span>
+                                <img src={users} alt="icon" className="w-5 h-5 ml-2 hover:cursor-pointer" />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -652,7 +710,27 @@ function Employee_Dashboard(){
                         </div>
                         {/* BODY */}
                         <div className="h-full flex mt-5 mx-4">
-                            <div className="h-full w-[30%]"></div>
+                            <div className="h-full w-[30%] mr-4 mt-4">
+                                <div className="h-[67%] flex flex-col justify-between relative">
+                                <div className="absolute left-[78px] top-2 bottom-2 border-r border-dashed border-gray-300 z-0"></div>
+                                <div className="flex items-center relative z-10">
+                                  <span className="text-gray-500 text-sm w-[75px]">12:25 AM</span>
+                                  <div className="w-3 h-3 rounded-full bg-[#F97316]"></div>
+                                </div>
+                                <div className="flex items-center relative z-10">
+                                  <span className="text-gray-500 text-sm w-[75px]">11:20 AM</span>
+                                  <div className="w-3 h-3 rounded-full bg-[#0C4B5E]"></div>
+                                </div>
+                                <div className="flex items-center relative z-10">
+                                  <span className="text-gray-500 text-sm w-[75px]">10:18 AM</span>
+                                  <div className="w-3 h-3 rounded-full bg-[#F4B400]"></div>
+                                </div>
+                                <div className="flex items-center relative z-10">
+                                  <span className="text-gray-500 text-sm w-[75px]">09:10 AM</span>
+                                  <div className="w-3 h-3 rounded-full bg-[#03C95A]"></div>
+                                </div>
+                            </div>
+                            </div>
                             <div className="h-[82%] w-[70%] flex flex-col gap-6">
                                 <div className="px-3 py-2 bg-gray-200 rounded-lg">
                                     <div className="font-semibold text-sm">Marketing Strategy Presentation</div>
