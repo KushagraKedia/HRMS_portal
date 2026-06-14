@@ -85,6 +85,7 @@ function Sidebar() {
   const [attendenceOpen, setAttendenceOpen] = useState(false);
   const [performanceOpen , setPerformanceOpen] = useState(false);
   const [trainingOpen , setTrainingOpen] = useState(false);
+  const [payrollOpen , setPayrollOpen] = useState(false);
 
   return (
     <aside className="w-62 h-screen overflow-y-auto bg-[#F8F9FA] border-r border-gray-200 px-4 py-4">
@@ -427,31 +428,31 @@ function Sidebar() {
 </div> */}
 
 {/* FINANCE & ACCOUNTS */}
-{/* <h3 className="text-xs font-bold text-gray-400 uppercase mt-10 mb-4">
+<h3 className="text-xs font-bold text-gray-400 uppercase mt-10 mb-4">
   Finance & Accounts
 </h3>
 
 <div className="space-y-2">
 
-  <div className="flex items-center justify-between px-3 py-3 rounded-lg hover:bg-gray-100">
+  {/* <div className="flex items-center justify-between px-3 py-3 rounded-lg hover:bg-gray-100">
     <div className="flex items-center gap-3">
       <Landmark size={18} className="text-slate-500" />
       <span>Sales</span>
     </div>
 
     <ChevronDown size={16} />
-  </div>
+  </div> */}
 
-  <div className="flex items-center justify-between px-3 py-3 rounded-lg hover:bg-gray-100">
+  {/* <div className="flex items-center justify-between px-3 py-3 rounded-lg hover:bg-gray-100">
     <div className="flex items-center gap-3">
       <Receipt size={18} className="text-slate-500" />
       <span>Accounting</span>
     </div>
 
     <ChevronDown size={16} />
-  </div>
+  </div> */}
 
-  <div className="flex items-center justify-between px-3 py-3 rounded-lg hover:bg-gray-100">
+  <div onClick={() => setPayrollOpen(!payrollOpen)} className="flex items-center justify-between px-3 py-3 rounded-lg hover:bg-gray-100 hover:cursor-pointer">
     <div className="flex items-center gap-3">
       <Wallet size={18} className="text-slate-500" />
       <span>Payroll</span>
@@ -459,8 +460,17 @@ function Sidebar() {
 
     <ChevronDown size={16} />
   </div>
+  {
+            payrollOpen && (
+              <div className="ml-8 mt-2 space-y-2">
+                <Link to="/Payroll/Employee_Salary" className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer px-3 rounded-lg py-1">Employee Salary</Link>
+                {/* <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Payslip</div> */}
+                {/* <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Payroll Items</div> */}
+             </div>
+            )
+    }
+</div>
 
-</div> */}
 
 {/* ADMINISTRATION */}
 {/* <h3 className="text-xs font-bold text-gray-400 uppercase mt-10 mb-4">
