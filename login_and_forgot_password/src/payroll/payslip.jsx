@@ -11,6 +11,7 @@ import arrowIcon from "./assests_p/downArrow.png"
 import plusIcon from "./assests_p/circle-plus.png"
 import upArrowIcon from "./assests_p/upArrow.png"
 import gic from "./assests_p/GIC1.webp"
+import downloadIcon from "./assests_p/download.png"
 
 function Payslip(){
     const text = " > Payroll > Payslip";
@@ -54,9 +55,9 @@ function Payslip(){
                         </div>
                         <div className="w-[60%] flex items-center gap-4 justify-end">
                             <button className="bg-black text-white rounded-lg py-2 px-3 shadow-[0_1px_3px_rgba(0,0,0,0.12)] flex items-center gap-1.5 hover:cursor-pointer hover:bg-[#f3f0f0]">
-                                {/* <img src={exportIcon} alt="export" className="h-4 w-4"/> */}
+                                <img src={downloadIcon} alt="export" className="h-4 w-4"/>
                                 <span>Download</span>
-                                <img src={arrowIcon} alt="arrow" className="h-4 w-4"/>                               
+                                
                             </button>
 
                             <button className="bg-white rounded-lg py-2 px-3 shadow-[0_1px_3px_rgba(0,0,0,0.12)] flex items-center gap-1.5 hover:cursor-pointer hover:bg-orange-500">
@@ -72,7 +73,7 @@ function Payslip(){
                     <div className="flex justify-between border-b border-b-gray-200 pb-3">
                         <div className="w-[50%] flex flex-col">
                             <img src={gic} alt="logo" className="h-10 w-29" />
-                            <span className="text-xs mt-1">3099 Kennedy Court Framingham, MA 01702</span>
+                            <span className="text-xs mt-1 text-gray-500">3099 Kennedy Court Framingham, MA 01702</span>
                         </div>
                         <div className="w-[50%] flex flex-col text-right">
                             <span>
@@ -172,7 +173,7 @@ function Payslip(){
                         <span className="text-xs font-bold ml-1">$3600(Three thousand six hundred only)</span>
                     </div>
                 </div>
-                <div className="fixed bottom-0 left-0 w-full bg-white h-10 border-t border-gray-200 flex justify-between items-center px-5">
+                <div className=" bottom-0 w-full bg-white h-10 border-t border-gray-200 flex justify-between items-center px-5">
                     <p>Copyright-2026 ©KK.</p>
                     <p>Designed & Developed By Kushagra Kedia</p>
                 </div>
