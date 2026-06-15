@@ -7,6 +7,8 @@ import Ticket from "./Tickets/Tickets"
 import Ticket_details from "./Tickets/tickets_details"
 import EmployeeDashboard from "./dashboard/employee_dashboard"
 import Employee_Salary from "./payroll/employee_salary"
+import Payslip from "./payroll/payslip"
+import Payroll_items from "./payroll/payroll_items"
 
 function App(){
   return(
@@ -20,6 +22,8 @@ function App(){
       <Route path="/Tickets/tickets_details" element={<Ticket_details />} />
       <Route path="/Dashboard/employee_dashboard" element={<EmployeeDashboard />} />
       <Route path="/Payroll/Employee_Salary" element={<Employee_Salary />} />
+      <Route path="/Payroll/Payslip" element={<Payslip />} />
+      <Route path="/Payroll/Payoll_items" elements={<Payroll_items />} />
     </Routes>
     </BrowserRouter>
   );

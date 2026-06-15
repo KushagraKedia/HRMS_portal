@@ -118,7 +118,7 @@ function Sidebar() {
             dashboardOpen && (
               <div className="ml-8 mt-2 space-y-2 flex flex-col">
               {/* <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Admin Dashboard</div> */}
-              <Link to="/Dashboard/employee_dashboard" className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer px-3 rounded-lg py-1">Employee Dashboard</Link>
+              <Link to="/Dashboard/employee_dashboard" className="text-gray-400 m-3 text-xs hover:bg-gray-400 hover:text-white hover:cursor-pointer px-3 rounded-lg py-1">Employee Dashboard</Link>
                {/* <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Deals Dashboard</div> */}
               {/* <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Leads Dashboard</div> */}
               <Link to="/Dashboard/HR_Dashboard" className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer px-3 rounded-lg py-1 ">HR Dashboard</Link>
@@ -462,10 +462,10 @@ function Sidebar() {
   </div>
   {
             payrollOpen && (
-              <div className="ml-8 mt-2 space-y-2">
+              <div className="ml-8 mt-2 space-y-2 flex flex-col">
                 <Link to="/Payroll/Employee_Salary" className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer px-3 rounded-lg py-1">Employee Salary</Link>
-                {/* <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Payslip</div> */}
-                {/* <div className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Payroll Items</div> */}
+                <Link to="/Payroll/Payslip" className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Payslip</Link>
+                <Link to="/Payroll/Payroll_items" className="text-gray-400 m-3 text-sm hover:bg-gray-400 hover:text-white hover:cursor-pointer pl-3 rounded-lg py-1">Payroll Items</Link> 
              </div>
             )
     }
