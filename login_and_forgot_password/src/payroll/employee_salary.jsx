@@ -47,11 +47,24 @@ function EmployeeSalary (){
 
     const [showModel,setShowModel] = useState(false);
     const [currentPage,setCurrentPage] = useState(1);
+    // const [showModel, setShowModel] = useState(false);
     const rowsPerPage = 10;
     const totalPages = Math.ceil(employees.length / rowsPerPage);
     const lastRowIndex = currentPage*rowsPerPage;
     const firstRowIndex = lastRowIndex - rowsPerPage;
     const currentEmployees = employees.slice(firstRowIndex,lastRowIndex);
+
+    const handleNext = () => {
+        if(currentPage < totalPages){
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    const handlePrev = () => {
+        if(currentPage > 1){
+            setCurrentPage(currentPage - 1);
+        }
+    }
 
     const text = " > Payroll > Employee Salary";
     return(
@@ -113,9 +126,9 @@ function EmployeeSalary (){
                 </div>
 
                 {/* <div className=" mt-5 w-[95%] mx-[2.5%]></div> */}
-                <div className="border border-gray-200 rounded-lg mx-[2.5%] w-[95%] my-5">
+                <div className="border border-gray-200 rounded-lg mx-[2.5%] w-[95%] my-5 shadow-[0_1px_3px_rgba(0,0,0,0.12)]">
 
-                    <div className="px-3 py-4 border-b border-b-gray-200 flex gap-30">
+                    <div className="px-3 py-4 border-b border-b-gray-200 flex gap-30    ">
                         <span className="text-lg font-semibold">Employee Salary List</span>
                         <span className="border border-gray-200 rounded-lg px-3 py-1 flex items-center gap-2">
                             <img src={calendar} alt="icon" className="w-4 h-4" />
@@ -137,39 +150,50 @@ function EmployeeSalary (){
                     </div>
 
                     <div className="flex justify-between py-3 ">
-                        <span className=" text-lg text-gray-400 mx-3">Rows Per Page <span>{rowsPerPage}</span> Entries</span>
-                        <input type="search" placeholder="Search" className=" border border-gray-200 rounded-lg mx-3"/>
+                        <span className=" text-lg text-gray-500 mx-3">Rows Per Page <span>{rowsPerPage}</span> Entries</span>
+                        <input type="search" placeholder="Search" className=" border border-gray-200 rounded-lg mx-3 px-3"/>
                     </div>
                 {/* TABLE */}
-                <table className="w-[100%] border-gray-200 shadow-[0_1px_3px_rgba(0,0,0,0.12)] border rounded-lg">
+                <table className="w-[100%] border-gray-200   border rounded-lg">
                     <thead>
                         <tr className="bg-gray-200 text-sm font-semibold border-b-gray-200">
                             <th className="p-3 text-left flex justify-between">
                                 Employee ID
-                                <img src={sort} alt="sort" className="w-4 h-4" />
+                                <img src={sort} alt="sort" className="w-4 h-4 hover:cursor-pointer" />
                             </th>
-                            <th className="p-3 text-left ">
+                            <th className="p-3 text-left "><div className="flex justify-between">
                                 <sapn>Name</sapn>
-                                {/* <img src={sort} alt="sort1" className="w-4 h-4" /> */}
-                            </th>
-                            <th className="p-3 text-left flex justify-between">Email<img src={sort} alt="sort1" className="w-4 h-4" /></th>
-                            <th className="p-3 text-left ">Phone</th>
-                            <th className="p-3 text-left flex justify-between">Designation <img src={sort} alt="sort1" className="w-4 h-4" /></th>
-                            <th className="p-3 text-left">Joined Date</th>
-                            <th className="p-3 text-left flex justify-between">Salary<img src={sort} alt="sort1" className="w-4 h-4" /></th>
-                            <th className="p-3 text-left">Payslip</th>
-                            <th className="p-3 text-left flex justify-between">Actions<img src={sort} alt="sort1" className="w-4 h-4" /></th>
+                                <img src={sort} alt="sort1" className="w-4 h-4 hover:cursor-pointer" />
+                            </div></th>
+                            <th className="p-3 text-left flex justify-between">Email<img src={sort} alt="sort1" className="w-4 h-4 hover:cursor-pointer" /></th>
+                            <th className="p-3 text-left "><div className="flex justify-between">
+                                Phone
+                                <img src={sort} alt="sort1" className="w-4 h-4 hover:cursor-pointer" />
+                            </div></th>
+                            <th className="p-3 text-left flex justify-between">Designation <img src={sort} alt="sort1" className="w-4 h-4 hover:cursor-pointer" /></th>
+                            <th className="p-3 text-left"><div className="flex justify-between">
+                                Joined Date
+                                <img src={sort} alt="sort1" className="w-4 h-4 hover:cursor-pointer" />
+                            </div></th>
+                            <th className="p-3 text-left flex justify-between">Salary<img src={sort} alt="sort1" className="w-4 h-4 hover:cursor-pointer" /></th>
+                            <th className="p-3 text-left"><div className="flex justify-between">
+                                Payslip
+                                <img src={sort} alt="sort1" className="w-4 h-4 hover:cursor-pointer" />  
+                            </div></th>
+                            <th className="p-3 text-left flex justify-between">Actions<img src={sort} alt="sort1" className="w-4 h-4 hover:cursor-pointer" /></th>
                         </tr>
                     </thead>
                     <tbody>
                         {currentEmployees.map((employee) => (
                             <tr key={employee.id} className="border-b hover:bg-gray-50">
                                 <td className="px-3 py-4 text-left border-b border-b-gray-200 text-gray-500">{employee.id}</td>
-                                <td className="px-3 py-4 text-left border-b border-b-gray-200 flex items-center gap-2">
+                                <td className="px-3 py-4 text-left border-b border-b-gray-200 ">
+                                    <div className="flex items-center gap-2">
                                     <div><img src={employee.avatar} alt="dp" className="w-8 h-8 rounded-full object-cover" /></div>
                                     <div>
                                         <div className="text-sm">{employee.name}</div>
                                         <div className="text-xs text-gray-500">{employee.designation}</div>
+                                    </div>
                                     </div>
                                 </td>
                                 <td className="px-3 py-4 text-left border-b border-b-gray-200 text-gray-500">{employee.email}</td>
@@ -180,14 +204,24 @@ function EmployeeSalary (){
                                 <td className="px-3 py-4 text-left border-b border-b-gray-200">
                                     <div className="px-2 rounded-lg w-fit py-1 bg-black text-sm text-white">Generate Slip</div>
                                 </td>
-                                <td className="px-3 py-4 text-left border-b border-b-gray-200 flex gap-2 items-center">
-                                    <img src={edit} alt="icon" className="w-4 h-4 hover:cursor-pointer" />
+                                <td className="px-3 py-4 text-left border-b border-b-gray-200 ">
+                                    <div className="flex gap-3.5 items-center">
+                                    <img src={edit} alt="icon" className="w-4 h-4 hover:cursor-pointer" onClick={() => setShowModel(true)}/>
                                     <img src={deleteIcon} alt="icon" className="w-4 h-4 hover:cursor-pointer" />
+                                    </div>
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
+                <div className="p-4 flex justify-between">
+                    <span className="text-gray-500">Showing {firstRowIndex+1} - {lastRowIndex} of {employees.length} entries</span>
+                    <div>
+                        <button className="text-xl text-gray-500 hover:cursor-pointer mr-4" onClick={handlePrev} disabled={currentPage == 1}>←</button>
+                        <span className="mr-4 bg-orange-400 rounded-full text-white px-2.5 py-1 h-fit w-fit">{currentPage}</span>
+                        <button className="text-xl text-gray-500 hover:cursor-pointer" onClick={handleNext} disabled={currentPage== totalPages}>→</button>
+                    </div>
+                </div>
                 </div>
 
                 {/* BOTTOM */}
@@ -196,6 +230,39 @@ function EmployeeSalary (){
                     <p>Designed & Developed By Kushagra Kedia</p>
                 </div>
             </div>
+            {/* {
+            showModel && (
+                <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-50">
+                    <div className="bg-white w-[800px] rounded-lg shadow-lg">
+                        <div className="p-">
+                            
+                            <div className="flex justify-between border-b-gray-400 border-b p-3">
+                                <span className="text-xl font-semibold">Edit Employee Salary</span>
+                                <button onClick={()=>setShowModel(false)} className="hover:cursor-pointer">✖</button>
+                            </div>
+                            
+                            <div className="flex justify-between border-b-gray-400 border-b p-3">
+                                <div className="w-[50%] test-left flex flex-col">
+                                    <span className="text-gray-600 font-bold text-sm">Employee Name</span>
+                                    <select className="mt-2 p-1 border border-gray-400 rounded-lg text-sm">
+                                        <option>Select</option><option>Anthony Lewis</option><option>Brian</option><option>Sam Will Tarly</option>
+                                    </select>
+                                    <span className="text-gray-600 font-bold mt-2">Earnings</span>
+                                    <div className="flex gap-[50%]">
+                                        <span className="text-gray-600 font-bold text-sm mt-2">Basic</span>
+                                        <span className="text-gray-600 font-bold text-sm mt-2">DA(40%)</span>
+                                    </div>
+                                    <div className="flex gap-10">
+                                        <input type="text" className="rounded border border-gray-300" />
+                                        <input type="text" className="rounded border border-gray-300" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )
+            } */}
         </div>
     )
 }
