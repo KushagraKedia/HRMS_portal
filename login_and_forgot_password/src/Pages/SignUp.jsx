@@ -20,16 +20,16 @@ function SignUp(){
     }
 
     return(
-      <div className="min-h-screen w-full flex flex-row bg-[#f0efe7] text-black">
+      <div className="min-h-screen w-full flex flex-col md:flex-row bg-[#f0efe7] text-black">
 
-      <div className="w-[42%] h-screen">
+      <div className="hidden md:flex md:w-[42%] h-screen">
           <img src={logo} alt="HRMS Logo" className="w-full h-full object-contain" />
       </div> 
 
-      <div className="w-[58%] flex flex-col justify-center items-center px-10">     
-       <h1 className="text-3xl font-bold text-black mb-2">Sign Up</h1><br />
-       <h2 className="text-[20px] text-gray-500 mb-6">Please enter your details to sign up</h2>
-       <form onSubmit={HandleSubmit} className="w-full max-w-full">
+      <div className="w-full md:w-[58%] flex flex-col justify-center items-center px-6 md:px-10 min-h-screen">     
+       <h1 className="text-2xl md:text-3xl font-bold text-black mb-2 text-center">Sign Up</h1><br />
+       <h2 className="text-base md:text-[20px] text-gray-500 mb-6 text-center">Please enter your details to sign up</h2>
+       <form onSubmit={HandleSubmit} className="w-full max-w-sm md:max-w-full">
 
         <p className="text-sm text-black mt-4 mb-2">Name: </p>
         <input type="text"
@@ -52,7 +52,7 @@ function SignUp(){
         className=" w-full p-3 rounded-xl border border-black bg-white text-black text-[15px]" />
 
         <br />
-        <button type="Submit" className="p-3 rounded-xl
+        <button type="Submit" className="w-full p-3 rounded-xl
           bg-orange-500 text-white font-semibold hover:bg-orange-600 mt-3">
           Sign Up
         </button>
@@ -60,7 +60,7 @@ function SignUp(){
         <p className="text-sm mt-2 flex gap-1">Already have an account? <Link to="/" className="text-green-600">Sign In</Link></p>
       </form>
       <bottom>
-        <p>Copyright © 2026 - Kushagra</p>
+        <p className="text-sm text-gray-500 mt-8 md:mt-0">Copyright © 2026 - Kushagra</p>
       </bottom>
       </div> 
     </div>

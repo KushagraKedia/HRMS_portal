@@ -88,9 +88,9 @@ function Sidebar() {
   const [payrollOpen , setPayrollOpen] = useState(false);
 
   return (
-    <aside className="w-62 h-screen overflow-y-auto bg-[#F8F9FA] border-r border-gray-200 px-4 py-4">
+    <aside className="w-72 lg:w-64 h-screen overflow-y-auto bg-[#F8F9FA] border-r border-gray-200 px-4 py-4">
 
-      <img src={GIC} alt="calendar" className="h-20 w-60" />
+      <img src={GIC} alt="calendar" className="h-20 w-full object-contain" />
       {/* MAIN MENU */}
       <h3 className="text-xs font-bold text-gray-400 uppercase mb-4 mt-8">
         Main Menu
