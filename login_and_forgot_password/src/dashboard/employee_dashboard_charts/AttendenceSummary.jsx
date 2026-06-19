@@ -1,3 +1,4 @@
+// AttendenceSummary.jsx
 import { useState } from "react";
 import {
   PieChart,
@@ -19,26 +20,26 @@ function AttendanceSummary() {
   ];
 
   return (
-    <div className="bg-white p-3 rounded-xl flex justify-between items-center">
+    <div className="bg-white p-3 rounded-xl flex flex-col md:flex-row justify-between items-center gap-4 md:gap-0">
 
       {/* Left Side */}
-      <div className="flex flex-col justify-between h-full">
+      <div className="flex flex-col justify-between h-full w-full md:w-auto">
 
-        <div className="space-y-6">
+        <div className="space-y-3 md:space-y-6">
 
           {data.map((item) => (
-            <div key={item.name} className="flex items-center gap-0.5">
+            <div key={item.name} className="flex items-center gap-1.5 md:gap-0.5">
 
               <div
-                className="w-2 h-2 rounded-full"
+                className="w-2 h-2 rounded-full flex-shrink-0"
                 style={{ backgroundColor: item.color }}
               />
 
-              <span className="text-lg font-bold text-slate-900">
+              <span className="text-base md:text-lg font-bold text-slate-900">
                 {item.value}
               </span>
 
-              <span className="text-gray-500">
+              <span className="text-gray-500 text-sm md:text-base">
                 {item.name}
               </span>
 
@@ -52,7 +53,7 @@ function AttendanceSummary() {
 
           <button
             onClick={() => setChecked(!checked)}
-            className={`w-5 h-5 border rounded-md flex items-center justify-center transition-all
+            className={`w-5 h-5 border rounded-md flex items-center justify-center transition-all flex-shrink-0
               ${
                 checked
                   ? "bg-orange-500 text-white"
@@ -71,7 +72,7 @@ function AttendanceSummary() {
       </div>
 
       {/* Right Side Donut Chart */}
-      <div className="w-[169px] h-[169px]">
+      <div className="w-[140px] h-[140px] md:w-[169px] md:h-[169px] flex-shrink-0">
 
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
@@ -88,8 +89,8 @@ function AttendanceSummary() {
             <Pie
               data={data}
               dataKey="value"
-              innerRadius={55}
-              outerRadius={85}
+              innerRadius={45}
+              outerRadius={70}
               paddingAngle={2}
               stroke="white"
               strokeWidth={2}
