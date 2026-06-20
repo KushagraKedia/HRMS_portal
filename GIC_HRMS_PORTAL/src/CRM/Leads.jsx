@@ -21,7 +21,9 @@ function Leads(){
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const text ="  > CRM > Leads Grid";
 
-    const leadColumns = [
+    // 1) leadColumns is now STATE, not a plain const.
+    //    State is what lets React re-render the columns after you drag a card.
+    const [leadColumns, setLeadColumns] = useState([
         {   status: "Contacted",color: "#F4B400",count: 2,total: "$7,50,000",leads: [
                 {initials: "SM",name: "Linda White",value: "$03,50,000",email: "linda@gmail.com",phone: "(193) 7839 748",location: "Austin, United States",iconBg: "#1AA3E8",},
             ],},
@@ -57,7 +59,56 @@ function Leads(){
                 },
             ],
         },
-    ];
+    ]);
+
+    // 2) Track which lead is currently being dragged, and which column it came from.
+    const [draggedLead, setDraggedLead] = useState(null); // { lead, sourceStatus }
+
+    // 3) Fired on the card the user starts dragging.
+    const handleDragStart = (lead, sourceStatus) => {
+        setDraggedLead({ lead, sourceStatus });
+    };
+
+    // 4) Fired continuously while a dragged card hovers over a column.
+    //    preventDefault() is REQUIRED — by default, browsers block dropping
+    //    anything anywhere. This line is what makes the column a valid drop target.
+    const handleDragOver = (e) => {
+        e.preventDefault();
+    };
+
+    // 5) Fired when the user releases the card over a column.
+    const handleDrop = (targetStatus) => {
+        if (!draggedLead) return;
+
+        const { lead, sourceStatus } = draggedLead;
+
+        if (sourceStatus === targetStatus) {
+            setDraggedLead(null);
+            return;
+        }
+
+        setLeadColumns((prevColumns) =>
+            prevColumns.map((column) => {
+                if (column.status === sourceStatus) {
+                    return {
+                        ...column,
+                        leads: column.leads.filter((l) => l.email !== lead.email),
+                        count: column.count - 1,
+                    };
+                }
+                if (column.status === targetStatus) {
+                    return {
+                        ...column,
+                        leads: [...column.leads, lead],
+                        count: column.count + 1,
+                    };
+                }
+                return column;
+            })
+        );
+
+        setDraggedLead(null);
+    };
 
     return(
         <div className="flex h-screen overflow-hidden">
@@ -147,7 +198,13 @@ function Leads(){
                     {/* STATUS COLUMNS GRID */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 pb-8">
                         {leadColumns.map((column) => (
-                            <div key={column.status} className="flex flex-col gap-4">
+                            <div
+                                key={column.status}
+                                className="flex flex-col gap-4 rounded-lg transition-colors"
+                                // 6) Make the WHOLE column a drop zone
+                                onDragOver={handleDragOver}
+                                onDrop={() => handleDrop(column.status)}
+                            >
 
                                 {/* Column Header */}
                                 <div className="bg-white rounded-lg border border-gray-200 shadow-[0_1px_3px_rgba(0,0,0,0.12)] p-3 flex items-center justify-between">
@@ -167,57 +224,66 @@ function Leads(){
                                     </div>
                                 </div>
 
-                                {/* Lead Cards */}
-                                {column.leads.map((lead) => (
-                                    <div key={lead.email} className="bg-white rounded-lg border border-gray-200 shadow-[0_1px_3px_rgba(0,0,0,0.12)] overflow-hidden">
-                                        <div className="h-1" style={{ backgroundColor: column.color }}></div>
-                                        <div className="p-3 md:p-4">
+                                {/* Minimum drop area height so empty columns are still droppable */}
+                                <div className="flex flex-col gap-4 min-h-[80px]">
+                                    {/* Lead Cards */}
+                                    {column.leads.map((lead) => (
+                                        <div
+                                            key={lead.email}
+                                            className="bg-white rounded-lg border border-gray-200 shadow-[0_1px_3px_rgba(0,0,0,0.12)] overflow-hidden cursor-grab active:cursor-grabbing"
+                                            // 7) Make the card itself draggable
+                                            draggable
+                                            onDragStart={() => handleDragStart(lead, column.status)}
+                                        >
+                                            <div className="h-1" style={{ backgroundColor: column.color }}></div>
+                                            <div className="p-3 md:p-4">
 
-                                            {/* ICON And Name */}
-                                            <div className="flex items-center gap-3 mb-3">
-                                                <div className="w-9 h-9 rounded-lg bg-gray-100 flex items-center justify-center font-semibold text-sm flex-shrink-0">
-                                                    {lead.initials}
-                                                </div>
-                                                <span className="font-semibold text-sm md:text-base">{lead.name}</span>
-                                            </div>
-
-                                            {/* DETAILS */}
-                                            <div className="flex flex-col gap-1.5 text-xs md:text-sm text-gray-600">
-
-                                                <div className="flex items-center gap-2">
-                                                    <Wallet size={14} className="text-gray-400 flex-shrink-0" />
-                                                    <span>{lead.value}</span>
-                                                </div>
-
-                                                <div className="flex items-center gap-2">
-                                                    <Mail size={14} className="text-gray-400 flex-shrink-0" />
-                                                    <span className="truncate">{lead.email}</span>
+                                                {/* ICON And Name */}
+                                                <div className="flex items-center gap-3 mb-3">
+                                                    <div className="w-9 h-9 rounded-lg bg-gray-100 flex items-center justify-center font-semibold text-sm flex-shrink-0">
+                                                        {lead.initials}
+                                                    </div>
+                                                    <span className="font-semibold text-sm md:text-base">{lead.name}</span>
                                                 </div>
 
-                                                <div className="flex items-center gap-2">
-                                                    <Phone size={14} className="text-gray-400 flex-shrink-0" />
-                                                    <span>{lead.phone}</span>
+                                                {/* DETAILS */}
+                                                <div className="flex flex-col gap-1.5 text-xs md:text-sm text-gray-600">
+
+                                                    <div className="flex items-center gap-2">
+                                                        <Wallet size={14} className="text-gray-400 flex-shrink-0" />
+                                                        <span>{lead.value}</span>
+                                                    </div>
+
+                                                    <div className="flex items-center gap-2">
+                                                        <Mail size={14} className="text-gray-400 flex-shrink-0" />
+                                                        <span className="truncate">{lead.email}</span>
+                                                    </div>
+
+                                                    <div className="flex items-center gap-2">
+                                                        <Phone size={14} className="text-gray-400 flex-shrink-0" />
+                                                        <span>{lead.phone}</span>
+                                                    </div>
+
+                                                    <div className="flex items-center gap-2">
+                                                        <MapPin size={14} className="text-gray-400 flex-shrink-0" />
+                                                        <span className="truncate">{lead.location}</span>
+                                                    </div>
                                                 </div>
 
-                                                <div className="flex items-center gap-2">
-                                                    <MapPin size={14} className="text-gray-400 flex-shrink-0" />
-                                                    <span className="truncate">{lead.location}</span>
-                                                </div>
-                                            </div>
-
-                                            {/* FOOTER */}
-                                            <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-200">
-                                                <div className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: lead.iconBg }}>
-                                                </div>
-                                                <div className="flex items-center gap-3">
-                                                    <Phone size={15} className="text-gray-500 hover:text-orange-500 hover:cursor-pointer" />
-                                                    <MessageCircle size={15} className="text-gray-500 hover:text-orange-500 hover:cursor-pointer" />
-                                                    <BookOpen size={15} className="text-gray-500 hover:text-orange-500 hover:cursor-pointer" />
+                                                {/* FOOTER */}
+                                                <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-200">
+                                                    <div className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: lead.iconBg }}>
+                                                    </div>
+                                                    <div className="flex items-center gap-3">
+                                                        <Phone size={15} className="text-gray-500 hover:text-orange-500 hover:cursor-pointer" />
+                                                        <MessageCircle size={15} className="text-gray-500 hover:text-orange-500 hover:cursor-pointer" />
+                                                        <BookOpen size={15} className="text-gray-500 hover:text-orange-500 hover:cursor-pointer" />
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                ))}
+                                    ))}
+                                </div>
                             </div>
                         ))}
                     </div>
@@ -234,4 +300,4 @@ function Leads(){
     )
 }
 
-export default Leads;   
+export default Leads;
