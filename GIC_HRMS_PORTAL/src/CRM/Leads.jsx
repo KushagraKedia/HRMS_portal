@@ -12,6 +12,9 @@ import plusIcon from "./assests_crm/circle-plus.png"
 import upArrowIcon from "./assests_crm/upArrow.png"
 import grid from "./assests_crm/grid-2x2.png"
 import list from "./assests_crm/list.png"
+import Leads_details from "./Leads_details"
+
+import { Link } from "react-router-dom";
 
 import { useState } from "react";
 import { Menu, X, Plus, Pencil, Trash2, Wallet, Mail, Phone, MapPin, MessageCircle, BookOpen } from "lucide-react";
@@ -243,7 +246,7 @@ function Leads(){
                                                     <div className="w-9 h-9 rounded-lg bg-gray-100 flex items-center justify-center font-semibold text-sm flex-shrink-0">
                                                         {lead.initials}
                                                     </div>
-                                                    <span className="font-semibold text-sm md:text-base">{lead.name}</span>
+                                                    <Link to="/CRM/Leads_details"  className="font-semibold text-sm md:text-base hover:text-blue-800">{lead.name}</Link>
                                                 </div>
 
                                                 {/* DETAILS */}

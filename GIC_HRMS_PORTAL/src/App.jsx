@@ -10,6 +10,7 @@ import Employee_Salary from "./payroll/employee_salary"
 import Payslip from "./payroll/payslip"
 import Payrollitems from "./payroll/payroll_items"
 import Leads from "./CRM/Leads"
+import Leads_details from "./CRM/Leads_details"
 
 function App(){
   return(
@@ -26,6 +27,7 @@ function App(){
       <Route path="/Payroll/Payslip" element={<Payslip />} />
       <Route path="/Payroll/Payroll_items" element={<Payrollitems />} />
       <Route path="/CRM/Leads" element={<Leads />} />
+      <Route path="/CRM/Leads_details" element={<Leads_details />} />
     </Routes>
     </BrowserRouter>
   );
