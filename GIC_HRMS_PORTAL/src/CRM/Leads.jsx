@@ -16,54 +16,116 @@ import Leads_details from "./Leads_details"
 
 import { Link } from "react-router-dom";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Menu, X, Plus, Pencil, Trash2, Wallet, Mail, Phone, MapPin, MessageCircle, BookOpen } from "lucide-react";
+
+const API = "http://localhost:5000/api/leads";   // ← change port if yours is different
 
 function Leads(){
 
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const text ="  > CRM > Leads Grid";
 
-    // 1) leadColumns is now STATE, not a plain const.
-    //    State is what lets React re-render the columns after you drag a card.
-    const [leadColumns, setLeadColumns] = useState([
-        {   status: "Contacted",color: "#F4B400",count: 2,total: "$7,50,000",leads: [
-                {initials: "SM",name: "Linda White",value: "$03,50,000",email: "linda@gmail.com",phone: "(193) 7839 748",location: "Austin, United States",iconBg: "#1AA3E8",},
-            ],},
-        {
-            status: "Not Contacted",color: "#8E24AA",count: 2,total: "$7,60,000",
-            leads: [{initials: "EJ",name: "Emily Johnson",value: "$3,50,000",email: "emily@gmail.com",phone: "(179) 7382 829",location: "Newyork, United States",iconBg: "#1F5FE0",
-                },
-                {
-                    initials: "MG",name: "Maria Garcia",value: "$4,10,000",email: "maria@gmail.com",phone: "(120) 3728 039",location: "Denver, United States",iconBg: "#8E24AA",
-                },],
-        },
-        {
-            status: "Closed",color: "#03C95A",count: 45,total: "$15,44,540",
-            leads: [{initials: "JS",name: "John Smith",value: "$3,20,000",email: "john@gmail.com",phone: "(123) 4567 890",location: "Chester, United Kingdom",iconBg: "#7C4DFF",
-                },
-                {
-                    initials: "DL",name: "David Lee",value: "$3,10,000",email: "david@gmail.com",phone: "(183) 9302 890",location: "Charlotte, United States",iconBg: "#1F5FE0",
-                },
-                {
-                    initials: "RM",name: "Robert Martinez",value: "$4,50,000",email: "robert@gmail.com",phone: "(163) 2459 315",location: "Bristol, United Kingdom",iconBg: "#2E7D32",
-                },
-            ],
-        },
-        {
-            status: "Lost",color: "#E53935",count: 15,total: "$14,89,543",
-            leads: [{initials: "MB",name: "Michael Brown",value: "$4,10,000",email: "micael@gmail.com",phone: "(184) 2719 738",location: "London, United Kingdom",iconBg: "#1F5FE0",
-                },
-                {
-                    initials: "KD",name: "Karen Davis",value: "$4,00,000",email: "darleeo@gmail.com",phone: "(163) 2459 315",location: "Detroit, United States",iconBg: "#2E7D32",
-                },
-                {
-                    initials: "JA",name: "James Anderson",value: "$3,40,000",email: "james@gmail.com",phone: "(168) 8392 823",location: "Manchester, United Kingdom",iconBg: "#1F5FE0",
-                },
-            ],
-        },
-    ]);
+    // ── Column state (loaded from backend) ──────────────────────────────────
+    const [leadColumns, setLeadColumns] = useState([]);
+    const [loading, setLoading] = useState(true);
 
+    // Fetch all columns from backend on first render
+    useEffect(() => {
+        fetch(`${API}/columns`)
+            .then(res => res.json())
+            .then(data => { setLeadColumns(data); setLoading(false); })
+            .catch(() => setLoading(false));
+    }, []);
+
+    // ── Add Lead Modal state ─────────────────────────────────────────────────
+    const [showAddModal, setShowAddModal] = useState(false);
+    const [activeColumnStatus, setActiveColumnStatus] = useState(null);
+    const [newLead, setNewLead] = useState({ name: "", value: "", email: "", phone: "", location: "" });
+    const [formError, setFormError] = useState("");
+
+    const avatarColors = ["#1AA3E8", "#1F5FE0", "#8E24AA", "#03C95A", "#E53935", "#2E7D32", "#F4B400"];
+
+    const openAddModal = (status) => {
+        setActiveColumnStatus(status);
+        setNewLead({ name: "", value: "", email: "", phone: "", location: "" });
+        setFormError("");
+        setShowAddModal(true);
+    };
+
+    const closeAddModal = () => {
+        setShowAddModal(false);
+        setActiveColumnStatus(null);
+    };
+
+    // POST lead → backend, then refresh columns from server
+    const handleAddLead = async () => {
+        const { name, value, email, phone, location } = newLead;
+        if (!name.trim() || !email.trim()) {
+            setFormError("Name and Email are required.");
+            return;
+        }
+        const randomColor = avatarColors[Math.floor(Math.random() * avatarColors.length)];
+        try {
+            const res = await fetch(`${API}/columns/${encodeURIComponent(activeColumnStatus)}/leads`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name: name.trim(), value: value.trim() || "$0", email: email.trim(), phone: phone.trim() || "N/A", location: location.trim() || "N/A", iconBg: randomColor }),
+            });
+            if (!res.ok) { const e = await res.json(); setFormError(e.error || "Failed to add lead."); return; }
+            // Refresh from server so UI matches JSON file exactly
+            const updated = await fetch(`${API}/columns`).then(r => r.json());
+            setLeadColumns(updated);
+            closeAddModal();
+        } catch {
+            setFormError("Could not reach the server.");
+        }
+    };
+
+    // ── Add Column Modal state ───────────────────────────────────────────────
+    const [showAddColumnModal, setShowAddColumnModal] = useState(false);
+    const [newColumn, setNewColumn] = useState({ status: "", color: "#1AA3E8" });
+    const [columnError, setColumnError] = useState("");
+
+    const openAddColumnModal = () => {
+        setNewColumn({ status: "", color: "#1AA3E8" });
+        setColumnError("");
+        setShowAddColumnModal(true);
+    };
+
+    const closeAddColumnModal = () => setShowAddColumnModal(false);
+
+    // POST new column → backend
+    const handleAddColumn = async () => {
+        if (!newColumn.status.trim()) { setColumnError("Column name is required."); return; }
+        try {
+            const res = await fetch(`${API}/columns`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ status: newColumn.status.trim(), color: newColumn.color }),
+            });
+            if (!res.ok) { const e = await res.json(); setColumnError(e.error || "Failed to create column."); return; }
+            const updated = await fetch(`${API}/columns`).then(r => r.json());
+            setLeadColumns(updated);
+            closeAddColumnModal();
+        } catch {
+            setColumnError("Could not reach the server.");
+        }
+    };
+
+    // DELETE column → backend
+    const handleDeleteColumn = async (status) => {
+        if (!window.confirm(`Delete the "${status}" column and all its leads?`)) return;
+        try {
+            await fetch(`${API}/columns/${encodeURIComponent(status)}`, { method: "DELETE" });
+            const updated = await fetch(`${API}/columns`).then(r => r.json());
+            setLeadColumns(updated);
+        } catch {
+            alert("Could not reach the server.");
+        }
+    };
+
+    // ── Drag-and-drop ────────────────────────────────────────────────────────
     // 2) Track which lead is currently being dragged, and which column it came from.
     const [draggedLead, setDraggedLead] = useState(null); // { lead, sourceStatus }
 
@@ -90,25 +152,25 @@ function Leads(){
             return;
         }
 
+        // Optimistic UI update
         setLeadColumns((prevColumns) =>
             prevColumns.map((column) => {
                 if (column.status === sourceStatus) {
-                    return {
-                        ...column,
-                        leads: column.leads.filter((l) => l.email !== lead.email),
-                        count: column.count - 1,
-                    };
+                    return { ...column, leads: column.leads.filter((l) => l.email !== lead.email), count: column.count - 1 };
                 }
                 if (column.status === targetStatus) {
-                    return {
-                        ...column,
-                        leads: [...column.leads, lead],
-                        count: column.count + 1,
-                    };
+                    return { ...column, leads: [...column.leads, lead], count: column.count + 1 };
                 }
                 return column;
             })
         );
+
+        // Persist move to backend (fire-and-forget — optimistic update already applied)
+        fetch(`${API}/move`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email: lead.email, fromStatus: sourceStatus, toStatus: targetStatus }),
+        }).catch(() => console.warn("Failed to persist drag-drop move to server."));
 
         setDraggedLead(null);
     };
@@ -177,9 +239,9 @@ function Leads(){
                                 <span>Export</span>
                                 <img src={arrowIcon} alt="arrow" className="h-4 w-4"/>
                             </button>
-                            <button className="bg-orange-500 rounded-lg py-2 px-3 shadow-[0_1px_3px_rgba(0,0,0,0.12)] flex items-center gap-1.5 hover:cursor-pointer hover:bg-orange-600">
+                            <button onClick={openAddColumnModal} className="bg-orange-500 rounded-lg py-2 px-3 shadow-[0_1px_3px_rgba(0,0,0,0.12)] flex items-center gap-1.5 hover:cursor-pointer hover:bg-orange-600">
                                 <img src={plusIcon} alt="export" className="h-4 w-4"/>
-                                <span className="text-white font-semibold text-sm">Add Ticket</span>
+                                <span className="text-white font-semibold text-sm">Add Column</span>
                             </button>
                             <button className="bg-white rounded-lg py-2 px-3 shadow-[0_1px_3px_rgba(0,0,0,0.12)] flex items-center gap-1.5 hover:cursor-pointer hover:bg-orange-500">
                                 <img src={upArrowIcon} alt="export" className="h-4 w-4 m-1"/>
@@ -199,6 +261,9 @@ function Leads(){
                     </div>
 
                     {/* STATUS COLUMNS GRID */}
+                    {loading ? (
+                        <div className="flex items-center justify-center py-20 text-gray-400 text-sm">Loading columns...</div>
+                    ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 pb-8">
                         {leadColumns.map((column) => (
                             <div
@@ -221,9 +286,9 @@ function Leads(){
                                         </div>
                                     </div>
                                     <div className="flex items-center gap-2 flex-shrink-0">
-                                        <Plus size={16} className="text-gray-500 hover:text-orange-500 hover:cursor-pointer" />
+                                        <Plus size={16} className="text-gray-500 hover:text-orange-500 hover:cursor-pointer" onClick={() => openAddModal(column.status)} />
                                         <Pencil size={14} className="text-gray-500 hover:text-orange-500 hover:cursor-pointer" />
-                                        <Trash2 size={14} className="text-gray-500 hover:text-red-500 hover:cursor-pointer" />
+                                        <Trash2 size={14} className="text-gray-500 hover:text-red-500 hover:cursor-pointer" onClick={() => handleDeleteColumn(column.status)} />
                                     </div>
                                 </div>
 
@@ -290,6 +355,7 @@ function Leads(){
                             </div>
                         ))}
                     </div>
+                    )}
 
                 </div>
 
@@ -298,7 +364,170 @@ function Leads(){
                     <p className="hidden md:block">Designed & Developed By Kushagra Kedia</p>
                 </div>
 
-            </div>    
+            </div>
+
+            {/* ── ADD LEAD MODAL ── */}
+            {showAddModal && (
+                <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/40 px-4">
+                    <div className="bg-white rounded-xl shadow-2xl w-full max-w-md p-6 relative">
+
+                        {/* Modal Header */}
+                        <div className="flex items-center justify-between mb-5">
+                            <div>
+                                <h2 className="text-lg font-bold text-gray-800">Add New Lead</h2>
+                                <p className="text-xs text-gray-500 mt-0.5">Adding to: <span className="font-semibold text-orange-500">{activeColumnStatus}</span></p>
+                            </div>
+                            <button onClick={closeAddModal} className="text-gray-400 hover:text-red-500 hover:cursor-pointer transition-colors">
+                                <X size={20} />
+                            </button>
+                        </div>
+
+                        {/* Error */}
+                        {formError && (
+                            <div className="mb-4 text-xs text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
+                                {formError}
+                            </div>
+                        )}
+
+                        {/* Form Fields */}
+                        <div className="flex flex-col gap-3">
+                            <div>
+                                <label className="text-xs font-semibold text-gray-600 mb-1 block">Full Name <span className="text-red-500">*</span></label>
+                                <input
+                                    type="text"
+                                    placeholder="e.g. John Smith"
+                                    value={newLead.name}
+                                    onChange={e => setNewLead(prev => ({ ...prev, name: e.target.value }))}
+                                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="text-xs font-semibold text-gray-600 mb-1 block">Email <span className="text-red-500">*</span></label>
+                                <input
+                                    type="email"
+                                    placeholder="e.g. john@gmail.com"
+                                    value={newLead.email}
+                                    onChange={e => setNewLead(prev => ({ ...prev, email: e.target.value }))}
+                                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="text-xs font-semibold text-gray-600 mb-1 block">Deal Value</label>
+                                <input
+                                    type="text"
+                                    placeholder="e.g. $3,50,000"
+                                    value={newLead.value}
+                                    onChange={e => setNewLead(prev => ({ ...prev, value: e.target.value }))}
+                                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="text-xs font-semibold text-gray-600 mb-1 block">Phone</label>
+                                <input
+                                    type="text"
+                                    placeholder="e.g. (193) 7839 748"
+                                    value={newLead.phone}
+                                    onChange={e => setNewLead(prev => ({ ...prev, phone: e.target.value }))}
+                                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="text-xs font-semibold text-gray-600 mb-1 block">Location</label>
+                                <input
+                                    type="text"
+                                    placeholder="e.g. Austin, United States"
+                                    value={newLead.location}
+                                    onChange={e => setNewLead(prev => ({ ...prev, location: e.target.value }))}
+                                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent"
+                                />
+                            </div>
+                        </div>
+
+                        {/* Action Buttons */}
+                        <div className="flex gap-3 mt-6">
+                            <button
+                                onClick={closeAddModal}
+                                className="flex-1 border border-gray-200 rounded-lg py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50 hover:cursor-pointer transition-colors"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                onClick={handleAddLead}
+                                className="flex-1 bg-orange-500 hover:bg-orange-600 rounded-lg py-2 text-sm font-semibold text-white hover:cursor-pointer transition-colors flex items-center justify-center gap-2"
+                            >
+                                <Plus size={15} />
+                                Add Lead
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* ── ADD COLUMN MODAL ── */}
+            {showAddColumnModal && (
+                <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/40 px-4">
+                    <div className="bg-white rounded-xl shadow-2xl w-full max-w-sm p-6 relative">
+
+                        <div className="flex items-center justify-between mb-5">
+                            <h2 className="text-lg font-bold text-gray-800">Add New Column</h2>
+                            <button onClick={closeAddColumnModal} className="text-gray-400 hover:text-red-500 hover:cursor-pointer transition-colors">
+                                <X size={20} />
+                            </button>
+                        </div>
+
+                        {columnError && (
+                            <div className="mb-4 text-xs text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
+                                {columnError}
+                            </div>
+                        )}
+
+                        <div className="flex flex-col gap-4">
+                            <div>
+                                <label className="text-xs font-semibold text-gray-600 mb-1 block">Column Name <span className="text-red-500">*</span></label>
+                                <input
+                                    type="text"
+                                    placeholder="e.g. In Progress"
+                                    value={newColumn.status}
+                                    onChange={e => setNewColumn(prev => ({ ...prev, status: e.target.value }))}
+                                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent"
+                                />
+                            </div>
+                            <div>
+                                <label className="text-xs font-semibold text-gray-600 mb-1 block">Column Color</label>
+                                <div className="flex items-center gap-3">
+                                    <input
+                                        type="color"
+                                        value={newColumn.color}
+                                        onChange={e => setNewColumn(prev => ({ ...prev, color: e.target.value }))}
+                                        className="w-10 h-10 rounded-lg border border-gray-200 hover:cursor-pointer p-0.5"
+                                    />
+                                    <span className="text-sm text-gray-500">{newColumn.color}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="flex gap-3 mt-6">
+                            <button
+                                onClick={closeAddColumnModal}
+                                className="flex-1 border border-gray-200 rounded-lg py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50 hover:cursor-pointer transition-colors"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                onClick={handleAddColumn}
+                                className="flex-1 bg-orange-500 hover:bg-orange-600 rounded-lg py-2 text-sm font-semibold text-white hover:cursor-pointer transition-colors flex items-center justify-center gap-2"
+                            >
+                                <Plus size={15} />
+                                Create Column
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }
