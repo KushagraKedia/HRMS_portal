@@ -14,14 +14,16 @@ import grid from "./assests_crm/grid-2x2.png"
 import list from "./assests_crm/list.png"
 import Leads_details from "./Leads_details"
 
-import { Link } from "react-router-dom";
 
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Menu, X, Plus, Pencil, Trash2, Wallet, Mail, Phone, MapPin, MessageCircle, BookOpen } from "lucide-react";
 
 const API = "http://localhost:5000/api/leads";   // ← change port if yours is different
 
 function Leads(){
+
+    const navigate = useNavigate();
 
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const text ="  > CRM > Leads Grid";
@@ -311,7 +313,7 @@ function Leads(){
                                                     <div className="w-9 h-9 rounded-lg bg-gray-100 flex items-center justify-center font-semibold text-sm flex-shrink-0">
                                                         {lead.initials}
                                                     </div>
-                                                    <Link to="/CRM/Leads_details"  className="font-semibold text-sm md:text-base hover:text-blue-800">{lead.name}</Link>
+                                                    <button onClick={() => navigate("/CRM/Leads_details", { state: { lead, columnStatus: column.status, columnColor: column.color } })} className="font-semibold text-sm md:text-base hover:text-orange-500 hover:cursor-pointer text-left">{lead.name}</button>
                                                 </div>
 
                                                 {/* DETAILS */}

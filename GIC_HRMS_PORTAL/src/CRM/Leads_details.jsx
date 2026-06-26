@@ -11,9 +11,25 @@ import modifiedAvatar from "./assests_crm/person-m-2.webp"
 import meetingAvatar from "./assests_crm/person-m-3.webp"
 
 import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, Star, Lock, ChevronDown, Pencil, Phone, MessageCircle, FileText, Mail, CalendarDays, Link2, UserCircle2, Plus, ArrowLeft } from "lucide-react";
 
 function Leads_details(){
+    const { state } = useLocation();
+    const navigate = useNavigate();
+    const lead = state?.lead || {};
+    const columnStatus = state?.columnStatus || "Unknown";
+    const columnColor = state?.columnColor || "#1AA3E8";
+
+    // Derive initials and fallback values
+    const initials = lead.initials || "??";
+    const name = lead.name || "Unknown Lead";
+    const email = lead.email || "N/A";
+    const phone = lead.phone || "N/A";
+    const location = lead.location || "N/A";
+    const value = lead.value || "$0";
+    const iconBg = lead.iconBg || "#1AA3E8";
+
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [activeTab, setActiveTab] = useState("Activities");
 
@@ -115,12 +131,12 @@ function Leads_details(){
 
                 {/* Breadcrumb */}
                 <div className="mx-3 md:mx-6 mt-4 flex items-center gap-2 text-sm flex-wrap">
-                    <button className="flex items-center gap-1 text-gray-500 hover:text-black hover:cursor-pointer">
+                    <button onClick={() => navigate(-1)} className="flex items-center gap-1 text-gray-500 hover:text-black hover:cursor-pointer">
                         <ArrowLeft size={16} />
                     </button>
-                    <span className="text-gray-500 hover:text-black hover:cursor-pointer font-medium">Leads</span>
+                    <span onClick={() => navigate(-1)} className="text-gray-500 hover:text-black hover:cursor-pointer font-medium">Leads</span>
                     <span className="text-gray-400">/</span>
-                    <span className="font-semibold">John Smith</span>
+                    <span className="font-semibold">{name}</span>
                     <button className="ml-2 flex items-center gap-1.5 border border-gray-300 rounded-lg px-3 py-1 text-sm hover:bg-gray-100 hover:cursor-pointer">
                         <Link2 size={14} />
                         Marketing Pipeline
@@ -140,26 +156,26 @@ function Leads_details(){
                             <div className="h-28 w-full bg-gradient-to-r from-orange-500 to-yellow-400"></div>
                             
                             <div className="flex justify-center -mt-10">
-                                <div className="w-20 h-20 rounded-full bg-white border-4 border-white shadow-md flex items-center justify-center text-2xl font-bold text-gray-700">
-                                    KK
+                                <div className="w-20 h-20 rounded-full border-4 border-white shadow-md flex items-center justify-center text-2xl font-bold text-white" style={{ backgroundColor: iconBg }}>
+                                    {initials}
                                 </div>
                             </div>
                             
                             <div className="flex flex-col items-center px-4 pt-3 pb-5 text-center">
                                 <div className="flex items-center gap-2">
-                                    <span className="text-xl font-bold">Kushagra Kedia  </span>
+                                    <span className="text-xl font-bold">{name}</span>
                                     <Star size={16} className="text-yellow-400 fill-yellow-400" />
                                 </div>
-                                <span className="text-gray-500 text-sm mt-1">1861 Bayonne Ave, Manchester, NJ, 08759</span>
+                                <span className="text-gray-500 text-sm mt-1">{location}</span>
                                 <div className="flex items-center gap-1 mt-1 text-gray-500 text-sm">
-                                    <span>BrightWave Innovations</span>
+                                    <Mail size={13} /><span>{email}</span>
                                 </div>
                                 <div className="flex gap-2 mt-3">
                                     <span className="flex items-center gap-1 px-3 py-0.5 bg-gray-100 rounded-full text-sm border border-gray-200">
                                         <Lock size={12} /> Private
                                     </span>
-                                    <span className="px-3 py-0.5 bg-green-100 text-green-600 rounded-full text-sm border border-green-200 font-medium">
-                                        Closed
+                                    <span className="px-3 py-0.5 rounded-full text-sm border font-medium text-white" style={{ backgroundColor: columnColor }}>
+                                        {columnStatus}
                                     </span>
                                 </div>
                             </div>
@@ -174,19 +190,19 @@ function Leads_details(){
                             <div className="flex flex-col gap-3 text-sm">
                                 <div className="flex justify-between items-center">
                                     <div className="flex items-center gap-2 text-gray-500"><CalendarDays size={14} />Date Created</div>
-                                    <span>10 June 2026, 11:45 pm</span>
+                                    <span>{new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}</span>
                                 </div>
                                 <div className="flex justify-between items-center">
                                     <div className="flex items-center gap-2 text-gray-500"><Link2 size={14} />Value</div>
-                                    <span>$4,50,000</span>
+                                    <span>{value}</span>
                                 </div>
                                 <div className="flex justify-between items-center">
-                                    <div className="flex items-center gap-2 text-gray-500"><CalendarDays size={14} />Due Date</div>
-                                    <span>25 June 2026, 11:45 pm</span>
+                                    <div className="flex items-center gap-2 text-gray-500"><Phone size={14} />Phone</div>
+                                    <span>{phone}</span>
                                 </div>
                                 <div className="flex justify-between items-center">
-                                    <div className="flex items-center gap-2 text-gray-500"><Phone size={14} />Follow Up</div>
-                                    <span>25 June 2026</span>
+                                    <div className="flex items-center gap-2 text-gray-500"><Mail size={14} />Email</div>
+                                    <span className="truncate max-w-[180px]">{email}</span>
                                 </div>
                                 <div className="flex justify-between items-center">
                                     <div className="flex items-center gap-2 text-gray-500"><Link2 size={14} />Source</div>
@@ -285,7 +301,9 @@ function Leads_details(){
                                 {pipelineStages.map((stage, i) => (
                                     <div
                                         key={stage.label}
-                                        className={`flex-1 min-w-[90px] h-10 flex items-center justify-center text-white text-xs font-semibold relative ${stage.color}
+                                        className={`flex-1 min-w-[90px] h-10 flex items-center justify-center text-white text-xs font-semibold relative transition-opacity
+                                            ${stage.label === columnStatus ? "opacity-100 ring-2 ring-offset-1 ring-gray-400" : "opacity-40"}
+                                            ${stage.color}
                                             ${i === 0 ? "rounded-l-full" : ""}
                                             ${i === pipelineStages.length - 1 ? "rounded-r-full" : ""}
                                         `}
