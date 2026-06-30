@@ -127,6 +127,39 @@ function Leads(){
         }
     };
 
+    // ── Edit Column Modal state ──────────────────────────────────────────────
+    const [showEditColumnModal, setShowEditColumnModal] = useState(false);
+    const [editingColumn, setEditingColumn] = useState(null);
+    const [editColumnForm, setEditColumnForm] = useState({ status: "", color: "" });
+    const [editColumnError, setEditColumnError] = useState("");
+    const [editColumnSaving, setEditColumnSaving] = useState(false);
+
+    const openEditColumn = (column) => {
+        setEditingColumn(column);
+        setEditColumnForm({ status: column.status, color: column.color });
+        setEditColumnError("");
+        setShowEditColumnModal(true);
+    };
+
+    const handleEditColumn = async () => {
+        if (!editColumnForm.status.trim()) { setEditColumnError("Column name is required."); return; }
+        setEditColumnSaving(true);
+        try {
+            const res = await fetch(`${API}/columns/${encodeURIComponent(editingColumn.status)}`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ status: editColumnForm.status.trim(), color: editColumnForm.color }),
+            });
+            if (!res.ok) { const e = await res.json(); setEditColumnError(e.error || "Failed to update column."); setEditColumnSaving(false); return; }
+            const updated = await fetch(`${API}/columns`).then(r => r.json());
+            setLeadColumns(updated);
+            setShowEditColumnModal(false);
+        } catch {
+            setEditColumnError("Could not reach the server.");
+        }
+        setEditColumnSaving(false);
+    };
+
     // ── Drag-and-drop ────────────────────────────────────────────────────────
     // 2) Track which lead is currently being dragged, and which column it came from.
     const [draggedLead, setDraggedLead] = useState(null); // { lead, sourceStatus }
@@ -289,7 +322,7 @@ function Leads(){
                                     </div>
                                     <div className="flex items-center gap-2 flex-shrink-0">
                                         <Plus size={16} className="text-gray-500 hover:text-orange-500 hover:cursor-pointer" onClick={() => openAddModal(column.status)} />
-                                        <Pencil size={14} className="text-gray-500 hover:text-orange-500 hover:cursor-pointer" />
+                                        <Pencil size={14} className="text-gray-500 hover:text-orange-500 hover:cursor-pointer" onClick={() => openEditColumn(column)} />
                                         <Trash2 size={14} className="text-gray-500 hover:text-red-500 hover:cursor-pointer" onClick={() => handleDeleteColumn(column.status)} />
                                     </div>
                                 </div>
@@ -525,6 +558,69 @@ function Leads(){
                             >
                                 <Plus size={15} />
                                 Create Column
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+            {/* ── EDIT COLUMN MODAL ── */}
+            {showEditColumnModal && (
+                <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/40 px-4">
+                    <div className="bg-white rounded-xl shadow-2xl w-full max-w-sm p-6 relative">
+
+                        <div className="flex items-center justify-between mb-5">
+                            <div>
+                                <h2 className="text-lg font-bold text-gray-800">Edit Column</h2>
+                                <p className="text-xs text-gray-400 mt-0.5">Editing: <span className="font-semibold text-orange-500">{editingColumn?.status}</span></p>
+                            </div>
+                            <button onClick={() => setShowEditColumnModal(false)} className="text-gray-400 hover:text-red-500 hover:cursor-pointer transition-colors">
+                                <X size={20} />
+                            </button>
+                        </div>
+
+                        {editColumnError && (
+                            <div className="mb-4 text-xs text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
+                                {editColumnError}
+                            </div>
+                        )}
+
+                        <div className="flex flex-col gap-4">
+                            <div>
+                                <label className="text-xs font-semibold text-gray-600 mb-1 block">Column Name <span className="text-red-500">*</span></label>
+                                <input
+                                    type="text"
+                                    value={editColumnForm.status}
+                                    onChange={e => setEditColumnForm(p => ({ ...p, status: e.target.value }))}
+                                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent"
+                                />
+                            </div>
+                            <div>
+                                <label className="text-xs font-semibold text-gray-600 mb-1 block">Column Color</label>
+                                <div className="flex items-center gap-3">
+                                    <input
+                                        type="color"
+                                        value={editColumnForm.color}
+                                        onChange={e => setEditColumnForm(p => ({ ...p, color: e.target.value }))}
+                                        className="w-10 h-10 rounded-lg border border-gray-200 hover:cursor-pointer p-0.5"
+                                    />
+                                    <span className="text-sm text-gray-500">{editColumnForm.color}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="flex gap-3 mt-6">
+                            <button
+                                onClick={() => setShowEditColumnModal(false)}
+                                className="flex-1 border border-gray-200 rounded-lg py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50 hover:cursor-pointer transition-colors"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                onClick={handleEditColumn}
+                                disabled={editColumnSaving}
+                                className="flex-1 bg-orange-500 hover:bg-orange-600 disabled:opacity-60 rounded-lg py-2 text-sm font-semibold text-white hover:cursor-pointer transition-colors"
+                            >
+                                {editColumnSaving ? "Saving..." : "Save Changes"}
                             </button>
                         </div>
                     </div>

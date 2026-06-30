@@ -17,18 +17,53 @@ import { Menu, X, Star, Lock, ChevronDown, Pencil, Phone, MessageCircle, FileTex
 function Leads_details(){
     const { state } = useLocation();
     const navigate = useNavigate();
-    const lead = state?.lead || {};
+    const leadData = state?.lead || {};
     const columnStatus = state?.columnStatus || "Unknown";
-    const columnColor = state?.columnColor || "#1AA3E8";
+    const columnColor  = state?.columnColor  || "#1AA3E8";
 
-    // Derive initials and fallback values
-    const initials = lead.initials || "??";
-    const name = lead.name || "Unknown Lead";
-    const email = lead.email || "N/A";
-    const phone = lead.phone || "N/A";
-    const location = lead.location || "N/A";
-    const value = lead.value || "$0";
-    const iconBg = lead.iconBg || "#1AA3E8";
+    // Use state so UI reflects edits immediately after save
+    const [name,     setName]     = useState(leadData.name     || "Unknown Lead");
+    const [email]                 = useState(leadData.email    || "N/A");   // identifier — not editable
+    const [phone,    setPhone]    = useState(leadData.phone    || "N/A");
+    const [location, setLocation] = useState(leadData.location || "N/A");
+    const [value,    setValue]    = useState(leadData.value    || "$0");
+    const [iconBg]                = useState(leadData.iconBg   || "#1AA3E8");
+
+    // Derive initials from current name
+    const initials = name.trim().split(' ').map(w => w[0]?.toUpperCase()).slice(0, 2).join('');
+
+    // ── Edit modal state ────────────────────────────────────────────────────
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [editForm, setEditForm]           = useState({});
+    const [editError, setEditError]         = useState("");
+    const [saving, setSaving]               = useState(false);
+
+    const openEdit = () => {
+        setEditForm({ name, phone, location, value });
+        setEditError("");
+        setShowEditModal(true);
+    };
+
+    const handleSave = async () => {
+        if (!editForm.name?.trim()) { setEditError("Name is required."); return; }
+        setSaving(true);
+        try {
+            const res = await fetch(
+                `http://localhost:5000/api/leads/columns/${encodeURIComponent(columnStatus)}/leads/${encodeURIComponent(email)}`,
+                { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify(editForm) }
+            );
+            if (!res.ok) { const e = await res.json(); setEditError(e.error || "Failed to save."); setSaving(false); return; }
+            // Update local state so the page reflects changes without a reload
+            setName(editForm.name.trim());
+            setPhone(editForm.phone?.trim() || phone);
+            setLocation(editForm.location?.trim() || location);
+            setValue(editForm.value?.trim() || value);
+            setShowEditModal(false);
+        } catch {
+            setEditError("Could not reach the server.");
+        }
+        setSaving(false);
+    };
 
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [activeTab, setActiveTab] = useState("Activities");
@@ -185,7 +220,7 @@ function Leads_details(){
                         <div className="bg-white rounded-xl border border-gray-200 shadow-[0_1px_3px_rgba(0,0,0,0.12)] p-4">
                             <div className="flex justify-between items-center mb-3">
                                 <span className="font-semibold text-base">Lead information</span>
-                                <Pencil size={15} className="text-gray-400 hover:text-orange-500 hover:cursor-pointer" />
+                                <Pencil size={15} className="text-gray-400 hover:text-orange-500 hover:cursor-pointer" onClick={openEdit} />
                             </div>
                             <div className="flex flex-col gap-3 text-sm">
                                 <div className="flex justify-between items-center">
@@ -439,6 +474,87 @@ function Leads_details(){
                 </div>
 
             </div>
+
+            {/* ── EDIT LEAD MODAL ── */}
+            {showEditModal && (
+                <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/40 px-4">
+                    <div className="bg-white rounded-xl shadow-2xl w-full max-w-md p-6 relative">
+
+                        {/* Header */}
+                        <div className="flex items-center justify-between mb-5">
+                            <div>
+                                <h2 className="text-lg font-bold text-gray-800">Edit Lead</h2>
+                                <p className="text-xs text-gray-400 mt-0.5">{email}</p>
+                            </div>
+                            <button onClick={() => setShowEditModal(false)} className="text-gray-400 hover:text-red-500 hover:cursor-pointer transition-colors">
+                                <X size={20} />
+                            </button>
+                        </div>
+
+                        {editError && (
+                            <div className="mb-4 text-xs text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
+                                {editError}
+                            </div>
+                        )}
+
+                        <div className="flex flex-col gap-3">
+                            <div>
+                                <label className="text-xs font-semibold text-gray-600 mb-1 block">Full Name <span className="text-red-500">*</span></label>
+                                <input
+                                    type="text"
+                                    value={editForm.name}
+                                    onChange={e => setEditForm(p => ({ ...p, name: e.target.value }))}
+                                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+                                />
+                            </div>
+                            <div>
+                                <label className="text-xs font-semibold text-gray-600 mb-1 block">Deal Value</label>
+                                <input
+                                    type="text"
+                                    value={editForm.value}
+                                    onChange={e => setEditForm(p => ({ ...p, value: e.target.value }))}
+                                    placeholder="e.g. $3,50,000"
+                                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+                                />
+                            </div>
+                            <div>
+                                <label className="text-xs font-semibold text-gray-600 mb-1 block">Phone</label>
+                                <input
+                                    type="text"
+                                    value={editForm.phone}
+                                    onChange={e => setEditForm(p => ({ ...p, phone: e.target.value }))}
+                                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+                                />
+                            </div>
+                            <div>
+                                <label className="text-xs font-semibold text-gray-600 mb-1 block">Location</label>
+                                <input
+                                    type="text"
+                                    value={editForm.location}
+                                    onChange={e => setEditForm(p => ({ ...p, location: e.target.value }))}
+                                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="flex gap-3 mt-6">
+                            <button
+                                onClick={() => setShowEditModal(false)}
+                                className="flex-1 border border-gray-200 rounded-lg py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50 hover:cursor-pointer transition-colors"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                onClick={handleSave}
+                                disabled={saving}
+                                className="flex-1 bg-orange-500 hover:bg-orange-600 disabled:opacity-60 rounded-lg py-2 text-sm font-semibold text-white hover:cursor-pointer transition-colors"
+                            >
+                                {saving ? "Saving..." : "Save Changes"}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }
