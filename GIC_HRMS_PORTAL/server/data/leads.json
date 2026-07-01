@@ -12,7 +12,27 @@
         "email": "linda@gmail.com",
         "phone": "(193) 7839 748",
         "location": "Austin, United States",
-        "iconBg": "#1AA3E8"
+        "iconBg": "#1AA3E8",
+        "notes": [],
+        "calls": [
+          {
+            "id": 1782882940535,
+            "note": "marketing call at 5:00pm",
+            "status": "No Answer",
+            "loggedAt": "2026-07-01T05:15:40.535Z"
+          }
+        ],
+        "files": [
+          {
+            "id": 1782882976508,
+            "title": "marketing stratergy",
+            "description": "marketing stratergy",
+            "type": "Proposal",
+            "owner": "Linda White",
+            "status": "Proposal",
+            "createdAt": "2026-07-01T05:16:16.508Z"
+          }
+        ]
       }
     ]
   },

@@ -12,7 +12,7 @@ import meetingAvatar from "./assests_crm/person-m-3.webp"
 
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Menu, X, Star, Lock, ChevronDown, Pencil, Phone, MessageCircle, FileText, Mail, CalendarDays, Link2, UserCircle2, Plus, ArrowLeft } from "lucide-react";
+import { Menu, X, Star, Lock, ChevronDown, Pencil, Trash2, Phone, MessageCircle, FileText, Mail, CalendarDays, Link2, UserCircle2, Plus, ArrowLeft } from "lucide-react";
 
 function Leads_details(){
     const { state } = useLocation();
@@ -67,6 +67,93 @@ function Leads_details(){
 
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [activeTab, setActiveTab] = useState("Activities");
+
+    const API = "http://localhost:5000/api/leads";
+
+    // ── Notes state ──────────────────────────────────────────────────────────
+    const [notes, setNotes]             = useState([]);
+    const [noteText, setNoteText]       = useState("");
+    const [editingNote, setEditingNote] = useState(null); // { id, text }
+    const [noteSaving, setNoteSaving]   = useState(false);
+
+    // ── Calls state ──────────────────────────────────────────────────────────
+    const [calls, setCalls]           = useState([]);
+    const [callNote, setCallNote]     = useState("");
+    const [callStatus, setCallStatus] = useState("Answered");
+    const [callSaving, setCallSaving] = useState(false);
+    const callStatuses = ["Answered", "Busy", "No Answer", "Left Voicemail"];
+
+    // ── Files state ──────────────────────────────────────────────────────────
+    const [files, setFiles]               = useState([]);
+    const [showFileModal, setShowFileModal] = useState(false);
+    const [fileForm, setFileForm]         = useState({ title: "", description: "", type: "Proposal", owner: name });
+    const [fileSaving, setFileSaving]     = useState(false);
+
+    // Fetch on tab switch
+    const fetchTab = async (tab) => {
+        if (tab === "Notes")  { const r = await fetch(`${API}/lead/${encodeURIComponent(email)}/notes`);  setNotes(await r.json()); }
+        if (tab === "Calls")  { const r = await fetch(`${API}/lead/${encodeURIComponent(email)}/calls`);  setCalls(await r.json()); }
+        if (tab === "Files")  { const r = await fetch(`${API}/lead/${encodeURIComponent(email)}/files`);  setFiles(await r.json()); }
+    };
+
+    const handleTabClick = (tab) => { setActiveTab(tab); fetchTab(tab); };
+
+    // ── Notes handlers ───────────────────────────────────────────────────────
+    const handleAddNote = async () => {
+        if (!noteText.trim()) return;
+        setNoteSaving(true);
+        const r = await fetch(`${API}/lead/${encodeURIComponent(email)}/notes`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text: noteText }) });
+        if (r.ok) { setNotes(await fetch(`${API}/lead/${encodeURIComponent(email)}/notes`).then(x => x.json())); setNoteText(""); }
+        setNoteSaving(false);
+    };
+
+    const handleEditNote = async (id, text) => {
+        await fetch(`${API}/lead/${encodeURIComponent(email)}/notes/${id}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text }) });
+        setNotes(await fetch(`${API}/lead/${encodeURIComponent(email)}/notes`).then(x => x.json()));
+        setEditingNote(null);
+    };
+
+    const handleDeleteNote = async (id) => {
+        await fetch(`${API}/lead/${encodeURIComponent(email)}/notes/${id}`, { method: "DELETE" });
+        setNotes(prev => prev.filter(n => n.id !== id));
+    };
+
+    // ── Calls handlers ───────────────────────────────────────────────────────
+    const handleLogCall = async () => {
+        if (!callNote.trim()) return;
+        setCallSaving(true);
+        const r = await fetch(`${API}/lead/${encodeURIComponent(email)}/calls`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ note: callNote, status: callStatus }) });
+        if (r.ok) { setCalls(await fetch(`${API}/lead/${encodeURIComponent(email)}/calls`).then(x => x.json())); setCallNote(""); setCallStatus("Answered"); }
+        setCallSaving(false);
+    };
+
+    const handleUpdateCallStatus = async (id, status) => {
+        await fetch(`${API}/lead/${encodeURIComponent(email)}/calls/${id}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ status }) });
+        setCalls(prev => prev.map(c => c.id === id ? { ...c, status } : c));
+    };
+
+    const handleDeleteCall = async (id) => {
+        await fetch(`${API}/lead/${encodeURIComponent(email)}/calls/${id}`, { method: "DELETE" });
+        setCalls(prev => prev.filter(c => c.id !== id));
+    };
+
+    // ── Files handlers ───────────────────────────────────────────────────────
+    const handleAddFile = async () => {
+        if (!fileForm.title.trim()) return;
+        setFileSaving(true);
+        const r = await fetch(`${API}/lead/${encodeURIComponent(email)}/files`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...fileForm, owner: name }) });
+        if (r.ok) { setFiles(await fetch(`${API}/lead/${encodeURIComponent(email)}/files`).then(x => x.json())); setShowFileModal(false); setFileForm({ title: "", description: "", type: "Proposal", owner: name }); }
+        setFileSaving(false);
+    };
+
+    const handleDeleteFile = async (id) => {
+        await fetch(`${API}/lead/${encodeURIComponent(email)}/files/${id}`, { method: "DELETE" });
+        setFiles(prev => prev.filter(f => f.id !== id));
+    };
+
+    // ── Helpers ──────────────────────────────────────────────────────────────
+    const fmtDate = (iso) => new Date(iso).toLocaleString("en-GB", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" });
+    const statusColor = (s) => ({ Answered: "bg-green-100 text-green-600 border-green-200", Busy: "bg-red-100 text-red-500 border-red-200", "No Answer": "bg-purple-100 text-purple-600 border-purple-200", "Left Voicemail": "bg-yellow-100 text-yellow-600 border-yellow-200" }[s] || "bg-gray-100 text-gray-600 border-gray-200");
 
     const tabs = ["Activities", "Notes", "Calls", "Files", "Email"];
 
@@ -360,7 +447,7 @@ function Leads_details(){
                                 {tabs.map((tab) => (
                                     <button
                                         key={tab}
-                                        onClick={() => setActiveTab(tab)}
+                                        onClick={() => handleTabClick(tab)}
                                         className={`pb-3 text-sm font-medium whitespace-nowrap flex items-center gap-1.5 hover:cursor-pointer border-b-2 transition-colors ${
                                             activeTab === tab
                                                 ? "border-orange-500 text-orange-500"
@@ -456,10 +543,194 @@ function Leads_details(){
                                 </div>
                             )}
 
-                            {/* Placeholder for other tabs */}
-                            {activeTab !== "Activities" && (
-                                <div className="mt-8 text-center text-gray-400 text-sm py-8">
-                                    No {activeTab} found.
+                            {/* Notes Tab */}
+                            {activeTab === "Notes" && (
+                                <div className="mt-4 flex flex-col gap-4">
+                                    <div className="flex items-center justify-between">
+                                        <span className="font-semibold text-base">Notes</span>
+                                        <div className="flex items-center gap-2">
+                                            <button className="flex items-center gap-1 text-sm border border-gray-200 rounded-lg px-3 py-1 hover:bg-gray-50 hover:cursor-pointer">
+                                                Sort By : Last 7 Days <ChevronDown size={14} />
+                                            </button>
+                                            <button onClick={handleAddNote} disabled={noteSaving || !noteText.trim()} className="flex items-center gap-1 text-sm text-orange-500 font-semibold hover:cursor-pointer disabled:opacity-40">
+                                                <Plus size={15} /> Add Note
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    {/* Add Note input */}
+                                    <div className="border border-gray-200 rounded-xl p-3 flex flex-col gap-2">
+                                        <textarea
+                                            rows={3}
+                                            placeholder="Write a note..."
+                                            value={noteText}
+                                            onChange={e => setNoteText(e.target.value)}
+                                            className="w-full text-sm resize-none focus:outline-none text-gray-700 placeholder-gray-400"
+                                        />
+                                        <div className="flex justify-end">
+                                            <button onClick={handleAddNote} disabled={noteSaving || !noteText.trim()} className="bg-orange-500 hover:bg-orange-600 disabled:opacity-50 text-white text-xs font-semibold px-4 py-1.5 rounded-lg hover:cursor-pointer transition-colors">
+                                                {noteSaving ? "Saving..." : "Add Note"}
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    {/* Notes list */}
+                                    {notes.length === 0 && <p className="text-center text-gray-400 text-sm py-6">No notes yet.</p>}
+                                    {notes.map(note => (
+                                        <div key={note.id} className="border border-gray-200 rounded-xl p-4 flex flex-col gap-2">
+                                            <div className="flex items-start justify-between gap-2">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="w-9 h-9 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0" style={{ backgroundColor: iconBg }}>{initials}</div>
+                                                    <div>
+                                                        <p className="font-semibold text-sm">{name}</p>
+                                                        <p className="text-xs text-gray-400">{fmtDate(note.createdAt)}{note.updatedAt ? " · edited" : ""}</p>
+                                                    </div>
+                                                </div>
+                                                <div className="flex gap-2 flex-shrink-0">
+                                                    <Pencil size={15} className="text-gray-400 hover:text-orange-500 hover:cursor-pointer" onClick={() => setEditingNote({ id: note.id, text: note.text })} />
+                                                    <Trash2 size={15} className="text-gray-400 hover:text-red-500 hover:cursor-pointer" onClick={() => handleDeleteNote(note.id)} />
+                                                </div>
+                                            </div>
+                                            {editingNote?.id === note.id ? (
+                                                <div className="flex flex-col gap-2 mt-1">
+                                                    <textarea rows={3} value={editingNote.text} onChange={e => setEditingNote(p => ({ ...p, text: e.target.value }))} className="w-full border border-gray-200 rounded-lg p-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 resize-none" />
+                                                    <div className="flex gap-2 justify-end">
+                                                        <button onClick={() => setEditingNote(null)} className="text-xs px-3 py-1 border border-gray-200 rounded-lg hover:bg-gray-50 hover:cursor-pointer">Cancel</button>
+                                                        <button onClick={() => handleEditNote(note.id, editingNote.text)} className="text-xs px-3 py-1 bg-orange-500 text-white rounded-lg hover:bg-orange-600 hover:cursor-pointer">Save</button>
+                                                    </div>
+                                                </div>
+                                            ) : (
+                                                <p className="text-sm text-gray-600 leading-relaxed">{note.text}</p>
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+
+                            {/* Calls Tab */}
+                            {activeTab === "Calls" && (
+                                <div className="mt-4 flex flex-col gap-4">
+                                    <div className="flex items-center justify-between">
+                                        <span className="font-semibold text-base">Calls</span>
+                                        <button onClick={handleLogCall} disabled={callSaving || !callNote.trim()} className="flex items-center gap-1 text-sm text-orange-500 font-semibold hover:cursor-pointer disabled:opacity-40">
+                                            <Plus size={15} /> Add New
+                                        </button>
+                                    </div>
+
+                                    {/* Log call input */}
+                                    <div className="border border-gray-200 rounded-xl p-3 flex flex-col gap-3">
+                                        <textarea
+                                            rows={2}
+                                            placeholder="Call notes..."
+                                            value={callNote}
+                                            onChange={e => setCallNote(e.target.value)}
+                                            className="w-full text-sm resize-none focus:outline-none text-gray-700 placeholder-gray-400"
+                                        />
+                                        <div className="flex items-center justify-between flex-wrap gap-2">
+                                            <div className="flex items-center gap-2">
+                                                <span className="text-xs text-gray-500">Status:</span>
+                                                <select value={callStatus} onChange={e => setCallStatus(e.target.value)} className="text-xs border border-gray-200 rounded-lg px-2 py-1 focus:outline-none focus:ring-2 focus:ring-orange-400">
+                                                    {callStatuses.map(s => <option key={s}>{s}</option>)}
+                                                </select>
+                                            </div>
+                                            <button onClick={handleLogCall} disabled={callSaving || !callNote.trim()} className="bg-orange-500 hover:bg-orange-600 disabled:opacity-50 text-white text-xs font-semibold px-4 py-1.5 rounded-lg hover:cursor-pointer transition-colors">
+                                                {callSaving ? "Logging..." : "Log Call"}
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    {/* Calls list */}
+                                    {calls.length === 0 && <p className="text-center text-gray-400 text-sm py-6">No calls logged yet.</p>}
+                                    {calls.map(call => (
+                                        <div key={call.id} className="border border-gray-200 rounded-xl p-4 flex flex-col gap-2">
+                                            <div className="flex items-start justify-between gap-2">
+                                                <div className="flex items-center gap-3 flex-wrap">
+                                                    <div className="w-9 h-9 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0" style={{ backgroundColor: iconBg }}>{initials}</div>
+                                                    <div>
+                                                        <span className="font-semibold text-sm">{name}</span>
+                                                        <span className="text-gray-500 text-sm"> logged a call on {fmtDate(call.loggedAt)}</span>
+                                                    </div>
+                                                </div>
+                                                <div className="flex items-center gap-2 flex-shrink-0">
+                                                    <select value={call.status} onChange={e => handleUpdateCallStatus(call.id, e.target.value)} className={`text-xs border rounded-lg px-2 py-1 font-medium focus:outline-none focus:ring-2 focus:ring-orange-400 hover:cursor-pointer ${statusColor(call.status)}`}>
+                                                        {callStatuses.map(s => <option key={s}>{s}</option>)}
+                                                    </select>
+                                                    <Trash2 size={15} className="text-gray-400 hover:text-red-500 hover:cursor-pointer" onClick={() => handleDeleteCall(call.id)} />
+                                                </div>
+                                            </div>
+                                            <p className="text-sm text-gray-600 leading-relaxed ml-12">{call.note}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+
+                            {/* Files Tab */}
+                            {activeTab === "Files" && (
+                                <div className="mt-4 flex flex-col gap-4">
+                                    {/* Manage Documents banner */}
+                                    <div className="border border-gray-200 rounded-xl p-4 flex items-center justify-between">
+                                        <div>
+                                            <p className="font-semibold text-sm">Manage Documents</p>
+                                            <p className="text-xs text-gray-500 mt-0.5">Send customizable quotes, proposals and contracts to close deals faster.</p>
+                                        </div>
+                                        <button onClick={() => { setShowFileModal(true); setFileForm({ title: "", description: "", type: "Proposal", owner: name }); }} className="bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold px-4 py-2 rounded-lg hover:cursor-pointer transition-colors whitespace-nowrap">
+                                            Create Document
+                                        </button>
+                                    </div>
+
+                                    {/* Files list */}
+                                    {files.length === 0 && <p className="text-center text-gray-400 text-sm py-6">No documents yet.</p>}
+                                    {files.map(file => (
+                                        <div key={file.id} className="border border-gray-200 rounded-xl p-4 flex flex-col gap-3">
+                                            <div className="flex items-start justify-between gap-2">
+                                                <div>
+                                                    <p className="font-semibold text-sm">{file.title}</p>
+                                                    <p className="text-xs text-gray-500 mt-0.5">{file.description || "No description."}</p>
+                                                </div>
+                                                <div className="flex gap-2 flex-shrink-0">
+                                                    <Trash2 size={15} className="text-gray-400 hover:text-red-500 hover:cursor-pointer" onClick={() => handleDeleteFile(file.id)} />
+                                                </div>
+                                            </div>
+                                            <div className="flex items-center justify-between flex-wrap gap-2">
+                                                <div className="flex items-center gap-2">
+                                                    <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0" style={{ backgroundColor: iconBg }}>{initials}</div>
+                                                    <div>
+                                                        <p className="text-xs text-gray-400">Owner</p>
+                                                        <p className="text-sm font-semibold">{file.owner}</p>
+                                                    </div>
+                                                </div>
+                                                <div className="flex items-center gap-2">
+                                                    <span className="text-xs px-2 py-0.5 rounded-full border border-pink-200 text-pink-500">{file.type}</span>
+                                                    <span className="text-xs px-2 py-0.5 rounded-full border border-gray-200 text-gray-500 flex items-center gap-1">
+                                                        <span className="w-1.5 h-1.5 rounded-full bg-gray-400 inline-block"></span>{file.status}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+
+                            {/* Email Tab */}
+                            {activeTab === "Email" && (
+                                <div className="mt-4">
+                                    <span className="font-semibold text-base">Email</span>
+                                    <div className="mt-4 border border-gray-200 rounded-xl p-4 flex items-center justify-between">
+                                        <div>
+                                            <p className="font-semibold text-sm">Manage Emails</p>
+                                            <p className="text-xs text-gray-500 mt-0.5">You can send and reply to emails directly via this section.</p>
+                                        </div>
+                                        <a href={`mailto:${email}`} className="bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold px-4 py-2 rounded-lg hover:cursor-pointer transition-colors whitespace-nowrap">
+                                            Send Email
+                                        </a>
+                                    </div>
+                                    <div className="mt-4 flex items-center gap-3 p-3 border border-gray-200 rounded-xl">
+                                        <Mail size={18} className="text-orange-500 flex-shrink-0" />
+                                        <div>
+                                            <p className="text-sm font-semibold">{email}</p>
+                                            <p className="text-xs text-gray-400">Lead email address</p>
+                                        </div>
+                                    </div>
                                 </div>
                             )}
                         </div>
@@ -550,6 +821,42 @@ function Leads_details(){
                                 className="flex-1 bg-orange-500 hover:bg-orange-600 disabled:opacity-60 rounded-lg py-2 text-sm font-semibold text-white hover:cursor-pointer transition-colors"
                             >
                                 {saving ? "Saving..." : "Save Changes"}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+            {/* ── CREATE DOCUMENT MODAL ── */}
+            {showFileModal && (
+                <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/40 px-4">
+                    <div className="bg-white rounded-xl shadow-2xl w-full max-w-md p-6">
+                        <div className="flex items-center justify-between mb-5">
+                            <h2 className="text-lg font-bold text-gray-800">Create Document</h2>
+                            <button onClick={() => setShowFileModal(false)} className="text-gray-400 hover:text-red-500 hover:cursor-pointer"><X size={20} /></button>
+                        </div>
+                        <div className="flex flex-col gap-3">
+                            <div>
+                                <label className="text-xs font-semibold text-gray-600 mb-1 block">Title <span className="text-red-500">*</span></label>
+                                <input type="text" value={fileForm.title} onChange={e => setFileForm(p => ({ ...p, title: e.target.value }))} placeholder="e.g. Collier-Turner Proposal" className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400" />
+                            </div>
+                            <div>
+                                <label className="text-xs font-semibold text-gray-600 mb-1 block">Description</label>
+                                <input type="text" value={fileForm.description} onChange={e => setFileForm(p => ({ ...p, description: e.target.value }))} placeholder="Brief description..." className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400" />
+                            </div>
+                            <div>
+                                <label className="text-xs font-semibold text-gray-600 mb-1 block">Type</label>
+                                <select value={fileForm.type} onChange={e => setFileForm(p => ({ ...p, type: e.target.value }))} className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400">
+                                    <option>Proposal</option>
+                                    <option>Quote</option>
+                                    <option>Contract</option>
+                                    <option>Invoice</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div className="flex gap-3 mt-6">
+                            <button onClick={() => setShowFileModal(false)} className="flex-1 border border-gray-200 rounded-lg py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50 hover:cursor-pointer">Cancel</button>
+                            <button onClick={handleAddFile} disabled={fileSaving || !fileForm.title.trim()} className="flex-1 bg-orange-500 hover:bg-orange-600 disabled:opacity-50 rounded-lg py-2 text-sm font-semibold text-white hover:cursor-pointer transition-colors">
+                                {fileSaving ? "Creating..." : "Create Document"}
                             </button>
                         </div>
                     </div>
