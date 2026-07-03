@@ -617,3 +617,45 @@ router.delete('/:email/files/:fileId', (req, res) => {
 
 
 module.exports = router;
+
+// ════════════════════════════════════════════════════════════════════════════════
+//  FOLLOW-UPS ROUTES  —  /api/leads/lead/:email/followups
+// ════════════════════════════════════════════════════════════════════════════════
+
+// GET all follow-ups
+router.get('/lead/:email/followups', (req, res) => {
+    try {
+        const data = readData();
+        const lead = getLeadByEmail(data, decodeURIComponent(req.params.email));
+        if (!lead) return res.status(404).json({ error: 'Lead not found.' });
+        res.json(lead.followUps || []);
+    } catch { res.status(500).json({ error: 'Failed to fetch follow-ups.' }); }
+});
+
+// POST add a follow-up
+router.post('/lead/:email/followups', (req, res) => {
+    try {
+        const { date, time, note, priority } = req.body;
+        if (!date) return res.status(400).json({ error: 'Date is required.' });
+        const data = readData();
+        const lead = getLeadByEmail(data, decodeURIComponent(req.params.email));
+        if (!lead) return res.status(404).json({ error: 'Lead not found.' });
+        if (!lead.followUps) lead.followUps = [];
+        const followUp = { id: Date.now(), date, time: time || '', note: note || '', priority: priority || 'Medium', createdAt: new Date().toISOString() };
+        lead.followUps.push(followUp);
+        writeData(data);
+        res.status(201).json(followUp);
+    } catch { res.status(500).json({ error: 'Failed to add follow-up.' }); }
+});
+
+// DELETE a follow-up
+router.delete('/lead/:email/followups/:followUpId', (req, res) => {
+    try {
+        const data = readData();
+        const lead = getLeadByEmail(data, decodeURIComponent(req.params.email));
+        if (!lead) return res.status(404).json({ error: 'Lead not found.' });
+        lead.followUps = (lead.followUps || []).filter(f => f.id !== Number(req.params.followUpId));
+        writeData(data);
+        res.json({ message: 'Follow-up deleted.' });
+    } catch { res.status(500).json({ error: 'Failed to delete follow-up.' }); }
+});
