@@ -1,0 +1,86 @@
+[
+  {
+    "id": 1783169528776,
+    "name": "Maria Garcia Deal",
+    "company": "Nexora Solutions",
+    "amount": "$4,10,000",
+    "stage": "Qualification",
+    "closeDate": "",
+    "assignedTo": "Shreya Roy",
+    "notes": "",
+    "source": "converted",
+    "createdAt": "2026-07-04T12:52:08.776Z"
+  },
+  {
+    "id": 3001,
+    "name": "BrightWave Enterprise Deal",
+    "company": "BrightWave Innovations",
+    "amount": "$3,50,000",
+    "stage": "Closed Won",
+    "closeDate": "2026-06-30",
+    "assignedTo": "Vaughan Iyer",
+    "notes": "Full enterprise suite deployment. Client is very satisfied.",
+    "source": "converted",
+    "createdAt": "2026-06-10T10:00:00.000Z"
+  },
+  {
+    "id": 3002,
+    "name": "Nexora Q3 Finance Module",
+    "company": "Nexora Solutions",
+    "amount": "$4,10,000",
+    "stage": "Negotiation",
+    "closeDate": "2026-07-15",
+    "assignedTo": "Shreya Roy",
+    "notes": "Contract review in progress. Legal team involved.",
+    "source": "converted",
+    "createdAt": "2026-06-12T11:30:00.000Z"
+  },
+  {
+    "id": 3003,
+    "name": "Collier-Turner Property Portal",
+    "company": "Collier-Turner Group",
+    "amount": "$2,80,000",
+    "stage": "Proposal",
+    "closeDate": "2026-07-25",
+    "assignedTo": "Daksh Rikhari",
+    "notes": "Proposal sent. Awaiting feedback from their board.",
+    "source": "manual",
+    "createdAt": "2026-06-15T09:15:00.000Z"
+  },
+  {
+    "id": 3004,
+    "name": "Zenith Patient Management System",
+    "company": "Zenith Healthcare",
+    "amount": "$5,20,000",
+    "stage": "Qualification",
+    "closeDate": "2026-08-10",
+    "assignedTo": "Arjun Mehta",
+    "notes": "Initial BANT screening done. Budget confirmed.",
+    "source": "manual",
+    "createdAt": "2026-06-18T14:00:00.000Z"
+  },
+  {
+    "id": 3005,
+    "name": "Orion Retail Inventory Deal",
+    "company": "Orion Retail Co.",
+    "amount": "$1,90,000",
+    "stage": "Closed Lost",
+    "closeDate": "2026-06-20",
+    "assignedTo": "Priya Sharma",
+    "notes": "Lost to competitor. Price was the deciding factor.",
+    "source": "manual",
+    "createdAt": "2026-06-20T08:45:00.000Z"
+  },
+  {
+    "id": 3006,
+    "name": "BrightWave Phase 2 Expansion",
+    "company": "BrightWave Innovations",
+    "amount": "$2,40,000",
+    "stage": "Prospecting",
+    "closeDate": "2026-09-01",
+    "assignedTo": "Vaughan Iyer",
+    "notes": "Follow-up call scheduled. They are interested in expanding.",
+    "source": "manual",
+    "createdAt": "2026-06-25T12:00:00.000Z"
+  }
+]

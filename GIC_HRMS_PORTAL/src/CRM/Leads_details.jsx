@@ -65,10 +65,25 @@ function Leads_details(){
     // ── Qualify / Outcome modal ──────────────────────────────────────────────
     const [showQualifyModal,  setShowQualifyModal]  = useState(false);
     const [showConvertModal,  setShowConvertModal]  = useState(false);
-    const [convertForm,       setConvertForm]       = useState({ company: "", opportunity: "", amount: value });
+    const [convertForm,       setConvertForm]       = useState({ company: "", opportunity: "", amount: value, stage: "Qualification", assignedRep: "" });
     const [convertSaving,     setConvertSaving]     = useState(false);
     const [disqualifyReason,  setDisqualifyReason]  = useState("No Budget");
     const [showDisqualifyModal, setShowDisqualifyModal] = useState(false);
+
+    // Existing accounts for dropdown
+    const [existingAccounts, setExistingAccounts] = useState([]);
+    const opportunityStages = ["Prospecting", "Qualification", "Proposal", "Negotiation", "Closed Won"];
+
+    const openConvertModal = async () => {
+        setShowQualifyModal(false);
+        // Fetch existing accounts to populate dropdown
+        try {
+            const r = await fetch("http://localhost:5000/api/accounts");
+            if (r.ok) setExistingAccounts(await r.json());
+        } catch { setExistingAccounts([]); }
+        setConvertForm({ company: "", isNewCompany: true, opportunity: `${name} Deal`, amount: value, stage: "Qualification", assignedRep: assignedTo || "" });
+        setShowConvertModal(true);
+    };
 
     const handleSetOutcome = async (outcome) => {
         try {
@@ -80,11 +95,48 @@ function Leads_details(){
         setShowDisqualifyModal(false);
     };
 
+    // ── Lead Assignment Engine ───────────────────────────────────────────────
+    const salesReps = ["Vaughan Iyer", "Daksh Rikhari", "Shreya Roy", "Arjun Mehta", "Priya Sharma"];
+    const [assignedTo, setAssignedTo] = useState(leadData.assignedTo || "");
+    const [assignSaving, setAssignSaving] = useState(false);
+
+    const handleAssign = async (rep) => {
+        setAssignedTo(rep);
+        setAssignSaving(true);
+        try {
+            await fetch(`${API}/columns/${encodeURIComponent(columnStatus)}/leads/${encodeURIComponent(email)}`,
+                { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ assignedTo: rep }) });
+        } catch { /* silent */ }
+        setAssignSaving(false);
+    };
+
     const handleConvert = async () => {
         setConvertSaving(true);
         try {
+            // 1. Update lead outcome
             await fetch(`${API}/columns/${encodeURIComponent(columnStatus)}/leads/${encodeURIComponent(email)}`,
                 { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ leadOutcome: "Converted", convertedData: convertForm }) });
+
+            // 2. Create Account (only if new)
+            if (convertForm.isNewCompany && convertForm.company.trim()) {
+                await fetch("http://localhost:5000/api/accounts", {
+                    method: "POST", headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ company: convertForm.company.trim(), email, phone, location, source: "converted" })
+                });
+            }
+
+            // 3. Create Contact
+            await fetch("http://localhost:5000/api/contacts", {
+                method: "POST", headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name, email, phone, location, company: convertForm.company || "", iconBg, source: "converted" })
+            });
+
+            // 4. Create Opportunity
+            await fetch("http://localhost:5000/api/opportunities", {
+                method: "POST", headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name: convertForm.opportunity || `${name} Deal`, company: convertForm.company || name, amount: convertForm.amount || value, stage: convertForm.stage || "Qualification", assignedTo: convertForm.assignedRep || assignedTo, source: "converted" })
+            });
+
             setLeadStatus("Converted");
             setShowConvertModal(false);
         } catch { alert("Could not reach server."); }
@@ -365,6 +417,34 @@ function Leads_details(){
                             <div className="flex items-center gap-3">
                                 <img src={ownerAvatar} alt="owner" className="w-9 h-9 rounded-full object-cover"/>
                                 <span className="font-medium">Vaughan Iyer</span>
+                            </div>
+                        </div>
+
+                        {/* Lead Assignment */}
+                        <div className="bg-white rounded-xl border border-gray-200 shadow-[0_1px_3px_rgba(0,0,0,0.12)] p-4">
+                            <div className="flex justify-between items-center mb-3">
+                                <span className="font-semibold text-base">Assigned To</span>
+                                {assignSaving && <span className="text-xs text-orange-500">Saving...</span>}
+                            </div>
+                            {assignedTo ? (
+                                <div className="flex items-center justify-between">
+                                    <div className="flex items-center gap-2">
+                                        <div className="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center text-white text-xs font-bold">
+                                            {assignedTo.split(" ").map(w=>w[0]).join("")}
+                                        </div>
+                                        <span className="text-sm font-medium">{assignedTo}</span>
+                                    </div>
+                                    <button onClick={() => handleAssign("")} className="text-xs text-gray-400 hover:text-red-500 hover:cursor-pointer">Unassign</button>
+                                </div>
+                            ) : (
+                                <p className="text-sm text-gray-400 mb-2">Not assigned yet</p>
+                            )}
+                            <div className="mt-3">
+                                <select value={assignedTo} onChange={e => handleAssign(e.target.value)}
+                                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400">
+                                    <option value="">Select a sales rep...</option>
+                                    {salesReps.map(rep => <option key={rep} value={rep}>{rep}</option>)}
+                                </select>
                             </div>
                         </div>
 
@@ -781,7 +861,7 @@ function Leads_details(){
                         </div>
                         <p className="text-sm text-gray-500 mb-5">Is <span className="font-semibold text-gray-800">{name}</span> a qualified lead based on BANT criteria?</p>
                         <div className="flex flex-col gap-3">
-                            <button onClick={() => { setShowQualifyModal(false); setShowConvertModal(true); }}
+                            <button onClick={openConvertModal}
                                 className="w-full flex items-center gap-3 border-2 border-green-400 rounded-xl p-3 hover:bg-green-50 hover:cursor-pointer transition-colors">
                                 <CheckCircle2 size={22} className="text-green-500 flex-shrink-0"/>
                                 <div className="text-left">
@@ -806,7 +886,7 @@ function Leads_details(){
             {/* ══ CONVERT MODAL ════════════════════════════════════════════════════════ */}
             {showConvertModal && (
                 <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/40 px-4">
-                    <div className="bg-white rounded-xl shadow-2xl w-full max-w-md p-6">
+                    <div className="bg-white rounded-xl shadow-2xl w-full max-w-md p-6 max-h-[90vh] overflow-y-auto">
                         <div className="flex items-center justify-between mb-5">
                             <div>
                                 <h2 className="text-lg font-bold text-gray-800">Convert Lead</h2>
@@ -814,30 +894,87 @@ function Leads_details(){
                             </div>
                             <button onClick={() => setShowConvertModal(false)} className="text-gray-400 hover:text-red-500 hover:cursor-pointer"><X size={20}/></button>
                         </div>
-                        <div className="flex flex-col gap-3">
-                            <div>
-                                <label className="text-xs font-semibold text-gray-600 mb-1 block">Company / Account Name</label>
-                                <input type="text" placeholder="e.g. BrightWave Innovations" value={convertForm.company} onChange={e=>setConvertForm(p=>({...p,company:e.target.value}))} className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"/>
+
+                        <div className="flex flex-col gap-4">
+
+                            {/* ── Account ── */}
+                            <div className="border border-gray-100 rounded-xl p-3 bg-gray-50">
+                                <p className="text-xs font-bold text-gray-500 uppercase mb-2">Account</p>
+                                <div className="flex gap-2 mb-2">
+                                    <button onClick={() => setConvertForm(p => ({...p, isNewCompany: true, company: ""}))}
+                                        className={`flex-1 text-xs py-1.5 rounded-lg border font-semibold transition-colors hover:cursor-pointer ${convertForm.isNewCompany ? "bg-orange-500 text-white border-orange-500" : "bg-white text-gray-600 border-gray-200 hover:bg-gray-100"}`}>
+                                        + New Account
+                                    </button>
+                                    <button onClick={() => setConvertForm(p => ({...p, isNewCompany: false, company: ""}))}
+                                        className={`flex-1 text-xs py-1.5 rounded-lg border font-semibold transition-colors hover:cursor-pointer ${!convertForm.isNewCompany ? "bg-orange-500 text-white border-orange-500" : "bg-white text-gray-600 border-gray-200 hover:bg-gray-100"}`}>
+                                        Existing Account
+                                    </button>
+                                </div>
+                                {convertForm.isNewCompany ? (
+                                    <input type="text" placeholder="Enter company name..." value={convertForm.company}
+                                        onChange={e => setConvertForm(p => ({...p, company: e.target.value}))}
+                                        className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 bg-white"/>
+                                ) : (
+                                    <select value={convertForm.company} onChange={e => setConvertForm(p => ({...p, company: e.target.value}))}
+                                        className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 bg-white">
+                                        <option value="">Select existing account...</option>
+                                        {existingAccounts.map(a => <option key={a.id} value={a.company}>{a.company}</option>)}
+                                    </select>
+                                )}
                             </div>
-                            <div>
-                                <label className="text-xs font-semibold text-gray-600 mb-1 block">Opportunity Name</label>
-                                <input type="text" placeholder="e.g. Q3 Enterprise Deal" value={convertForm.opportunity} onChange={e=>setConvertForm(p=>({...p,opportunity:e.target.value}))} className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"/>
-                            </div>
-                            <div>
-                                <label className="text-xs font-semibold text-gray-600 mb-1 block">Deal Amount</label>
-                                <input type="text" value={convertForm.amount} onChange={e=>setConvertForm(p=>({...p,amount:e.target.value}))} className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"/>
-                            </div>
-                            {/* Summary boxes */}
-                            <div className="mt-2 flex gap-2">
-                                {["Account","Contact","Opportunity"].map(item => (
-                                    <div key={item} className="flex-1 border border-green-200 bg-green-50 rounded-lg p-2 text-center">
-                                        <CheckCircle2 size={16} className="text-green-500 mx-auto mb-1"/>
-                                        <p className="text-xs font-semibold text-green-700">{item}</p>
-                                        <p className="text-xs text-gray-500">{item==="Account"?(convertForm.company||name):item==="Contact"?name:(convertForm.opportunity||"New Deal")}</p>
+
+                            {/* ── Contact ── */}
+                            <div className="border border-gray-100 rounded-xl p-3 bg-gray-50">
+                                <p className="text-xs font-bold text-gray-500 uppercase mb-2">Contact</p>
+                                <div className="flex items-center gap-3 bg-white border border-gray-200 rounded-lg px-3 py-2">
+                                    <div className="w-7 h-7 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0" style={{ backgroundColor: iconBg }}>{initials}</div>
+                                    <div>
+                                        <p className="text-sm font-semibold">{name}</p>
+                                        <p className="text-xs text-gray-400">{email}</p>
                                     </div>
-                                ))}
+                                    <CheckCircle2 size={16} className="text-green-500 ml-auto flex-shrink-0"/>
+                                </div>
+                                <p className="text-xs text-gray-400 mt-1.5 ml-1">This lead will be saved as a contact automatically.</p>
                             </div>
+
+                            {/* ── Opportunity ── */}
+                            <div className="border border-gray-100 rounded-xl p-3 bg-gray-50">
+                                <p className="text-xs font-bold text-gray-500 uppercase mb-2">Opportunity</p>
+                                <div className="flex flex-col gap-2">
+                                    <div>
+                                        <label className="text-xs text-gray-500 mb-1 block">Opportunity Name</label>
+                                        <input type="text" value={convertForm.opportunity}
+                                            onChange={e => setConvertForm(p => ({...p, opportunity: e.target.value}))}
+                                            placeholder="e.g. Q3 Enterprise Deal"
+                                            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 bg-white"/>
+                                    </div>
+                                    <div>
+                                        <label className="text-xs text-gray-500 mb-1 block">Deal Amount</label>
+                                        <input type="text" value={convertForm.amount}
+                                            onChange={e => setConvertForm(p => ({...p, amount: e.target.value}))}
+                                            placeholder="e.g. $3,50,000"
+                                            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 bg-white"/>
+                                    </div>
+                                    <div>
+                                        <label className="text-xs text-gray-500 mb-1 block">Stage</label>
+                                        <select value={convertForm.stage} onChange={e => setConvertForm(p => ({...p, stage: e.target.value}))}
+                                            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 bg-white">
+                                            {opportunityStages.map(s => <option key={s}>{s}</option>)}
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label className="text-xs text-gray-500 mb-1 block">Assign To</label>
+                                        <select value={convertForm.assignedRep} onChange={e => setConvertForm(p => ({...p, assignedRep: e.target.value}))}
+                                            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 bg-white">
+                                            <option value="">Select sales rep...</option>
+                                            {salesReps.map(r => <option key={r}>{r}</option>)}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
+
                         <div className="flex gap-3 mt-6">
                             <button onClick={() => setShowConvertModal(false)} className="flex-1 border border-gray-200 rounded-lg py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50 hover:cursor-pointer">Cancel</button>
                             <button onClick={handleConvert} disabled={convertSaving} className="flex-1 bg-green-500 hover:bg-green-600 disabled:opacity-50 rounded-lg py-2 text-sm font-semibold text-white hover:cursor-pointer">

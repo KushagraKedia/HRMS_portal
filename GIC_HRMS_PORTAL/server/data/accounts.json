@@ -1,0 +1,57 @@
+[
+  {
+    "id": 1001,
+    "company": "BrightWave Innovations",
+    "email": "info@brightwave.com",
+    "phone": "(193) 7839 748",
+    "location": "Austin, United States",
+    "industry": "Technology",
+    "website": "https://brightwave.com",
+    "source": "converted",
+    "createdAt": "2026-06-10T10:00:00.000Z"
+  },
+  {
+    "id": 1002,
+    "company": "Nexora Solutions",
+    "email": "contact@nexora.com",
+    "phone": "(179) 7382 829",
+    "location": "New York, United States",
+    "industry": "Finance",
+    "website": "https://nexora.com",
+    "source": "manual",
+    "createdAt": "2026-06-12T11:30:00.000Z"
+  },
+  {
+    "id": 1003,
+    "company": "Collier-Turner Group",
+    "email": "hello@collierturner.com",
+    "phone": "(120) 3728 039",
+    "location": "London, United Kingdom",
+    "industry": "Real Estate",
+    "website": "https://collierturner.com",
+    "source": "converted",
+    "createdAt": "2026-06-15T09:15:00.000Z"
+  },
+  {
+    "id": 1004,
+    "company": "Zenith Healthcare",
+    "email": "admin@zenithhc.com",
+    "phone": "(184) 2719 738",
+    "location": "Chicago, United States",
+    "industry": "Healthcare",
+    "website": "https://zenithhc.com",
+    "source": "manual",
+    "createdAt": "2026-06-18T14:00:00.000Z"
+  },
+  {
+    "id": 1005,
+    "company": "Orion Retail Co.",
+    "email": "support@orionretail.com",
+    "phone": "(163) 2459 315",
+    "location": "Manchester, United Kingdom",
+    "industry": "Retail",
+    "website": "https://orionretail.com",
+    "source": "manual",
+    "createdAt": "2026-06-20T08:45:00.000Z"
+  }
+]

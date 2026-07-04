@@ -1,0 +1,80 @@
+[
+  {
+    "id": 1783169528772,
+    "name": "Maria Garcia",
+    "initials": "MG",
+    "email": "maria@gmail.com",
+    "phone": "(120) 3728 039",
+    "location": "Denver, United States",
+    "company": "Nexora Solutions",
+    "role": "",
+    "iconBg": "#8E24AA",
+    "source": "converted",
+    "createdAt": "2026-07-04T12:52:08.772Z"
+  },
+  {
+    "id": 2001,
+    "name": "Linda White",
+    "initials": "LW",
+    "email": "linda@gmail.com",
+    "phone": "(193) 7839 748",
+    "location": "Austin, United States",
+    "company": "BrightWave Innovations",
+    "role": "CEO",
+    "iconBg": "#1AA3E8",
+    "source": "converted",
+    "createdAt": "2026-06-10T10:00:00.000Z"
+  },
+  {
+    "id": 2002,
+    "name": "Emily Johnson",
+    "initials": "EJ",
+    "email": "emily@gmail.com",
+    "phone": "(179) 7382 829",
+    "location": "New York, United States",
+    "company": "Nexora Solutions",
+    "role": "CFO",
+    "iconBg": "#1F5FE0",
+    "source": "converted",
+    "createdAt": "2026-06-12T11:30:00.000Z"
+  },
+  {
+    "id": 2003,
+    "name": "John Smith",
+    "initials": "JS",
+    "email": "john@gmail.com",
+    "phone": "(123) 4567 890",
+    "location": "Chester, United Kingdom",
+    "company": "Collier-Turner Group",
+    "role": "Sales Manager",
+    "iconBg": "#7C4DFF",
+    "source": "manual",
+    "createdAt": "2026-06-14T09:00:00.000Z"
+  },
+  {
+    "id": 2004,
+    "name": "Maria Garcia",
+    "initials": "MG",
+    "email": "maria@gmail.com",
+    "phone": "(120) 3728 039",
+    "location": "Denver, United States",
+    "company": "Zenith Healthcare",
+    "role": "Operations Head",
+    "iconBg": "#8E24AA",
+    "source": "manual",
+    "createdAt": "2026-06-16T13:00:00.000Z"
+  },
+  {
+    "id": 2005,
+    "name": "Michael Brown",
+    "initials": "MB",
+    "email": "micael@gmail.com",
+    "phone": "(184) 2719 738",
+    "location": "London, United Kingdom",
+    "company": "Orion Retail Co.",
+    "role": "Marketing Director",
+    "iconBg": "#1F5FE0",
+    "source": "converted",
+    "createdAt": "2026-06-19T10:30:00.000Z"
+  }
+]

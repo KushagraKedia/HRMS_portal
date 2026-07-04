@@ -1,27 +1,21 @@
-const express = require('express');
-const cors = require('cors');
-const leadsRoutes = require('./routes/leadsRoutes');
+const express          = require('express');
+const cors             = require('cors');
+const leadsRoutes        = require('./routes/leadsRoutes');
+const accountsRoutes     = require('./routes/accountsRoutes');
+const contactsRoutes     = require('./routes/contactsRoutes');
+const opportunitiesRoutes = require('./routes/opportunitiesRoutes');
 
-const app = express();
+const app  = express();
 const PORT = 5000;
 
-// ── Middleware ────────────────────────────────────────────────────────────────
-
-// Allows your React app (localhost:5173) to talk to this server
 app.use(cors());
-
-// Lets Express read JSON request bodies (req.body)
 app.use(express.json());
 
-// ── Routes ────────────────────────────────────────────────────────────────────
-app.use('/api/leads', leadsRoutes);
+app.use('/api/leads',         leadsRoutes);
+app.use('/api/accounts',      accountsRoutes);
+app.use('/api/contacts',      contactsRoutes);
+app.use('/api/opportunities', opportunitiesRoutes);
 
-// Health check — visit http://localhost:5000/ to confirm server is running
-app.get('/', (req, res) => {
-    res.json({ message: 'GIC FOLKS backend is running!' });
-});
+app.get('/', (req, res) => res.json({ message: 'GIC FOLKS backend is running!' }));
 
-// ── Start Server ──────────────────────────────────────────────────────────────
-app.listen(PORT, () => {
-    console.log(`✅ Server running at http://localhost:${PORT}`);
-});
+app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));

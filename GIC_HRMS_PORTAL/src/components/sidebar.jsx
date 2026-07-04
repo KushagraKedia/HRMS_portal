@@ -762,6 +762,21 @@ function Sidebar() {
           <span>Leads</span>
         </Link>
 
+        <Link to="/CRM/Accounts" className="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-gray-100">
+          <Building2 size={18} className="text-slate-500" />
+          <span>Accounts</span>
+        </Link>
+
+        <Link to="/CRM/Contacts" className="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-gray-100">
+          <Contact size={18} className="text-slate-500" />
+          <span>Contacts</span>
+        </Link>
+
+        <Link to="/CRM/Opportunities" className="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-gray-100">
+          <Handshake size={18} className="text-slate-500" />
+          <span>Opportunities</span>
+        </Link>
+
         {/* <div className="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-gray-100">
           <GitBranch size={18} className="text-slate-500" />
           <span>Pipeline</span>

@@ -2,7 +2,7 @@
   {
     "status": "Contacted",
     "color": "#F4B400",
-    "count": 1,
+    "count": 2,
     "total": "$3,50,000",
     "leads": [
       {
@@ -39,6 +39,15 @@
             "createdAt": "2026-07-01T05:16:16.508Z"
           }
         ]
+      },
+      {
+        "initials": "MG",
+        "name": "Maria Garcia",
+        "value": "$4,10,000",
+        "email": "maria@gmail.com",
+        "phone": "(120) 3728 039",
+        "location": "Denver, United States",
+        "iconBg": "#8E24AA"
       }
     ]
   },
@@ -58,13 +67,13 @@
         "iconBg": "#1F5FE0"
       },
       {
-        "initials": "MG",
-        "name": "Maria Garcia",
-        "value": "$4,10,000",
-        "email": "maria@gmail.com",
-        "phone": "(120) 3728 039",
-        "location": "Denver, United States",
-        "iconBg": "#8E24AA"
+        "initials": "KK",
+        "name": "Kushagra Kedia",
+        "value": "$3,400",
+        "email": "kushagrakedia2006@gmail.com",
+        "phone": "09712068320",
+        "location": "Canada",
+        "iconBg": "#1F5FE0"
       }
     ]
   },
@@ -81,7 +90,17 @@
         "email": "john@gmail.com",
         "phone": "(123) 4567 890",
         "location": "Chester, United Kingdom",
-        "iconBg": "#7C4DFF"
+        "iconBg": "#7C4DFF",
+        "followUps": [
+          {
+            "id": 1783082439396,
+            "date": "2026-07-23",
+            "time": "21:13",
+            "note": "meeting",
+            "priority": "High",
+            "createdAt": "2026-07-03T12:40:39.396Z"
+          }
+        ]
       },
       {
         "initials": "RM",

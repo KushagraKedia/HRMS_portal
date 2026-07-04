@@ -11,6 +11,10 @@ import Payslip from "./payroll/payslip"
 import Payrollitems from "./payroll/payroll_items"
 import Leads from "./CRM/Leads"
 import Leads_details from "./CRM/Leads_details"
+import Accounts      from "./CRM/Accounts"
+import Contacts      from "./CRM/Contacts"
+import Opportunities from "./CRM/Opportunities"
+import LeadCapture   from "./CRM/LeadCapture"
 
 function App(){
   return(
@@ -28,6 +32,10 @@ function App(){
       <Route path="/Payroll/Payroll_items" element={<Payrollitems />} />
       <Route path="/CRM/Leads" element={<Leads />} />
       <Route path="/CRM/Leads_details" element={<Leads_details />} />
+      <Route path="/CRM/Accounts"      element={<Accounts/>}/>
+      <Route path="/CRM/Contacts"      element={<Contacts/>}/>
+      <Route path="/CRM/Opportunities" element={<Opportunities/>}/>
+      <Route path="/lead-capture"      element={<LeadCapture/>}/>
     </Routes>
     </BrowserRouter>
   );
