@@ -2,7 +2,7 @@
   {
     "status": "Contacted",
     "color": "#F4B400",
-    "count": 4,
+    "count": 3,
     "total": "$3,50,000",
     "leads": [
       {
@@ -48,19 +48,6 @@
         "phone": "(120) 3728 039",
         "location": "Denver, United States",
         "iconBg": "#8E24AA"
-      },
-      {
-        "initials": "KK",
-        "name": "Kushagra Kedia",
-        "value": "$45000",
-        "email": "kushagrakedia2006@gmail.com",
-        "phone": "09712068320",
-        "location": "Belgium",
-        "iconBg": "#1AA3E8",
-        "assignedTo": "virat kohli",
-        "adminId": 1783422455435,
-        "createdBy": "Kushagra",
-        "createdAt": "2026-07-07T11:40:45.471Z"
       },
       {
         "initials": "JS",
@@ -119,7 +106,7 @@
   {
     "status": "Closed",
     "color": "#03C95A",
-    "count": 3,
+    "count": 4,
     "total": "$15,44,540",
     "leads": [
       {
@@ -158,6 +145,19 @@
         "phone": "(183) 9302 890",
         "location": "Charlotte, United States",
         "iconBg": "#1F5FE0"
+      },
+      {
+        "initials": "KK",
+        "name": "Kushagra Kedia",
+        "value": "$45000",
+        "email": "kushagrakedia2006@gmail.com",
+        "phone": "09712068320",
+        "location": "Belgium",
+        "iconBg": "#1AA3E8",
+        "assignedTo": "virat kohli",
+        "adminId": 1783422455435,
+        "createdBy": "Kushagra",
+        "createdAt": "2026-07-07T11:40:45.471Z"
       }
     ]
   },
