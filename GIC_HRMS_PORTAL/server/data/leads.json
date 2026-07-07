@@ -80,7 +80,7 @@
   {
     "status": "Not Contacted",
     "color": "#8E24AA",
-    "count": 2,
+    "count": 3,
     "total": "$7,60,000",
     "leads": [
       {
@@ -100,6 +100,19 @@
         "phone": "09712068320",
         "location": "Canada",
         "iconBg": "#1F5FE0"
+      },
+      {
+        "initials": "LW",
+        "name": "Lisa White",
+        "value": "$45,000",
+        "email": "white@gmail.com",
+        "phone": "87676890890",
+        "location": "Sydeny, Australia",
+        "iconBg": "#1AA3E8",
+        "assignedTo": "Rahul Gupta",
+        "adminId": 1783422455435,
+        "createdBy": "Kushagra",
+        "createdAt": "2026-07-07T11:50:02.207Z"
       }
     ]
   },

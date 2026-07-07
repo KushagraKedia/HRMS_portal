@@ -48,5 +48,15 @@
     "role": "staff",
     "companyName": "Google",
     "createdAt": "2026-07-07T11:09:26.408Z"
+  },
+  {
+    "id": 1783424889467,
+    "adminId": 1783422455435,
+    "name": "Rahul Gupta",
+    "email": "rahul@gmail.com",
+    "password": "123456",
+    "role": "staff",
+    "companyName": "Google",
+    "createdAt": "2026-07-07T11:48:09.467Z"
   }
 ]
