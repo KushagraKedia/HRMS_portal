@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1783422455435,
+    "adminId": 1783422455435,
+    "name": "Kushagra",
+    "email": "kushagrakedia2006@gmail.com",
+    "password": "123456",
+    "role": "admin",
+    "companyName": "Google",
+    "createdAt": "2026-07-07T11:07:35.435Z"
+  },
+  {
+    "id": 1783422485875,
+    "adminId": 1783422455435,
+    "name": "Raghav Kedia",
+    "email": "raghav@gmail.com",
+    "password": "123456",
+    "role": "staff",
+    "companyName": "Google",
+    "createdAt": "2026-07-07T11:08:05.875Z"
+  },
+  {
+    "id": 1783422518312,
+    "adminId": 1783422455435,
+    "name": "aniket",
+    "email": "aniket@gmail.com",
+    "password": "123456",
+    "role": "staff",
+    "companyName": "Google",
+    "createdAt": "2026-07-07T11:08:38.312Z"
+  },
+  {
+    "id": 1783422545791,
+    "adminId": 1783422455435,
+    "name": "virat kohli",
+    "email": "virat@gmail.com",
+    "password": "123456",
+    "role": "staff",
+    "companyName": "Google",
+    "createdAt": "2026-07-07T11:09:05.791Z"
+  },
+  {
+    "id": 1783422566408,
+    "adminId": 1783422455435,
+    "name": "Rohit Sharma",
+    "email": "rohit@gmail.com",
+    "password": "123456",
+    "role": "staff",
+    "companyName": "Google",
+    "createdAt": "2026-07-07T11:09:26.408Z"
+  }
+]

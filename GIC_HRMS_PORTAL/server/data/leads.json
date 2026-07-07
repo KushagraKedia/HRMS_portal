@@ -2,7 +2,7 @@
   {
     "status": "Contacted",
     "color": "#F4B400",
-    "count": 2,
+    "count": 4,
     "total": "$3,50,000",
     "leads": [
       {
@@ -48,6 +48,32 @@
         "phone": "(120) 3728 039",
         "location": "Denver, United States",
         "iconBg": "#8E24AA"
+      },
+      {
+        "initials": "KK",
+        "name": "Kushagra Kedia",
+        "value": "$45000",
+        "email": "kushagrakedia2006@gmail.com",
+        "phone": "09712068320",
+        "location": "Belgium",
+        "iconBg": "#1AA3E8",
+        "assignedTo": "virat kohli",
+        "adminId": 1783422455435,
+        "createdBy": "Kushagra",
+        "createdAt": "2026-07-07T11:40:45.471Z"
+      },
+      {
+        "initials": "JS",
+        "name": "John Smith",
+        "value": "$350,000",
+        "email": "john@gmail.com",
+        "phone": "9712940383",
+        "location": "Surat, Gujarat",
+        "iconBg": "#F4B400",
+        "assignedTo": "aniket",
+        "adminId": 1783422455435,
+        "createdBy": "Kushagra",
+        "createdAt": "2026-07-07T11:41:51.215Z"
       }
     ]
   },

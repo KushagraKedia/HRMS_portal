@@ -37,10 +37,28 @@ function recalcCount(column) {
 // ════════════════════════════════════════════════════════════════════════════════
 
 // GET /api/leads/columns
-// Returns all columns with their leads.
-router.get('/columns', (req, res) => {
+// Admin: all leads filtered by adminId. Staff: only their assigned leads.
+router.get("/columns", (req, res) => {
     try {
-        const data = readData();
+        const { adminId, assignedTo } = req.query;
+        let data = readData();
+
+        // Filter leads by adminId (company) if provided
+        if (adminId) {
+            data = data.map(col => {
+                const filtered = col.leads.filter(l => String(l.adminId) === String(adminId));
+                return { ...col, leads: filtered, count: filtered.length };
+            });
+        }
+
+        // If assignedTo provided (staff view), filter further
+        if (assignedTo) {
+            data = data.map(col => {
+                const filtered = col.leads.filter(l => l.assignedTo === assignedTo);
+                return { ...col, leads: filtered, count: filtered.length };
+            });
+        }
+
         res.json(data);
     } catch (err) {
         res.status(500).json({ error: 'Failed to read leads data.' });
@@ -114,39 +132,36 @@ router.delete('/columns/:status', (req, res) => {
 // ════════════════════════════════════════════════════════════════════════════════
 
 // POST /api/leads/columns/:status/leads
-// Adds a new lead to a specific column.
-// Body: { name, email, value, phone, location, iconBg }
 router.post('/columns/:status/leads', (req, res) => {
     try {
         const targetStatus = decodeURIComponent(req.params.status);
-        const { name, email, value, phone, location, iconBg } = req.body;
+        const { name, email, value, phone, location, iconBg, assignedTo, adminId, createdBy } = req.body;
 
         if (!name || !email) {
             return res.status(400).json({ error: 'Name and email are required.' });
         }
 
-        const data = readData();
+        const data   = readData();
         const column = data.find(col => col.status === targetStatus);
 
         if (!column) {
             return res.status(404).json({ error: `Column "${targetStatus}" not found.` });
         }
 
-        // Auto-generate initials from name
-        const initials = name.trim()
-            .split(' ')
-            .map(w => w[0].toUpperCase())
-            .slice(0, 2)
-            .join('');
+        const initials = name.trim().split(' ').map(w => w[0].toUpperCase()).slice(0, 2).join('');
 
         const newLead = {
             initials,
-            name: name.trim(),
-            value: value || '$0',
-            email: email.trim(),
-            phone: phone || 'N/A',
-            location: location || 'N/A',
-            iconBg: iconBg || '#1AA3E8'
+            name:       name.trim(),
+            value:      value || '$0',
+            email:      email.trim(),
+            phone:      phone || 'N/A',
+            location:   location || 'N/A',
+            iconBg:     iconBg || '#1AA3E8',
+            assignedTo: assignedTo || '',
+            adminId:    adminId || null,
+            createdBy:  createdBy || '',
+            createdAt:  new Date().toISOString()
         };
 
         column.leads.push(newLead);

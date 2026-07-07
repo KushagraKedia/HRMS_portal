@@ -69,7 +69,7 @@ import {
   Table
 } from "lucide-react";
 
-import { Contact, Building2, Handshake, GitBranch, ListChecks } from "lucide-react";
+import { Contact, Building2, Handshake, GitBranch, ListChecks, UserCog2 } from "lucide-react";
 
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -79,6 +79,9 @@ import { Link } from "react-router-dom";
 import GIC from "../assets/GIC1.webp";
 
 function Sidebar() {
+  const currentUser = JSON.parse(localStorage.getItem("gic_user") || "{}");
+  const isAdmin = currentUser.role === "admin";
+
   const [dashboardOpen,setDashboardOpen] = useState(false);
   const [superAdminOpen, setSuperAdminOpen] = useState(false);
   const [applicationOpen, setApplicationOpen] = useState(false);
@@ -806,6 +809,21 @@ function Sidebar() {
   </div>
 
 </div> */}
+      {/* ADMIN SECTION — only visible to admin */}
+      {isAdmin && (
+        <>
+          <h3 className="text-xs font-bold text-gray-400 uppercase mt-10 mb-4">
+            Admin
+          </h3>
+          <div className="space-y-2">
+            <Link to="/Admin/ManageStaff" className="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-gray-100">
+              <Users size={18} className="text-slate-500" />
+              <span>Manage Staff</span>
+            </Link>
+          </div>
+        </>
+      )}
+
     </aside>
   );
 }
