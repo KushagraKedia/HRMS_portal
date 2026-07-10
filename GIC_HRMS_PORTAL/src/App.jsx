@@ -16,6 +16,9 @@ import Contacts      from "./CRM/Contacts"
 import Opportunities from "./CRM/Opportunities"
 import LeadCapture   from "./CRM/LeadCapture"
 import ManageStaff from "./CRM/ManageStaff"
+import EmailTemplates      from "./CRM/EmailTemplates"
+import EmailTemplateEditor from "./CRM/EmailTemplateEditor"
+
 
 function App(){
   return(
@@ -38,6 +41,8 @@ function App(){
       <Route path="/CRM/Opportunities" element={<Opportunities/>}/>
       <Route path="/lead-capture"      element={<LeadCapture/>}/>
       <Route path="/Admin/ManageStaff" element={<ManageStaff/>}/>
+      <Route path="/CRM/EmailTemplates"        element={<EmailTemplates/>}/>
+      <Route path="/CRM/EmailTemplates/Editor" element={<EmailTemplateEditor/>}/>
     </Routes>
     </BrowserRouter>
   );

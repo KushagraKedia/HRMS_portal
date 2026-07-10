@@ -23,7 +23,8 @@ import {
   BellRing,
   Megaphone,
   LogOut,
-  UserX
+  UserX,
+  Mail
 } from "lucide-react";
 
 import {
@@ -779,6 +780,11 @@ function Sidebar() {
           <Handshake size={18} className="text-slate-500" />
           <span>Opportunities</span>
         </Link>
+
+        <Link to="/CRM/EmailTemplates" className="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-gray-100">
+          <Mail size={18} className="text-slate-500"/> 
+          <span>Email Templates</span>
+        </Link>        
 
         {/* <div className="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-gray-100">
           <GitBranch size={18} className="text-slate-500" />

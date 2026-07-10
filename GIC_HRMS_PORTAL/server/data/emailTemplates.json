@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1783683776297,
+    "name": "Proposal Email",
+    "category": "Proposal",
+    "subject": "Proposal for {{company}}",
+    "body": "<div style=\"font-family:Arial,sans-serif;max-width:600px;margin:0 auto;color:#333\">\n\n  <h2 style=\"color:#384959;font-size:25px;font-weight:600\">\n    Your Proposal is Ready 📄\n  </h2>\n\n  <br>\n\n  <p>Hi {{name}} 👋,</p>\n\n  <p>\n    Thank you for taking the time to discuss your requirements with us.\n  </p>\n\n  <p>\n    Based on our conversation, we've prepared a proposal tailored specifically\n    for <strong>{{company}}</strong>. We believe it aligns well with your goals\n    and outlines how GIC FOLKS can support your business.\n  </p>\n\n  <p>\n    Please take a moment to review the proposal. If you have any questions,\n    need any modifications, or would like to discuss it further, I'd be happy\n    to assist.\n  </p>\n\n  <p>\n    We look forward to your feedback and hope to work together soon.\n  </p>\n\n  <br>\n\n  <p>\n    Best regards,<br>\n    <strong>{{assignedTo}}</strong><br>\n    GIC FOLKS Team\n  </p>\n\n</div>",
+    "adminId": 1783422455435,
+    "createdAt": "2026-07-10T11:42:56.297Z"
+  },
+  {
+    "id": 1783683681927,
+    "name": "Closing Email",
+    "category": "Closing",
+    "subject": "Closing Your Inquiry",
+    "body": "<div style=\"font-family:Arial,sans-serif;max-width:600px;margin:0 auto;color:#333\">\n  <h2 style=\"color:#384959;font-size:25px;font-weight:600\">\n    Thank You, {{name}}\n  </h2>\n  <br>\n\n  <p>Hi {{name}} 👋,</p>\n\n  <p>\n    Since we haven't heard back from you, we'll go ahead and close your inquiry\n    for now.\n  </p>\n\n  <p>\n    If your requirements change in the future or you'd like to continue the\n    conversation, simply reply to this email. We'll be happy to assist you.\n  </p>\n\n  <p>\n    Thank you for considering GIC FOLKS. We appreciate your time and wish you\n    all the best.\n  </p>\n\n  <br>\n\n  <p>\n    Best regards,<br>\n    <strong>{{assignedTo}}</strong><br>\n    GIC FOLKS Team\n  </p>\n</div>",
+    "adminId": 1783422455435,
+    "createdAt": "2026-07-10T11:41:21.927Z"
+  },
+  {
+    "id": 1783683624688,
+    "name": "Meeting Request",
+    "category": "Meeting Request",
+    "subject": "Can We Schedule a Quick Meeting?",
+    "body": "<div style=\"font-family:Arial,sans-serif;max-width:600px;margin:0 auto;color:#333\">\n  <h2 style=\"color:#384959;font-size:25px;font-weight:600\">\n    Let's Connect, {{name}} 🤝\n  </h2>\n  <br>\n\n  <p>Hi {{name}} 👋,</p>\n\n  <p>\n    I'd love the opportunity to learn more about your goals and discuss\n    how GIC FOLKS can help {{company}}.\n  </p>\n\n  <p>\n    Would you be available for a quick 20–30 minute meeting sometime this week?\n    Please let me know a time that works best for you.\n  </p>\n\n  <br>\n\n  <p>\n    Looking forward to speaking with you.\n  </p>\n\n  <br>\n\n  <p>\n    Best regards,<br>\n    <strong>{{assignedTo}}</strong><br>\n    GIC FOLKS Team\n  </p>\n</div>",
+    "adminId": 1783422455435,
+    "createdAt": "2026-07-10T11:40:24.688Z"
+  },
+  {
+    "id": 1783683585016,
+    "name": "Nurture Email",
+    "category": "Nurture",
+    "subject": "Helpful Resources for {{company}}",
+    "body": "<div style=\"font-family:Arial,sans-serif;max-width:600px;margin:0 auto;color:#333\">\n  <h2 style=\"color:#384959;font-size:25px;font-weight:600\">\n    A few resources for {{name}} 📚\n  </h2>\n  <br>\n\n  <p>Hi {{name}} 👋,</p>\n\n  <p>\n    I hope you're doing well.\n  </p>\n\n  <p>\n    I wanted to share a few insights and resources that may help {{company}}\n    while evaluating your options.\n  </p>\n\n  <p>\n    If you have any questions or would like to discuss your requirements,\n    I'd be happy to help.\n  </p>\n\n  <br>\n\n  <p>\n    Best regards,<br>\n    <strong>{{assignedTo}}</strong><br>\n    GIC FOLKS Team\n  </p>\n</div>",
+    "adminId": 1783422455435,
+    "createdAt": "2026-07-10T11:39:45.016Z"
+  },
+  {
+    "id": 1783683223016,
+    "name": "Follow Up Email",
+    "category": "Follow Up",
+    "subject": "Following Up – {{company}}",
+    "body": "<div style=\"font-family:Arial,sans-serif;max-width:600px;margin:0 auto;color:#333\">\n  <h2 style=\"color:#384959; font-weight:600; font-size:25px\">Following up — {{name}}</h2><br>\n  <p>Hi {{name}} 👋,</p>\n  <p>I wanted to follow up on our recent conversation about the {{company}} opportunity.</p><br>\n  <p>Could we schedule a quick call this week to move things forward?</p>\n  <br/>\n  <p>Best regards,<br/><strong>{{assignedTo}}</strong><br/>GIC FOLKS Team</p>\n</div>",
+    "adminId": 1783422455435,
+    "createdAt": "2026-07-10T11:33:43.016Z"
+  },
+  {
+    "id": 1783682544387,
+    "name": "Welcome email",
+    "category": "Welcome",
+    "subject": "Welcome to GIC FOLKS, {{name}}!",
+    "body": "<div style=\"font-family:Arial,sans-serif;max-width:600px;margin:0 auto\">\n  <h2 style=\"color:#384959; font-size: 27px\">Welcome to GIC FOLKS, {{name}}! 👋</h2><br>\n  <p>Thank you for reaching out to us. We're excited to connect with you.</p>\n  <p>Our team will be in touch shortly to discuss how we can help you.</p>\n  <br/>\n  <p>Best regards,<br/><strong>{{assignedTo}}</strong><br/>GIC FOLKS Team</p>\n</div>",
+    "adminId": 1783422455435,
+    "createdAt": "2026-07-10T11:22:24.387Z"
+  }
+]
