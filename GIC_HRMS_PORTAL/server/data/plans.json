@@ -1,0 +1,41 @@
+[
+  {
+    "id": 5001,
+    "name": "Starter",
+    "price": 999,
+    "currency": "INR",
+    "duration": "month",
+    "maxStaff": 3,
+    "maxLeads": 50,
+    "features": ["3 Staff Accounts", "50 Leads", "Email Templates", "Basic CRM"],
+    "color": "#1AA3E8",
+    "popular": false,
+    "createdAt": "2026-06-01T00:00:00.000Z"
+  },
+  {
+    "id": 5002,
+    "name": "Professional",
+    "price": 2999,
+    "currency": "INR",
+    "duration": "month",
+    "maxStaff": 10,
+    "maxLeads": 500,
+    "features": ["10 Staff Accounts", "500 Leads", "Email Templates", "Full CRM", "Accounts & Contacts", "Opportunities"],
+    "color": "#E97316",
+    "popular": true,
+    "createdAt": "2026-06-01T00:00:00.000Z"
+  },
+  {
+    "id": 5003,
+    "name": "Enterprise",
+    "price": 9999,
+    "currency": "INR",
+    "duration": "month",
+    "maxStaff": 999,
+    "maxLeads": 999999,
+    "features": ["Unlimited Staff", "Unlimited Leads", "Email Templates", "Full CRM", "Accounts & Contacts", "Opportunities", "Priority Support", "Custom Branding"],
+    "color": "#8E24AA",
+    "popular": false,
+    "createdAt": "2026-06-01T00:00:00.000Z"
+  }
+]

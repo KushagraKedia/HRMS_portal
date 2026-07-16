@@ -18,6 +18,9 @@ import LeadCapture   from "./CRM/LeadCapture"
 import ManageStaff from "./CRM/ManageStaff"
 import EmailTemplates      from "./CRM/EmailTemplates"
 import EmailTemplateEditor from "./CRM/EmailTemplateEditor"
+import SuperAdminLogin from './Pages/SuperAdminLogin';
+import SuperAdminDashboard from './SuperAdmin/SuperAdminDashboard';
+import SubscriptionCards from './subscription/SubscriptionCards';
 
 
 function App(){
@@ -43,6 +46,9 @@ function App(){
       <Route path="/Admin/ManageStaff" element={<ManageStaff/>}/>
       <Route path="/CRM/EmailTemplates"        element={<EmailTemplates/>}/>
       <Route path="/CRM/EmailTemplates/Editor" element={<EmailTemplateEditor/>}/>
+      <Route path="/superadmin/login" element={<SuperAdminLogin />} />
+      <Route path="/superadmin/dashboard" element={<SuperAdminDashboard />} />
+      <Route path="/company/subscription" element={<SubscriptionCards />} />
     </Routes>
     </BrowserRouter>
   );

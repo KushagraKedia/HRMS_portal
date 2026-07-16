@@ -109,6 +109,12 @@ function Login() {
           Copyright © 2026 - Kushagra
         </div>
 
+        <div className="mt-3">
+          <a href="/superadmin/login" className="text-xs text-gray-300 hover:text-gray-400 transition-colors">
+            SuperAdmin Access
+          </a>
+        </div>
+
       </div>
     </div>
   );
