@@ -11,6 +11,21 @@ const router = express.Router();
 router.post('/signup', signUpAdmin);
 router.post('/login',  loginUser);
 
+// GET all companies (admin accounts) — for SuperAdmin dashboard
+router.get('/companies', (req, res) => {
+    const fs   = require('fs');
+    const path = require('path');
+    const DATA_FILE = path.join(__dirname, '../data/users.json');
+    try {
+        if (!fs.existsSync(DATA_FILE)) return res.json([]);
+        const users     = JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8'));
+        const companies = users
+            .filter(u => u.role === 'admin')
+            .map(({ password: _, ...u }) => u);
+        res.json(companies);
+    } catch { res.status(500).json({ error: 'Failed to fetch companies.' }); }
+});
+
 // Check if any admin exists (used by SignUp page to lock/unlock form)
 router.get('/check-admin', (req, res) => {
     const fs   = require('fs');
