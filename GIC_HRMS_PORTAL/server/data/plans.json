@@ -10,8 +10,10 @@
     "features": [
       "3 Staff Accounts",
       "50 Leads",
-      "Email Templates",
-      "Basic CRM"
+      "Tickets Module",
+      "Payroll Module",
+      "Basic CRM (Leads only)",
+      "Manage Staff (3 max)"
     ],
     "color": "#1AA3E8",
     "popular": false,
@@ -28,10 +30,11 @@
     "features": [
       "10 Staff Accounts",
       "500 Leads",
+      "Tickets Module",
+      "Payroll Module",
+      "Full CRM (Leads, Accounts, Contacts, Opportunities)",
       "Email Templates",
-      "Full CRM",
-      "Accounts & Contacts",
-      "Opportunities"
+      "Manage Staff (10 max)"
     ],
     "color": "#E97316",
     "popular": true,
@@ -39,6 +42,29 @@
   },
   {
     "id": 5003,
+    "name": "Growth",
+    "price": 4999,
+    "currency": "INR",
+    "duration": "month",
+    "maxStaff": 25,
+    "maxLeads": 1000,
+    "features": [
+      "25 Staff Accounts",
+      "1000 Leads",
+      "Tickets Module",
+      "Payroll Module",
+      "Full CRM (Leads, Accounts, Contacts, Opportunities)",
+      "Email Templates",
+      "Advanced Analytics",
+      "Dedicated Account Manager",
+      "Manage Staff (25 max)"
+    ],
+    "color": "#03C95A",
+    "popular": false,
+    "createdAt": "2026-06-01T00:00:00.000Z"
+  },
+  {
+    "id": 5004,
     "name": "Enterprise",
     "price": 9999,
     "currency": "INR",
@@ -46,14 +72,17 @@
     "maxStaff": 999,
     "maxLeads": 999999,
     "features": [
-      "Unlimited Staff",
+      "Unlimited Staff Accounts",
       "Unlimited Leads",
+      "Tickets Module",
+      "Payroll Module",
+      "Full CRM (Leads, Accounts, Contacts, Opportunities)",
       "Email Templates",
-      "Full CRM",
-      "Accounts & Contacts",
-      "Opportunities",
+      "Advanced Analytics",
+      "Dedicated Account Manager",
       "Priority Support",
-      "Custom Branding"
+      "Custom Branding",
+      "Manage Staff (Unlimited)"
     ],
     "color": "#8E24AA",
     "popular": false,

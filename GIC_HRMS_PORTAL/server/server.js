@@ -9,8 +9,8 @@ const opportunitiesRoutes   = require('./routes/opportunitiesRoutes');
 const authRoutes            = require('./routes/authRoutes');
 const emailTemplatesRoutes  = require('./routes/emailTemplatesRoutes');
 const razorpayRoutes        = require('./routes/razorpayRoutes');
-const plansRoutes = require('./routes/plansRoutes');
-const subscriptionsRoutes = require('./routes/subscriptionsRoutes');
+const subscriptionsRoutes   = require('./routes/subscriptionsRoutes');
+const plansRoutes           = require('./routes/plansRoutes');
  
 const app  = express();
 const PORT = process.env.PORT || 5000;
@@ -25,8 +25,8 @@ app.use('/api/opportunities',   opportunitiesRoutes);
 app.use('/api/auth',            authRoutes);
 app.use('/api/email-templates', emailTemplatesRoutes);
 app.use('/api/razorpay',        razorpayRoutes);
-app.use('/api/plans', plansRoutes);
-app.use('/api/subscriptions', subscriptionsRoutes);
+app.use('/api/subscriptions',   subscriptionsRoutes);
+app.use('/api/plans',           plansRoutes);
  
 app.get('/', (req, res) => res.json({ message: 'GIC FOLKS backend is running!' }));
  
